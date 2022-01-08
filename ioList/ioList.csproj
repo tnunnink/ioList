@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="gong-wpf-dragdrop" Version="3.0.0" />
       <PackageReference Include="Prism.Core" Version="8.1.97" />
       <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />

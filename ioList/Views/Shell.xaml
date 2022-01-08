@@ -8,10 +8,6 @@
         mc:Ignorable="d"
         Title="io-List" Height="450" Width="800">
   <Grid>
-    <Border BorderThickness="2" BorderBrush="Red" Height="300" Width="300">
-      <TextBlock Text="DROP YOUR L5X HERE" FontSize="16"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Center"/>  
-    </Border>
+    <ContentControl prism:RegionManager.RegionName="ContentRegion" />
   </Grid>
 </Window>
