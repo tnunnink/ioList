@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="ioList.Module.LoadFile.Controls.RecentFileItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:model="clr-namespace:ioList.Module.LoadFile.Model"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance d:Type=model:RecentFile}"
+             d:DesignHeight="60" d:DesignWidth="600">
+  <Grid Margin="5">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <Rectangle Grid.Column="0" Height="20" Width="20" Margin="5 0 15 0" Fill="Aquamarine" />
+
+    <StackPanel Grid.Column="1">
+      <DockPanel>
+        <TextBlock DockPanel.Dock="Left"
+                   Height="20"
+                   Text="{Binding Name}"
+                   FontWeight="SemiBold"
+                   FontSize="13"
+                   Margin="0 5"
+                   Foreground="DarkSlateGray"
+                   VerticalAlignment="Center" />
+
+        <StackPanel DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+          <Button Height="16" Width="16"
+                  Margin="10 0" />
+
+          <StackPanel.Style>
+            <Style TargetType="{x:Type StackPanel}">
+              <Setter Property="Visibility" Value="Hidden" />
+              <Style.Triggers>
+                <DataTrigger
+                  Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                        AncestorType={x:Type ListViewItem}},Path=IsMouseOver}"
+                  Value="True">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </StackPanel.Style>
+        </StackPanel>
+      </DockPanel>
+
+      <DockPanel>
+        <TextBlock DockPanel.Dock="Left"
+                   Text="{Binding Directory}"
+                   VerticalAlignment="Center"
+                   MaxWidth="300"
+                   TextTrimming="CharacterEllipsis"
+                   ToolTip="{Binding Directory}"
+                   Foreground="LightSlateGray" />
+
+        <TextBlock DockPanel.Dock="Right"
+                   VerticalAlignment="Center"
+                   TextAlignment="Right"
+                   Text="{Binding LastWriteTime}"
+                   Foreground="LightSlateGray" />
+      </DockPanel>
+    </StackPanel>
+  </Grid>
+</UserControl>

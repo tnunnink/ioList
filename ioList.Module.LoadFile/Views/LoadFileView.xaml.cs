@@ -1,4 +1,4 @@
-﻿namespace ioList.Views
+﻿namespace ioList.Module.LoadFile.Views
 {
     public partial class LoadFileView
     {

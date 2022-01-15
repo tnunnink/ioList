@@ -1,13 +1,15 @@
-﻿<Window x:Class="ioList.Views.Shell"
+﻿<Window x:Class="ioList.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:common="clr-namespace:ioList.Common;assembly=ioList.Common"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="io-List" Height="450" Width="800">
+        d:DesignHeight="800" d:DesignWidth="1200"
+        Title="io-List">
   <Grid>
-    <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+    <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />  
   </Grid>
 </Window>

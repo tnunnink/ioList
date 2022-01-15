@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Prism.Core" Version="8.1.97" />
-      <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Module.IoSelection\ioList.Module.IoSelection.csproj" />
-      <ProjectReference Include="..\ioList.Module.LoadFile\ioList.Module.LoadFile.csproj" />
+      <ProjectReference Include="..\ioList.Common\ioList.Common.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
     </ItemGroup>
 

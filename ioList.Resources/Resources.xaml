@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:theming="clr-namespace:ioList.Resources.Theming">
+
+  <ResourceDictionary.MergedDictionaries>
+    <theming:ThemeResourceDictionary />
+    <!--General-->
+    <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
+    
+    <!--Icons-->
+    <ResourceDictionary Source="Icons/GenericIcons.xaml" />
+
+  </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

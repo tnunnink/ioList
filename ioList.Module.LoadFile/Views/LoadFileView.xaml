@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="ioList.Module.LoadFile.Views.LoadFileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ioList.Module.LoadFile.ViewModels"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance Type=viewModels:LoadFileViewModel}"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:ui="http://ioList.com/ui"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="800">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ioList.Resources;component/Resources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+
+  </UserControl.Resources>
+
+  <Border dd:DragDrop.IsDropTarget="True"
+          dd:DragDrop.DropHandler="{Binding}"
+          Margin="40">
+
+    <Border.Style>
+      <Style TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="GhostWhite" />
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding IsValidFile}" Value="True">
+            <Setter Property="Background" Value="LightSeaGreen" />
+          </DataTrigger>
+        </Style.Triggers>
+      </Style>
+    </Border.Style>
+
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="2*" />
+      </Grid.RowDefinitions>
+
+      <StackPanel Grid.Row="0"
+                  Margin="40">
+
+        <TextBlock Text="Welcome to ioList"
+                   FontSize="24" FontWeight="SemiBold"
+                   Foreground="MidnightBlue"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+
+        <TextBlock Margin="30 10"
+                   Text="This application can generate a list of Logix IO tags by parsing a provided L5X file. To get started, select a L5X file to load. Once the loaded, to application will display all found modules and IO connection found in the file. From there you can filter the list and export to a CSV. Enjoy!"
+                   FontSize="14" FontWeight="Normal"
+                   Foreground="SlateBlue"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center" />
+      </StackPanel>
+
+      <StackPanel Grid.Row="1"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center">
+
+        <ui:Icon Height="60" Width="60"
+                 Template="{StaticResource Icon.Xml}"
+                 Margin="10"
+                 Foreground="DarkOrchid">
+        </ui:Icon>
+
+        <TextBlock Text="Drag and drop L5X"
+                   Foreground="DarkSlateGray"
+                   FontSize="20" Margin="10"
+                   HorizontalAlignment="Center" />
+
+        <TextBlock Text="or" FontSize="12" Margin="10"
+                   HorizontalAlignment="Center" />
+
+        <Button Height="30" Width="120"
+                Command="{Binding BrowseFileCommand}"
+                Background="MediumSlateBlue"
+                Foreground="Azure"
+                BorderThickness="0"
+                Content="Browse Files"
+                Margin="20" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>
