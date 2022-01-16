@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ioList.Common\ioList.Common.csproj" />
+      <ProjectReference Include="..\ioList.Events\ioList.Events.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
     </ItemGroup>
 

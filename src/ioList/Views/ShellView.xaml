@@ -5,11 +5,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:common="clr-namespace:ioList.Common;assembly=ioList.Common"
+        xmlns:viewModels="clr-namespace:ioList.ViewModels"
+        xmlns:ui="http://ioList.com/ui"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
-        d:DesignHeight="800" d:DesignWidth="1200"
-        Title="io-List">
+        Height="Auto" Width="Auto"
+        d:DesignHeight="800" d:DesignWidth="1000"
+        Title="ioList"
+        WindowStartupLocation="CenterOwner"
+        Style="{DynamicResource ShellStyle}">
   <Grid>
-    <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />  
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="400" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    
+    <Border Grid.Column="0"
+            BorderBrush="{ui:ThemeResource ResourceKey=PrimaryBorder}"
+            BorderThickness="0 0 1 0">
+      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ListRegion}" />
+    </Border>
+
+    <GridSplitter Grid.Column="1"
+                  Width="5"
+                  Margin="-3 0 -2 0"
+                  HorizontalAlignment="Stretch"
+                  ResizeDirection="Columns"
+                  Background="Transparent"
+                  Panel.ZIndex="1" />
+
+    <ContentControl Grid.Column="2" prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />
   </Grid>
 </Window>

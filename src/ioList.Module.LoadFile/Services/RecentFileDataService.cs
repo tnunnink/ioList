@@ -31,22 +31,21 @@ namespace ioList.Module.LoadFile.Services
             _document = XDocument.Load(_fileName);
         }
 
+        public void Clear()
+        {
+            _document.Root?.RemoveNodes();
+            _document.Save(_fileName);
+        }
+
         public IEnumerable<RecentFile> GetAll() =>
             _document.Descendants(nameof(RecentFile)).Select(e => new RecentFile(e.Value));
 
-        public RecentFile Get(string path) =>
-            new(_document.Descendants(nameof(RecentFile)).FirstOrDefault(e => e.Value == path)?.Value);
-
-        public bool Exists(string fullName) =>
-            _document.Descendants(nameof(RecentFile))
-                .Any(e => string.Equals(e.Value, fullName, StringComparison.OrdinalIgnoreCase));
-
         public void Add(RecentFile recentFile)
         {
-            if (Exists(recentFile.FullName))
+            if (Exists(recentFile.FullPath))
                 return;
 
-            var element = new XElement(nameof(RecentFile), recentFile.FullName);
+            var element = new XElement(nameof(RecentFile), recentFile.FullPath);
 
             _document.Root?.Add(element);
 
@@ -55,12 +54,16 @@ namespace ioList.Module.LoadFile.Services
 
         public void Remove(RecentFile recentFile)
         {
-            var element = _document.Descendants(nameof(RecentFile)).FirstOrDefault(e => e.Value == recentFile.FullName);
+            var element = _document.Descendants(nameof(RecentFile)).FirstOrDefault(e => e.Value == recentFile.FullPath);
 
             element?.Remove();
 
             _document.Save(_fileName);
         }
+
+        private bool Exists(string fullName) =>
+            _document.Descendants(nameof(RecentFile))
+                .Any(e => string.Equals(e.Value, fullName, StringComparison.OrdinalIgnoreCase));
 
         private static void GenerateDocument(string fileName)
         {

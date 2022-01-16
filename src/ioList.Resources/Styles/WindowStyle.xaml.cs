@@ -8,26 +8,19 @@ namespace ioList.Resources.Styles
         {
             InitializeComponent();
         }
-        
+
         private void OnCloseClick(object sender, RoutedEventArgs e)
         {
             var window = (Window)((FrameworkElement)sender).TemplatedParent;
 
             window.Close();
         }
-        
+
         private void OnMaximizeRestoreClick(object sender, RoutedEventArgs e)
         {
             var window = (Window)((FrameworkElement)sender).TemplatedParent;
 
-            if (window.WindowState == WindowState.Normal)
-            {
-                window.WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                window.WindowState = WindowState.Normal;
-            }
+            window.WindowState = window.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
         }
 
         private void OnMinimizeClick(object sender, RoutedEventArgs e)

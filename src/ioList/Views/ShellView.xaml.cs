@@ -5,13 +5,11 @@ using Prism.Regions;
 
 namespace ioList.Views
 {
-    public partial class ShellView : Window
+    public partial class ShellView
     {
         public ShellView(IRegionManager regionManager)
         {
             InitializeComponent();
-
-            regionManager.RegisterViewWithRegion<MainView>(RegionNames.ContentRegion);
         }
     }
 }

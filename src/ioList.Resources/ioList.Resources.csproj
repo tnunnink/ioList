@@ -18,6 +18,11 @@
 
         <AssemblyAttribute Include="System.Windows.Markup.XmlnsDefinitionAttribute">
             <_Parameter1>http://ioList.com/ui</_Parameter1>
+            <_Parameter2>ioList.Resources.Converters</_Parameter2>
+        </AssemblyAttribute>
+
+        <AssemblyAttribute Include="System.Windows.Markup.XmlnsDefinitionAttribute">
+            <_Parameter1>http://ioList.com/ui</_Parameter1>
             <_Parameter2>ioList.Resources.Theming</_Parameter2>
         </AssemblyAttribute>
         
@@ -25,6 +30,12 @@
             <_Parameter1>http://ioList.com/ui</_Parameter1>
             <_Parameter2>ui</_Parameter2>
         </AssemblyAttribute>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Update="Styles\DialogStyle.xaml.cs">
+        <DependentUpon>DialogStyle.xaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

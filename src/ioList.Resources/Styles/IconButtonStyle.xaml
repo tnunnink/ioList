@@ -1,0 +1,87 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:t="clr-namespace:ioList.Resources.Theming"
+                    xmlns:controls="clr-namespace:ioList.Resources.Controls"
+                    xmlns:ui="clr-namespace:ioList.Resources.AttachedProperties">
+  
+  <ControlTemplate x:Key="Template.IconButton" TargetType="{x:Type controls:IconButton}">
+    <Grid SnapsToDevicePixels="True">
+      <Border x:Name="MainBorder"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(ui:BorderProperties.CornerRadius)}">
+        <Grid>
+          <controls:Icon x:Name="DefaultIcon"
+                         Foreground="{TemplateBinding Foreground}"
+                         Template="{TemplateBinding DefaultIcon}"
+                         Margin="{TemplateBinding Padding}"
+                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                         Focusable="False"
+                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                         Style="{x:Null}" />
+          <controls:Icon x:Name="MouseOverIcon"
+                         Visibility="Hidden"
+                         Foreground="{TemplateBinding Foreground}"
+                         Template="{TemplateBinding MouseOverIcon}"
+                         Margin="{TemplateBinding Padding}"
+                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                         Focusable="False"
+                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                         Style="{x:Null}" />
+        </Grid>
+      </Border>
+    </Grid>
+    <ControlTemplate.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value="{t:ThemeResource ResourceKey=ControlDisabledOpacity}" />
+      </Trigger>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter TargetName="MouseOverIcon" Property="Visibility" Value="Visible" />
+        <Setter TargetName="DefaultIcon" Property="Visibility" Value="Hidden" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="MouseOverIcon" Value="{x:Null}" />
+          <Condition Property="IsMouseOver" Value="True" />
+        </MultiTrigger.Conditions>
+        <MultiTrigger.Setters>
+          <Setter TargetName="DefaultIcon" Property="Visibility" Value="Visible" />
+          <Setter TargetName="MouseOverIcon" Property="Visibility" Value="Hidden" />
+        </MultiTrigger.Setters>
+      </MultiTrigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+
+  <Style x:Key="Style.IconButton" TargetType="{x:Type controls:IconButton}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="true">
+        <Setter Property="Foreground" Value="{t:ThemeResource ResourceKey=IconMouseOverForeground}" />
+        <Setter Property="Background" Value="{t:ThemeResource ResourceKey=IconMouseOverBackground}" />
+      </Trigger>
+      <Trigger Property="IsPressed" Value="true">
+        <Setter Property="Background" Value="{t:ThemeResource ResourceKey=IconPressedBackground}" />
+        <Setter Property="BorderBrush" Value="{t:ThemeResource ResourceKey=IconPressedBorder}" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="MouseOverIcon" Value="{x:Null}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Foreground" Value="{t:ThemeResource ResourceKey=IconForeground}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Height" Value="26" />
+    <Setter Property="Width" Value="26" />
+    <Setter Property="Padding" Value="5" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="UseLayoutRounding" Value="False" />
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="ui:BorderProperties.CornerRadius" Value="5" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Template" Value="{StaticResource Template.IconButton}" />
+  </Style>
+  <Style TargetType="{x:Type controls:IconButton}" BasedOn="{StaticResource Style.IconButton}" />
+</ResourceDictionary>

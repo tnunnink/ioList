@@ -20,6 +20,7 @@ namespace ioList
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<Module.LoadFile.LoadFileModule>();
+            moduleCatalog.AddModule<Module.Dialogs.DialogModule>();
             moduleCatalog.AddModule<Module.IoSelection.IoSelectionModule>();
         }
     }

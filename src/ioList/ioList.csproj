@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ioList.Module.Dialogs\ioList.Module.Dialogs.csproj" />
       <ProjectReference Include="..\ioList.Module.IoSelection\ioList.Module.IoSelection.csproj" />
       <ProjectReference Include="..\ioList.Module.LoadFile\ioList.Module.LoadFile.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />

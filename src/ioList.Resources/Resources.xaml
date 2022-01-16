@@ -6,9 +6,15 @@
     <theming:ThemeResourceDictionary />
     <!--General-->
     <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
+    <ResourceDictionary Source="Styles/CheckBoxStyle.xaml" />
+    <ResourceDictionary Source="Styles/IconButtonStyle.xaml" />
+    <ResourceDictionary Source="Styles/WindowStyle.xaml"/>
+    <ResourceDictionary Source="Styles/TreeViewItemStyle.xaml"/>
     
     <!--Icons-->
     <ResourceDictionary Source="Icons/GenericIcons.xaml" />
+    <ResourceDictionary Source="Icons/WindowsIcons.xaml" />
+    <ResourceDictionary Source="Styles/DialogStyle.xaml" />
 
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -46,7 +46,7 @@ namespace ioList.Resources.Theming
                 {
                     //Primary
                     SetResource(ThemeResourceKey.PrimaryBackground.ToString(),
-                        new SolidColorBrush(ColorFromHex("#FFF4F5F8")));
+                        new SolidColorBrush(ColorFromHex("#FFFFFFFF")));
                     SetResource(ThemeResourceKey.PrimaryForeground.ToString(),
                         new SolidColorBrush(ColorFromHex("#FF353B43")));
                     SetResource(ThemeResourceKey.PrimaryBorder.ToString(),

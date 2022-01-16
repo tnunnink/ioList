@@ -5,8 +5,8 @@ namespace ioList.Module.LoadFile.Services
 {
     public interface IRecentFileDataService
     {
+        void Clear();
         IEnumerable<RecentFile> GetAll();
-        RecentFile Get(string path);
         void Add(RecentFile recentFile);
         void Remove(RecentFile recentFile);
     }

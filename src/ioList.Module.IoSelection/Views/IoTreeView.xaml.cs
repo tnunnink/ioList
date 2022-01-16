@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace ioList.Views
+﻿namespace ioList.Module.IoSelection.Views
 {
     public partial class IoTreeView
     {

@@ -12,4 +12,37 @@
         Data="M12.89,3L14.85,3.4L11.11,21L9.15,20.6L12.89,3M19.59,12L16,8.41V5.58L22.42,12L16,18.41V15.58L19.59,12M1.58,12L8,5.58V8.41L4.41,12L8,15.58V18.41L1.58,12Z" />
     </Viewbox>
   </ControlTemplate>
+
+  <ControlTemplate x:Key="Icon.Clear" TargetType="{x:Type controls:Icon}">
+    <Viewbox>
+      <Path
+        Fill="{TemplateBinding Foreground}"
+        Stretch="Uniform"
+        SnapsToDevicePixels="False"
+        UseLayoutRounding="False"
+        Data="M22,3H7C6.31,3 5.77,3.35 5.41,3.88L0,12L5.41,20.11C5.77,20.64 6.31,21 7,21H22A2,2 0 0,0 24,19V5A2,2 0 0,0 22,3M19,15.59L17.59,17L14,13.41L10.41,17L9,15.59L12.59,12L9,8.41L10.41,7L14,10.59L17.59,7L19,8.41L15.41,12" />
+    </Viewbox>
+  </ControlTemplate>
+  
+  <ControlTemplate x:Key="Icon.ClearMany" TargetType="{x:Type controls:Icon}">
+    <Viewbox>
+      <Path
+        Fill="{TemplateBinding Foreground}"
+        Stretch="Uniform"
+        SnapsToDevicePixels="False"
+        UseLayoutRounding="False"
+        Data="M2 12C2 9.21 3.64 6.8 6 5.68V3.5C2.5 4.76 0 8.09 0 12S2.5 19.24 6 20.5V18.32C3.64 17.2 2 14.79 2 12M15 3C10.04 3 6 7.04 6 12S10.04 21 15 21 24 16.96 24 12 19.96 3 15 3M20 15.59L18.59 17L15 13.41L11.41 17L10 15.59L13.59 12L10 8.41L11.41 7L15 10.59L18.59 7L20 8.41L16.41 12L20 15.59Z" />
+    </Viewbox>
+  </ControlTemplate>
+  
+  <ControlTemplate x:Key="Icon.Close" TargetType="{x:Type controls:Icon}">
+    <Viewbox>
+      <Path
+        Fill="{TemplateBinding Foreground}"
+        Stretch="Uniform"
+        SnapsToDevicePixels="False"
+        UseLayoutRounding="False"
+        Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+    </Viewbox>
+  </ControlTemplate>
 </ResourceDictionary>

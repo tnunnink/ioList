@@ -18,8 +18,8 @@ namespace ioList.Module.LoadFile
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion<RecentFilesView>(RegionNames.RecentFilesRegion);
-            regionManager.RegisterViewWithRegion<LoadFileView>(RegionNames.LoadFilesRegion);
+            regionManager.RegisterViewWithRegion<RecentFilesView>(RegionNames.ListRegion);
+            regionManager.RegisterViewWithRegion<SelectFileView>(RegionNames.ContentRegion);
         }
     }
 }

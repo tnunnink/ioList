@@ -1,13 +1,50 @@
-﻿<UserControl x:Class="ioList.Views.IoTreeView"
+﻿<UserControl x:Class="ioList.Module.IoSelection.Views.IoTreeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:ui="http://gmerge.com/ui/wpf"
+             xmlns:viewModels="clr-namespace:ioList.Module.IoSelection.ViewModels"
+             xmlns:model="clr-namespace:ioList.Module.IoSelection.Model"
+             xmlns:controls="clr-namespace:ioList.Module.IoSelection.Controls"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance viewModels:IoTreeViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="300">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ioList.Resources;component/Resources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
   <Grid>
-    <TreeView>
-      
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Border Grid.Row="0" Background="Aquamarine">
+      <TextBlock Text="IO Tree" Margin="10" />
+    </Border>
+
+    <TreeView Grid.Row="1"
+              HorizontalContentAlignment="Stretch"
+              BorderThickness="0"
+              Padding="0"
+              Margin="10 5"
+              ItemsSource="{Binding Modules}"
+              Background="Azure">
+      <TreeView.Resources>
+        <HierarchicalDataTemplate ItemsSource="{Binding Modules}"
+                                  DataType="{x:Type model:LogixModule}">
+          <controls:ModuleTreeItem />
+        </HierarchicalDataTemplate>
+      </TreeView.Resources>
     </TreeView>
   </Grid>
 </UserControl>

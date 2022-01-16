@@ -1,8 +1,8 @@
 ﻿namespace ioList.Module.LoadFile.Views
 {
-    public partial class LoadFileView
+    public partial class SelectFileView
     {
-        public LoadFileView()
+        public SelectFileView()
         {
             InitializeComponent();
         }

@@ -6,7 +6,7 @@ namespace ioList.Resources.Theming
     {
         public ThemeResourceDictionary()
         {
-            MergedDictionaries.Add(new ResourceDictionary());
+            MergedDictionaries.Add(Theme.ResourceDictionary);
         }
     }
 }
