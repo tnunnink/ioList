@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using ioList.Module.IoSelection.Model;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using ioList.Module.IoSelection.Observers;
 using ioList.Module.IoSelection.Services;
 using ioList.Module.IoSelection.Services.Fakes;
 using Prism.Events;
@@ -12,24 +12,24 @@ namespace ioList.Module.IoSelection.ViewModels
     public class IoTreeViewModel : BindableBase, INavigationAware
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IModuleDataService _moduleDataService;
-        private ObservableCollection<LogixModule> _modules;
+        private readonly ICardDataService _cardDataService;
+        private ObservableCollection<ModuleObserver> _modules;
 
 
         public IoTreeViewModel()
         {
-            _moduleDataService = new FakeModuleDataService();
-            _moduleDataService.Load(string.Empty);
+            _cardDataService = new FakeCardDataService();
+            _cardDataService.Load(string.Empty);
             Load();
         }
 
         public IoTreeViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-            _moduleDataService = new FakeModuleDataService();
+            _cardDataService = new FakeCardDataService();
         }
 
-        public ObservableCollection<LogixModule> Modules
+        public ObservableCollection<ModuleObserver> Modules
         {
             get => _modules;
             private set => SetProperty(ref _modules, value);
@@ -44,17 +44,17 @@ namespace ioList.Module.IoSelection.ViewModels
                 //issue warning?
             }
             
-            _moduleDataService.Load(fileName);
+            _cardDataService.Load(fileName);
             Load();
         }
 
         private void Load()
         {
-            var modules = _moduleDataService.GetAll();
+            var modules = _cardDataService.GetAll();
 
-            Modules ??= new ObservableCollection<LogixModule>();
+            Modules ??= new ObservableCollection<ModuleObserver>();
             Modules.Clear();
-            Modules.AddRange(modules);
+            Modules.AddRange(modules.Select(m => new ModuleObserver(m)));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;

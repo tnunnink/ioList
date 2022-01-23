@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="ioList.Module.LoadFile.Controls.RecentFileItem"
+﻿<UserControl x:Class="ioList.Module.LoadFile.Views.FileItemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:model="clr-namespace:ioList.Module.LoadFile.Model"
              xmlns:ui="http://ioList.com/ui"
+             xmlns:observers="clr-namespace:ioList.Module.LoadFile.Observers"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance d:Type=model:RecentFile}"
+             d:DataContext="{d:DesignInstance d:Type=observers:RecentFileObserver}"
              d:DesignHeight="60" d:DesignWidth="600">
   <UserControl.Resources>
     <ResourceDictionary>

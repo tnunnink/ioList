@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using ioList.Events;
-using ioList.Module.LoadFile.Model;
+using ioList.Module.LoadFile.Observers;
 using ioList.Module.LoadFile.Services;
 using ioList.Module.LoadFile.Services.Fakes;
 using Prism.Commands;
@@ -16,7 +18,7 @@ namespace ioList.Module.LoadFile.ViewModels
     {
         private readonly IRecentFileDataService _recentFileDataService;
         private readonly IEventAggregator _eventAggregator;
-        private RecentFile _selectedRecentFile;
+        private RecentFileObserver _selectedFileViewModel;
         private DelegateCommand _clearAllCommand;
         private bool _hasRecentFiles;
 
@@ -26,6 +28,8 @@ namespace ioList.Module.LoadFile.ViewModels
         /// </summary>
         public RecentFilesViewModel()
         {
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject())) return;
+
             _recentFileDataService = new FakeRecentFileDataService();
             Load();
         }
@@ -43,15 +47,15 @@ namespace ioList.Module.LoadFile.ViewModels
             set => SetProperty(ref _hasRecentFiles, value);
         }
 
-        public ObservableCollection<RecentFile> RecentFiles { get; private set; }
-        
-        public RecentFile SelectedRecentFile
+        public ObservableCollection<RecentFileObserver> RecentFiles { get; private set; }
+
+        public RecentFileObserver SelectedFileViewModel
         {
-            get => _selectedRecentFile;
+            get => _selectedFileViewModel;
             set
             {
-                SetProperty(ref _selectedRecentFile, value);
-                LoadFile(_selectedRecentFile.FullPath);
+                SetProperty(ref _selectedFileViewModel, value);
+                LoadFile(_selectedFileViewModel.FullPath);
             }
         }
 
@@ -64,19 +68,19 @@ namespace ioList.Module.LoadFile.ViewModels
         public DelegateCommand ClearNonExistingCommand =>
             _clearNonExistingCommand ??= new DelegateCommand(ExecuteClearNonExistingCommand);
 
-        private DelegateCommand<RecentFile> _removeFileCommand;
+        private DelegateCommand<RecentFileObserver> _removeFileCommand;
 
-        public DelegateCommand<RecentFile> RemoveFileCommand =>
-            _removeFileCommand ??= new DelegateCommand<RecentFile>(ExecuteRemoveFileCommand);
+        public DelegateCommand<RecentFileObserver> RemoveFileCommand =>
+            _removeFileCommand ??= new DelegateCommand<RecentFileObserver>(ExecuteRemoveFileCommand);
 
 
         private void Load()
         {
             var files = _recentFileDataService.GetAll();
 
-            RecentFiles ??= new ObservableCollection<RecentFile>();
+            RecentFiles ??= new ObservableCollection<RecentFileObserver>();
             RecentFiles.Clear();
-            RecentFiles.AddRange(files);
+            RecentFiles.AddRange(files.Select(f => new RecentFileObserver(f)));
 
             HasRecentFiles = RecentFiles.Any();
         }
@@ -93,24 +97,24 @@ namespace ioList.Module.LoadFile.ViewModels
             var nonExisting = RecentFiles.Where(f => !f.Exists);
 
             foreach (var file in nonExisting)
-                _recentFileDataService.Remove(file);
-            
+                _recentFileDataService.Remove(file.Entity);
+
             Load();
         }
 
-        private void ExecuteRemoveFileCommand(RecentFile recentFile)
+        private void ExecuteRemoveFileCommand(RecentFileObserver fileViewModel)
         {
-            if (recentFile is null)
+            if (fileViewModel is null)
                 return;
-            
-            _recentFileDataService.Remove(recentFile);
-            
+
+            _recentFileDataService.Remove(fileViewModel.Entity);
+
             Load();
         }
 
         private void LoadFile(string fillPath)
         {
-            if (fillPath is null) 
+            if (fillPath is null)
                 return;
 
             _eventAggregator.GetEvent<LoadFileEvent>().Publish(fillPath);

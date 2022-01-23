@@ -6,8 +6,8 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:ui="http://gmerge.com/ui/wpf"
              xmlns:viewModels="clr-namespace:ioList.Module.IoSelection.ViewModels"
-             xmlns:model="clr-namespace:ioList.Module.IoSelection.Model"
-             xmlns:controls="clr-namespace:ioList.Module.IoSelection.Controls"
+             xmlns:views="clr-namespace:ioList.Module.IoSelection.Views"
+             xmlns:model="clr-namespace:ioList.Module.IoSelection.Observers"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance viewModels:IoTreeViewModel}"
              mc:Ignorable="d"
@@ -41,8 +41,8 @@
               Background="Azure">
       <TreeView.Resources>
         <HierarchicalDataTemplate ItemsSource="{Binding Modules}"
-                                  DataType="{x:Type model:LogixModule}">
-          <controls:ModuleTreeItem />
+                                  DataType="{x:Type model:ModuleObserver}">
+          <views:ModuleTreeItemView />
         </HierarchicalDataTemplate>
       </TreeView.Resources>
     </TreeView>

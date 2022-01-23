@@ -1,6 +1,6 @@
-﻿namespace ioList.Module.IoSelection.Model
+﻿namespace ioList.Domain
 {
-    public class IoPoint
+    public class Tag
     {
         public PnId PnId { get; set; }
         public string ModuleName { get; set; }

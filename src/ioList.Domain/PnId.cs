@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ioList.Module.IoSelection.Model
+namespace ioList.Domain
 {
     public class PnId
     {

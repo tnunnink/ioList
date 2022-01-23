@@ -7,8 +7,8 @@
   xmlns:prism="http://prismlibrary.com/"
   prism:ViewModelLocator.AutoWireViewModel="True"
   xmlns:viewModels="clr-namespace:ioList.Module.LoadFile.ViewModels"
-  xmlns:controls="clr-namespace:ioList.Module.LoadFile.Controls"
   xmlns:ui="http://ioList.com/ui"
+  xmlns:views="clr-namespace:ioList.Module.LoadFile.Views"
   d:DataContext="{d:DesignInstance d:Type=viewModels:RecentFilesViewModel}"
   d:DesignHeight="800"
   d:DesignWidth="500"
@@ -64,14 +64,14 @@
     <ListView Grid.Row="1" 
               HorizontalContentAlignment="Stretch"
               ItemsSource="{Binding RecentFiles}"
-              SelectedItem="{Binding SelectedRecentFile}"
+              SelectedItem="{Binding SelectedFileViewModel}"
               BorderThickness="0"
               Background="Transparent"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
               Visibility="{Binding HasRecentFiles, Converter={ui:BooleanVisibilityConverter}}">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <controls:RecentFileItem />
+          <views:FileItemView />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>

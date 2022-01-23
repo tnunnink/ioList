@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using ioList.Module.LoadFile.Model;
+using ioList.Domain;
+using ioList.Module.LoadFile.ViewModels;
 
 namespace ioList.Module.LoadFile.Services
 {
     public class RecentFileDataService : IRecentFileDataService
     {
+        private const string RecentFile = "RecentFile";
         private const string DataFile = @"ioList\RecentFiles.xml";
 
         private readonly string _fileName =
@@ -38,23 +40,24 @@ namespace ioList.Module.LoadFile.Services
         }
 
         public IEnumerable<RecentFile> GetAll() =>
-            _document.Descendants(nameof(RecentFile)).Select(e => new RecentFile(e.Value));
+            _document.Descendants(RecentFile).Select(e => new RecentFile(e.Value));
 
-        public void Add(RecentFile recentFile)
+        public void Add(RecentFile fileViewModel)
         {
-            if (Exists(recentFile.FullPath))
+            if (Exists(fileViewModel.FullPath))
                 return;
 
-            var element = new XElement(nameof(RecentFile), recentFile.FullPath);
+            var element = new XElement(RecentFile, fileViewModel.FullPath);
 
             _document.Root?.Add(element);
 
             _document.Save(_fileName);
         }
 
-        public void Remove(RecentFile recentFile)
+        public void Remove(RecentFile fileViewModel)
         {
-            var element = _document.Descendants(nameof(RecentFile)).FirstOrDefault(e => e.Value == recentFile.FullPath);
+            var element = _document.Descendants(RecentFile)
+                .FirstOrDefault(e => e.Value == fileViewModel.FullPath);
 
             element?.Remove();
 
@@ -62,7 +65,7 @@ namespace ioList.Module.LoadFile.Services
         }
 
         private bool Exists(string fullName) =>
-            _document.Descendants(nameof(RecentFile))
+            _document.Descendants(RecentFile)
                 .Any(e => string.Equals(e.Value, fullName, StringComparison.OrdinalIgnoreCase));
 
         private static void GenerateDocument(string fileName)

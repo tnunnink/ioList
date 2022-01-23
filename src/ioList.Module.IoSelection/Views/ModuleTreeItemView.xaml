@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="ioList.Module.IoSelection.Controls.ModuleTreeItem"
+﻿<UserControl x:Class="ioList.Module.IoSelection.Views.ModuleTreeItemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://ioList.com/ui"
-             xmlns:model="clr-namespace:ioList.Module.IoSelection.Model"
+             xmlns:observers="clr-namespace:ioList.Module.IoSelection.Observers"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance d:Type=model:LogixModule}"
+             d:DataContext="{d:DesignInstance d:Type=observers:ModuleObserver}"
              d:DesignHeight="Auto" d:DesignWidth="200">
   <UserControl.Resources>
     <ResourceDictionary>
@@ -16,16 +16,16 @@
     </ResourceDictionary>
   </UserControl.Resources>
 
-  <Border Margin="0 4" Background="Gray">
+  <Border Margin="0 2">
     <DockPanel>
       <StackPanel DockPanel.Dock="Left"
                   Orientation="Horizontal">
         <TextBlock Text="{Binding Slot}"
-                   FontSize="12" Foreground="Azure"
+                   FontSize="10" Foreground="LightSlateGray"
                    VerticalAlignment="Center"
                    Margin="5 0"/>
         <TextBlock Text="{Binding Name}"
-                   FontSize="14" Foreground="DarkSlateBlue"
+                   FontSize="12" Foreground="DarkSlateBlue"
                    VerticalAlignment="Center"
                    Margin="5 0"/>
       </StackPanel>
@@ -34,11 +34,11 @@
         <TextBlock Text="{Binding CatalogNumber}"
                    VerticalAlignment="Center" HorizontalAlignment="Right"
                    Margin="10 0"
-                   FontSize="10" Foreground="Azure"/>
-        <TextBlock Text="{Binding Major}"
+                   FontSize="10" Foreground="LightSlateGray"/>
+        <TextBlock Text="{Binding Revision}"
                    VerticalAlignment="Center" HorizontalAlignment="Right"
                    Margin="10 0"
-                   FontSize="10" Foreground="Azure"/>
+                   FontSize="10" Foreground="LightSlateGray"/>
       </StackPanel>
     </DockPanel>
 

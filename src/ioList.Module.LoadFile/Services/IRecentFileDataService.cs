@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using ioList.Module.LoadFile.Model;
+using ioList.Domain;
+using ioList.Module.LoadFile.ViewModels;
 
 namespace ioList.Module.LoadFile.Services
 {
@@ -7,7 +8,7 @@ namespace ioList.Module.LoadFile.Services
     {
         void Clear();
         IEnumerable<RecentFile> GetAll();
-        void Add(RecentFile recentFile);
-        void Remove(RecentFile recentFile);
+        void Add(RecentFile fileViewModel);
+        void Remove(RecentFile fileViewModel);
     }
 }

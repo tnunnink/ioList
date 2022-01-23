@@ -1,4 +1,5 @@
-﻿using ioList.Common;
+﻿using System.ComponentModel;
+using ioList.Common;
 using ioList.Events;
 using ioList.Module.IoSelection.Views;
 using Prism.Events;
@@ -13,6 +14,10 @@ namespace ioList.ViewModels
         private readonly IRegionManager _regionManager;
         private readonly IDialogService _dialogService;
 
+        public ShellViewModel()
+        {
+        }
+        
         public ShellViewModel(IEventAggregator eventAggregator, IRegionManager regionManager,
             IDialogService dialogService)
         {

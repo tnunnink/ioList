@@ -6,12 +6,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityObserver" Version="1.0.0" />
       <PackageReference Include="Prism.Core" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ioList.Common\ioList.Common.csproj" />
+      <ProjectReference Include="..\ioList.Domain\ioList.Domain.csproj" />
       <ProjectReference Include="..\ioList.Events\ioList.Events.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
     </ItemGroup>

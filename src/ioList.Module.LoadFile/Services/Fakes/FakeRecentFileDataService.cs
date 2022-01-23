@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using ioList.Module.LoadFile.Model;
+using ioList.Domain;
+using ioList.Module.LoadFile.ViewModels;
 
 namespace ioList.Module.LoadFile.Services.Fakes
 {
@@ -21,8 +22,8 @@ namespace ioList.Module.LoadFile.Services.Fakes
 
         public IEnumerable<RecentFile> GetAll() => _files;
 
-        public void Add(RecentFile recentFile) => _files.Add(recentFile);
+        public void Add(RecentFile fileViewModel) => _files.Add(fileViewModel);
 
-        public void Remove(RecentFile recentFile) => _files.Remove(recentFile);
+        public void Remove(RecentFile fileViewModel) => _files.Remove(fileViewModel);
     }
 }
