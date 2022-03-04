@@ -6,12 +6,12 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Resrouces/Brushes.xaml" />
-        <ResourceDictionary Source="Styles/ButtonStyle.xaml" />
-        <ResourceDictionary Source="Styles/IconButtonStyle.xaml" />
-        <ResourceDictionary Source="Styles/WindowStyle.xaml"/>
-        <ResourceDictionary Source="Styles/DialogStyle.xaml" />
-        <ResourceDictionary Source="Icons/GenericIcons.xaml" />
-        <ResourceDictionary Source="Icons/WindowsIcons.xaml" />
+        <ResourceDictionary Source="Resrouces/Styles/ButtonStyle.xaml" />
+        <ResourceDictionary Source="Resrouces/Styles/IconButtonStyle.xaml" />
+        <ResourceDictionary Source="Resrouces/Styles/WindowStyle.xaml"/>
+        <ResourceDictionary Source="Resrouces/Styles/DialogStyle.xaml" />
+        <ResourceDictionary Source="Resrouces/Icons/GenericIcons.xaml" />
+        <ResourceDictionary Source="Resrouces/Icons/WindowsIcons.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
