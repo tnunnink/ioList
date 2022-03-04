@@ -18,13 +18,13 @@
            BasedOn="{StaticResource Style.Button.Icon}">
       <Setter Property="Background" Value="#457EC9" />
       <Setter Property="Foreground" Value="#AAF8F3" />
-      <Setter Property="Margin" Value="10 4" />
+      <Setter Property="Margin" Value="5" />
       <Setter Property="Padding" Value="6" />
       <Setter Property="BorderThickness" Value="0"></Setter>
       <Setter Property="IconHeight" Value="14" />
       <Setter Property="IconWidth" Value="14" />
-      <Setter Property="IconMargin" Value="5 0 3 0"></Setter>
-      <Setter Property="ContentMargin" Value="3 0 5 0"></Setter>
+      <Setter Property="IconMargin" Value="5 0"></Setter>
+      <Setter Property="ContentMargin" Value="5 0"></Setter>
       <Setter Property="p:BorderProperties.CornerRadius" Value="10" />
     </Style>
   </UserControl.Resources>
@@ -40,40 +40,46 @@
 
       <Grid>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-          <c:IconButton Icon="{StaticResource Icon.User}" 
-                         Margin="5"
-                         Foreground="#A6BED1"/>
+          <c:IconButton Icon="{StaticResource Icon.User}"
+                        Margin="5"
+                        Foreground="#A6BED1" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-          <c:IconButton Icon="{StaticResource Icon.Settings}" 
-                         Margin="5"
-                         Foreground="#A6BED1"/>
-          <c:IconButton Icon="{StaticResource Icon.CollapseLeft}" 
-                         Margin="5"
-                         Foreground="#A6BED1"/>
+          <c:IconButton Icon="{StaticResource Icon.Settings}"
+                        Margin="5"
+                        Foreground="#A6BED1" />
+          <c:IconButton Icon="{StaticResource Icon.CollapseLeft}"
+                        Margin="5"
+                        Foreground="#A6BED1" />
         </StackPanel>
       </Grid>
 
-      <Grid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="10 10 0 10">
-          <c:IconButton Style="{StaticResource LocalIconButtonStyle}"
-                         Icon="{StaticResource Icon.Add}"
-                         Content="Create"
-                         Command="{Binding CreateListCommand}">
-          </c:IconButton>
-          <c:IconButton Style="{StaticResource LocalIconButtonStyle}"
-                         Background="#3EB8BC"
-                         Foreground="#175C5E"
-                         Icon="{StaticResource Icon.Import}"
-                         Content="Import">
-          </c:IconButton>
-          <c:IconButton Style="{StaticResource LocalIconButtonStyle}"
-                         Background="#DC5959"
-                         Foreground="#FFECC5"
-                         Icon="{StaticResource Icon.Delete}"
-                         Content="Delete">
-          </c:IconButton>
-        </StackPanel>
+      <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <c:IconButton Grid.Column="0" 
+                      Style="{StaticResource LocalIconButtonStyle}"
+                      Icon="{StaticResource Icon.Add}"
+                      Content="Create"
+                      Command="{Binding CreateListCommand}">
+        </c:IconButton>
+        <c:IconButton Grid.Column="1" 
+                      Style="{StaticResource LocalIconButtonStyle}"
+                      Background="#3EB8BC"
+                      Foreground="#175C5E"
+                      Icon="{StaticResource Icon.Import}"
+                      Content="Load">
+        </c:IconButton>
+        <c:IconButton Grid.Column="2" Style="{StaticResource LocalIconButtonStyle}"
+                      Background="#DC5959"
+                      Foreground="#FFECC5"
+                      Icon="{StaticResource Icon.Delete}"
+                      Content="Delete">
+        </c:IconButton>
       </Grid>
 
     </StackPanel>
@@ -86,8 +92,8 @@
         <DataTemplate>
           <StackPanel Orientation="Horizontal" Margin="10">
             <c:Icon Template="{StaticResource Icon.List}"
-                     Margin="5 0"
-                     Foreground="#B8CCEE" />
+                    Margin="5 0"
+                    Foreground="#B8CCEE" />
             <TextBlock Text="{Binding Name}" Margin="10 0 0 0"
                        Foreground="#DBDFE5"
                        FontWeight="SemiBold" />

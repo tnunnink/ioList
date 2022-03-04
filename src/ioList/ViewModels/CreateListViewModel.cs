@@ -21,9 +21,9 @@ namespace ioList.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private DelegateCommand _browseFileCommand;
         private string _listName;
+        private string _listDescription;
         private bool _fileLoaded;
         private bool _isValidFile;
-        private XDocument _document;
 
 
         private static readonly List<string> ValidExtensions = new()
@@ -46,6 +46,12 @@ namespace ioList.ViewModels
         {
             get => _listName;
             set => SetProperty(ref _listName, value);
+        }
+        
+        public string ListDescription
+        {
+            get => _listDescription;
+            set => SetProperty(ref _listDescription, value);
         }
 
         public bool FileLoaded
@@ -111,11 +117,9 @@ namespace ioList.ViewModels
 
         private void LoadFile(string fileName)
         {
-            
             //validate?...
 
             var list = new IoList(ListName, fileName);
-            
             
             _eventAggregator.GetEvent<ListCreatedEvent>().Publish(ListName);
         }

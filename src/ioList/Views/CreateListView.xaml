@@ -34,14 +34,22 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-      <StackPanel Grid.Row="0"
-                  Margin="30 30">
+      <StackPanel Grid.Row="0" Margin="30 30">
+        
         <TextBlock Text="Name"
                    FontSize="10" FontWeight="Normal"
                    Foreground="LightSlateGray"
                    Margin="0 0 0 5"
                    HorizontalAlignment="Left" />
         <TextBox Text="{Binding ListName}" />
+        
+        <TextBlock Text="Description"
+                   FontSize="10" FontWeight="Normal"
+                   Foreground="LightSlateGray"
+                   Margin="0 10 0 5"
+                   HorizontalAlignment="Left" />
+        <TextBox Text="{Binding ListName}" />
+        
       </StackPanel>
 
       <StackPanel Grid.Row="1"
@@ -73,9 +81,8 @@
       <StackPanel Grid.Row="2"
                   HorizontalAlignment="Right"
                   Orientation="Horizontal"
-                  Margin="10"
-                  Visibility="Collapsed">
-        <Button Content="Create" 
+                  Margin="10">
+        <Button Content="Next" 
                 Margin="5 0"
                 Width="60"/>
         <Button Content="Close"

@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using ioList.Abstractions;
 using ioList.Common;
 using ioList.Model;
+using ioList.Observers;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -11,32 +13,35 @@ namespace ioList.ViewModels
 {
     public class ListViewModel : BindableBase
     {
-        private readonly IListRepository _listRepository;
+        private readonly IListFileService _listFileService;
         private readonly IDialogService _dialogService;
         private DelegateCommand _createListCommand;
-
+        private ObservableCollection<ListFileObserver> _lists;
 
         public ListViewModel()
         {
-            Lists = new ObservableCollection<IoList>
+            Lists = new ObservableCollection<ListFileObserver>
             {
-                new("List Name 01", "Path To File", "This is fake"),
-                new("List Name 01", "Path To File", "This is fake"),
-                new("List Name 01", "Path To File", "This is fake")
+                new(new ListFile("List Name 01", "Path To File")),
+                new(new ListFile("List Name 01", "Path To File")),
+                new(new ListFile("List Name 01", "Path To File"))
             };
         }
 
-        public ListViewModel(IListRepository listRepository, IEventAggregator eventAggregator,
+        public ListViewModel(IListFileService listFileService, IEventAggregator eventAggregator,
             IDialogService dialogService)
         {
-            _listRepository = listRepository;
+            _listFileService = listFileService;
             _dialogService = dialogService;
-
             Load();
         }
 
-        public ObservableCollection<IoList> Lists { get; private set; }
-        
+        public ObservableCollection<ListFileObserver> Lists
+        {
+            get => _lists;
+            private set => SetProperty(ref _lists, value);
+        }
+
         public DelegateCommand CreateListCommand =>
             _createListCommand ??= new DelegateCommand(ExecuteCreateListCommand);
 
@@ -47,7 +52,8 @@ namespace ioList.ViewModels
 
         private void Load()
         {
-            //Lists = _listRepository.Get
+            var lists = _listFileService.GetAll().Select(m => new ListFileObserver(m));
+            Lists = new ObservableCollection<ListFileObserver>(lists);
         }
     }
 }
