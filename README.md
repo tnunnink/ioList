@@ -1,2 +1,2 @@
 # ioList
-An application for generating an IO list from L5X files
+An application for generating and maintaining IO Lists using RSLogix 5000 L5X Exports
