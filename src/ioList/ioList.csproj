@@ -7,15 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityObserver" Version="1.0.0" />
+      <PackageReference Include="gong-wpf-dragdrop" Version="3.1.1" />
+      <PackageReference Include="L5Sharp" Version="1.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.14" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.14" />
       <PackageReference Include="Prism.Core" Version="8.1.97" />
       <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Module.Dialogs\ioList.Module.Dialogs.csproj" />
-      <ProjectReference Include="..\ioList.Module.IoSelection\ioList.Module.IoSelection.csproj" />
-      <ProjectReference Include="..\ioList.Module.LoadFile\ioList.Module.LoadFile.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
     </ItemGroup>
 

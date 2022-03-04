@@ -4,38 +4,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:common="clr-namespace:ioList.Common;assembly=ioList.Common"
+        xmlns:common="clr-namespace:ioList.Common"
         xmlns:viewModels="clr-namespace:ioList.ViewModels"
-        xmlns:ui="http://ioList.com/ui"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
-        Height="Auto" Width="1000"
-        d:DesignHeight="400" d:DesignWidth="1000"
+        Height="800" Width="1400"
+        d:DesignHeight="800" d:DesignWidth="1400"
         Title="ioList"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource ShellStyle}">
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="400" />
-      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="300" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    
+
     <Border Grid.Column="0"
-            BorderBrush="{ui:ThemeResource ResourceKey=PrimaryBorder}"
-            BorderThickness="0 0 1 0">
+            Background="{StaticResource Brush.WindowHeader.Background}"
+            BorderThickness="0">
       <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ListRegion}" />
     </Border>
 
-    <GridSplitter Grid.Column="1"
-                  Width="5"
-                  Margin="-3 0 -2 0"
-                  HorizontalAlignment="Stretch"
-                  ResizeDirection="Columns"
-                  Background="Transparent"
-                  Panel.ZIndex="1" />
+    <Border Grid.Column="1"
+            Background="{StaticResource Brush.Primary.Background}"
+            BorderThickness="0">
+      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />
+    </Border>
 
-    <ContentControl Grid.Column="2" prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />
   </Grid>
 </Window>

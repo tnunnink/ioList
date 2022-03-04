@@ -1,7 +1,10 @@
 ﻿using System.Windows;
+using ioList.Abstractions;
+using ioList.Common;
+using ioList.Services;
 using ioList.Views;
 using Prism.Ioc;
-using Prism.Modularity;
+using Prism.Regions;
 
 namespace ioList
 {
@@ -9,7 +12,7 @@ namespace ioList
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.Register<IListFileService, ListFileService>();
         }
 
         protected override Window CreateShell()
@@ -17,11 +20,12 @@ namespace ioList
             return Container.Resolve<ShellView>();
         }
 
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        protected override void OnInitialized()
         {
-            moduleCatalog.AddModule<Module.LoadFile.LoadFileModule>();
-            moduleCatalog.AddModule<Module.Dialogs.DialogModule>();
-            moduleCatalog.AddModule<Module.IoSelection.IoSelectionModule>();
+            base.OnInitialized();
+
+            var regionManager = Container.Resolve<IRegionManager>();
+            regionManager.RegisterViewWithRegion<ListView>(RegionNames.ListRegion);
         }
     }
 }

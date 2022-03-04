@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using ioList.Common;
-using ioList.Module.LoadFile.Views;
-using Prism.Regions;
+﻿using Prism.Regions;
 
 namespace ioList.Views
 {
