@@ -16,7 +16,7 @@
         Style="{DynamicResource ShellStyle}">
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="300" />
+      <ColumnDefinition Width="360" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
 

@@ -1,12 +1,11 @@
 ﻿using System.Windows;
 using ioList.Common;
-using ioList.Data;
+using ioList.Dialogs;
 using ioList.Services;
 using ioList.ViewModels;
 using ioList.Views;
 using Prism.Ioc;
 using Prism.Regions;
-using ListFileService = ioList.Services.ListFileService;
 
 namespace ioList
 {
@@ -16,7 +15,8 @@ namespace ioList
         {
             containerRegistry.Register<IListFileService, ListFileService>();
 
-            containerRegistry.RegisterDialog<NewListView, NewListViewModel>(DialogNames.NewListDialog);
+            containerRegistry.RegisterForNavigation<ContentView, ContentViewModel>();
+            containerRegistry.RegisterDialog<CreateListView, CreateListViewModel>(DialogNames.NewListDialog);
         }
 
         protected override Window CreateShell()

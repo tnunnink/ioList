@@ -7,6 +7,7 @@ namespace ioList.Model
 {
     public class IOList
     {
+        private const string Extension = ".list";
         private readonly XDocument _document;
 
         public IOList(string name, string path, string comment, L5XContext source)

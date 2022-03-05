@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:core="http://CoreTools.com/wpf"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-  <Grid>
-    <core:Icon Template="{StaticResource Icon.List}"/>
+             d:DesignHeight="800" d:DesignWidth="1200">
+  <Grid Background="{StaticResource Brush.Primary.Background}">
+    
   </Grid>
 </UserControl>

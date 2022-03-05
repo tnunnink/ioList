@@ -4,40 +4,43 @@ using System.Xml.Linq;
 
 namespace ioList.Model
 {
-    [Serializable]
     public class ListFile
     {
         public ListFile(string name, string path)
         {
             ListName = name;
             ListPath = path;
-            FileInfo = new FileInfo(path);
-            InitializeWatcher(FileInfo);
+            ListInfo = new FileInfo(path);
+            InitializeWatcher(ListInfo);
         }
 
         /// <summary>
         /// Gets the string name of the list.
         /// </summary>
-        public string ListName { get; set; }
+        public string ListName { get; init; }
 
         /// <summary>
         /// Gets the full path to the <see cref="IOList"/> file.
         /// </summary>
         public string ListPath { get; set; }
+        
+        public string Directory => ListInfo.DirectoryName;
+
+        public bool Exists => ListInfo.Exists;
+
+        public string Extension => ListInfo.Extension;
 
         /// <summary>
-        /// Gets the <see cref="FileInfo"/> data for the IO list.
+        /// Gets the <see cref="ListInfo"/> data for the IO list.
         /// </summary>
-        public FileInfo FileInfo { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating that changes have been made to the underlying IO list file.
-        /// </summary>
-        public bool HasUpdates { get; private set; }
+        public FileInfo ListInfo { get; private set; }
 
         public int TotalTags { get; private set; }
 
         public int ValidatedTag { get; private set; }
+
+        public event EventHandler<ListFile> FileChanged;
+        public event EventHandler<ListFile> FileRenamed; 
 
         public static ListFile Materialize(XElement element)
         {
@@ -56,7 +59,7 @@ namespace ioList.Model
             
             if (fullPath != ListPath) return;
             
-            FileInfo = new FileInfo(fullPath);
+            ListInfo = new FileInfo(fullPath);
         }
 
         private void OnFileDeleted(object sender, FileSystemEventArgs e)
@@ -65,17 +68,24 @@ namespace ioList.Model
             
             if (fullPath != ListPath) return;
             
-            FileInfo = new FileInfo(fullPath);
+            ListInfo = new FileInfo(fullPath);
         }
-        
+
         private void OnFileChanged(object sender, FileSystemEventArgs e)
         {
             var fullPath = e.FullPath;
             
             if (fullPath != ListPath) return;
             
-            FileInfo = new FileInfo(fullPath);
-            HasUpdates = true;
+            ListInfo = new FileInfo(fullPath);
+            RaiseFileChanged(this);
+        }
+
+        private void OnFileRenamed(object sender, RenamedEventArgs e)
+        {
+            var fullPath = e.FullPath;
+            ListInfo = new FileInfo(fullPath);
+            RaiseFileRenamed(this);
         }
 
         private void InitializeWatcher(FileInfo info)
@@ -86,6 +96,7 @@ namespace ioList.Model
             watcher.Deleted += OnFileDeleted;
             watcher.Created += OnFileCreated;
             watcher.Changed += OnFileChanged;
+            watcher.Renamed += OnFileRenamed;
             watcher.EnableRaisingEvents = true;
         }
 
@@ -94,6 +105,16 @@ namespace ioList.Model
             var element = new XElement(nameof(ListFile), ListPath);
             element.Add(new  XAttribute(nameof(ListName), ListName));
             return element;
+        }
+        
+        private void RaiseFileChanged(ListFile e)
+        {
+            FileChanged?.Invoke(this, e);   
+        }
+
+        private void RaiseFileRenamed(ListFile e)
+        {
+            FileRenamed?.Invoke(this, e);   
         }
     }
 }

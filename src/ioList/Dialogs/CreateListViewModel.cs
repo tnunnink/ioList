@@ -13,18 +13,19 @@ using L5Sharp;
 using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Services.Dialogs;
 
-namespace ioList.ViewModels
+namespace ioList.Dialogs
 {
-    public class NewListViewModel : DialogViewModelBase, IDropTarget
+    public class CreateListViewModel : DialogViewModelBase, IDropTarget
     {
         private readonly IListFileService _listFileService;
         private readonly IEventAggregator _eventAggregator;
         private DelegateCommand _createListCommand;
         private DelegateCommand _browseFileCommand;
-        private bool _loadResult;
+        private FileLoadResult _loadResult;
         private bool _isValidFile;
-        private L5XContext _context;
+        private L5XContext _source;
 
         private static readonly List<string> ValidExtensions = new()
         {
@@ -32,10 +33,10 @@ namespace ioList.ViewModels
             ".L5X"
         };
 
-        public NewListViewModel(IListFileService listFileService, IEventAggregator eventAggregator)
+        public CreateListViewModel(IListFileService listFileService, IEventAggregator eventAggregator)
         {
             Title = "ioList";
-            
+
             _listFileService = listFileService;
             _eventAggregator = eventAggregator;
 
@@ -44,10 +45,18 @@ namespace ioList.ViewModels
 
         public ListInfoObserver List { get; }
 
-        public bool LoadResult
+        public FileLoadResult LoadResult
         {
             get => _loadResult;
             set => SetProperty(ref _loadResult, value);
+        }
+
+        private string _loadResultMessage;
+
+        public string LoadResultMessage
+        {
+            get => _loadResultMessage;
+            set => SetProperty(ref _loadResultMessage, value);
         }
 
         public bool IsValidFile
@@ -57,11 +66,15 @@ namespace ioList.ViewModels
         }
 
         public DelegateCommand CreateListCommand =>
-            _createListCommand ??= new DelegateCommand(ExecuteCreateListCommand, CanExecuteCreateListCommand);
+            _createListCommand ??=
+                new DelegateCommand(ExecuteCreateListCommand, CanExecuteCreateListCommand)
+                    .ObservesProperty(() => LoadResult)
+                    .ObservesProperty(() => List.Name)
+                    .ObservesProperty(() => List.Directory);
 
         public DelegateCommand BrowseFileCommand =>
             _browseFileCommand ??= new DelegateCommand(ExecuteBrowseFileCommand);
-        
+
 
         public void DragOver(IDropInfo dropInfo)
         {
@@ -86,26 +99,28 @@ namespace ioList.ViewModels
                 return;
 
             IsValidFile = false;
+            List.SourceFile = info.FullName;
 
-            LoadFile(info.FullName);
+            LoadSource(List.SourceFile);
         }
 
         private void ExecuteCreateListCommand()
         {
             var listFileName = Path.Combine(List.Directory, $"{List.Name}.xml");
 
-            var list = new IOList(List.Name, listFileName, List.Comment, _context);
-
-            list.Save();
+            var list = new IOList(List.Name, listFileName, List.Comment, _source);
             
-            _listFileService.Add(list.File);
+            _eventAggregator.GetEvent<ListCreatedEvent>().Publish(list.File);
             
-            _eventAggregator.GetEvent<ListCreatedEvent>().Publish(List.Name);
+            RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
 
         private bool CanExecuteCreateListCommand()
         {
-            return IsValidFile && !string.IsNullOrEmpty(List.Name);
+            return _source is not null &&
+                   LoadResult == FileLoadResult.Success &&
+                   !string.IsNullOrEmpty(List.Name) &&
+                   !string.IsNullOrEmpty(List.Directory);
         }
 
         private void ExecuteBrowseFileCommand()
@@ -117,25 +132,27 @@ namespace ioList.ViewModels
                 Multiselect = false
             };
 
-            var fileName = dialog.ShowDialog() == true ? dialog.FileName : string.Empty;
+            List.SourceFile = dialog.ShowDialog() == true ? dialog.FileName : string.Empty;
 
-            if (string.IsNullOrEmpty(fileName))
+            if (string.IsNullOrEmpty(List.SourceFile))
                 return;
 
-            LoadFile(fileName);
+            LoadSource(List.SourceFile);
         }
 
-        private void LoadFile(string fileName)
+        private void LoadSource(string fileName)
         {
             try
             {
-                _context = new L5XContext(fileName);
-                LoadResult = true;
+                _source = new L5XContext(fileName);
+                LoadResult = FileLoadResult.Success;
+                LoadResultMessage = "Successfully loaded L5X file.";
             }
             catch (Exception e)
             {
                 //todo log error
-                LoadResult = false;
+                LoadResult = FileLoadResult.Failure;
+                LoadResultMessage = "Failed to load file. See log for details.";
             }
         }
     }

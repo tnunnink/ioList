@@ -5,13 +5,14 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Resrouces/Brushes.xaml" />
-        <ResourceDictionary Source="Resrouces/Styles/ButtonStyle.xaml" />
-        <ResourceDictionary Source="Resrouces/Styles/IconButtonStyle.xaml" />
-        <ResourceDictionary Source="Resrouces/Styles/WindowStyle.xaml"/>
-        <ResourceDictionary Source="Resrouces/Styles/DialogStyle.xaml" />
-        <ResourceDictionary Source="Resrouces/Icons/GenericIcons.xaml" />
-        <ResourceDictionary Source="Resrouces/Icons/WindowsIcons.xaml" />
+        <ResourceDictionary Source="Resources/Brushes.xaml" />
+        <ResourceDictionary Source="Resources/Styles/ButtonStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/ListViewItemStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/IconButtonStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/WindowStyle.xaml"/>
+        <ResourceDictionary Source="Resources/Styles/DialogStyle.xaml" />
+        <ResourceDictionary Source="Resources/Icons/GenericIcons.xaml" />
+        <ResourceDictionary Source="Resources/Icons/WindowsIcons.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

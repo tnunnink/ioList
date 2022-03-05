@@ -6,11 +6,16 @@
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:core="http://CoreTools.com/wpf"
+             xmlns:views="clr-namespace:ioList.Views"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance Type=viewModels:ListViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="300">
+             d:DesignHeight="800" d:DesignWidth="360">
   <UserControl.Resources>
+    
+    <Style BasedOn="{StaticResource Style.ListViewItem}" TargetType="{x:Type ListViewItem}">
+      <Setter Property="Margin" Value="5 3" />
+    </Style>
 
     <Style x:Key="LocalIconButtonStyle"
            TargetType="{x:Type core:IconButton}"
@@ -31,7 +36,6 @@
   <Grid Background="{StaticResource Brush.WindowHeader.Background}">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
-      <RowDefinition Height="2*" />
       <RowDefinition />
     </Grid.RowDefinitions>
 
@@ -40,16 +44,19 @@
       <Grid>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
           <core:IconButton Icon="{StaticResource Icon.User}"
-                        Margin="5"
-                        Foreground="#A6BED1" />
+                           Margin="5"
+                           Foreground="#A6BED1" />
+          <TextBlock Text="{Binding CurrentUser}"
+                     Foreground="#A6BED1"
+                     VerticalAlignment="Center" />
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
           <core:IconButton Icon="{StaticResource Icon.Settings}"
-                        Margin="5"
-                        Foreground="#A6BED1" />
+                           Margin="5"
+                           Foreground="#A6BED1" />
           <core:IconButton Icon="{StaticResource Icon.CollapseLeft}"
-                        Margin="5"
-                        Foreground="#A6BED1" />
+                           Margin="5"
+                           Foreground="#A6BED1" />
         </StackPanel>
       </Grid>
 
@@ -59,25 +66,25 @@
           <ColumnDefinition />
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
-        <core:IconButton Grid.Column="0" 
-                      Style="{StaticResource LocalIconButtonStyle}"
-                      Icon="{StaticResource Icon.Add}"
-                      Content="Create"
-                      Command="{Binding CreateListCommand}">
+
+        <core:IconButton Grid.Column="0"
+                         Style="{StaticResource LocalIconButtonStyle}"
+                         Icon="{StaticResource Icon.Add}"
+                         Content="Create"
+                         Command="{Binding CreateListCommand}">
         </core:IconButton>
-        <core:IconButton Grid.Column="1" 
-                      Style="{StaticResource LocalIconButtonStyle}"
-                      Background="#3EB8BC"
-                      Foreground="#175C5E"
-                      Icon="{StaticResource Icon.Import}"
-                      Content="Load">
+        <core:IconButton Grid.Column="1"
+                         Style="{StaticResource LocalIconButtonStyle}"
+                         Background="#3EB8BC"
+                         Foreground="#175C5E"
+                         Icon="{StaticResource Icon.Import}"
+                         Content="Load">
         </core:IconButton>
         <core:IconButton Grid.Column="2" Style="{StaticResource LocalIconButtonStyle}"
-                      Background="#DC5959"
-                      Foreground="#FFECC5"
-                      Icon="{StaticResource Icon.Delete}"
-                      Content="Delete">
+                         Background="#DC5959"
+                         Foreground="#FFECC5"
+                         Icon="{StaticResource Icon.Delete}"
+                         Content="Delete">
         </core:IconButton>
       </Grid>
 
@@ -85,18 +92,14 @@
 
     <ListView Grid.Row="1"
               ItemsSource="{Binding Lists}"
+              SelectedItem="{Binding SelectedList}"
               BorderThickness="0"
-              Background="Transparent">
+              Background="Transparent"
+              HorizontalContentAlignment="Stretch"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <StackPanel Orientation="Horizontal" Margin="10">
-            <core:Icon Template="{StaticResource Icon.List}"
-                    Margin="5 0"
-                    Foreground="#B8CCEE" />
-            <TextBlock Text="{Binding Name}" Margin="10 0 0 0"
-                       Foreground="#DBDFE5"
-                       FontWeight="SemiBold" />
-          </StackPanel>
+          <views:ListItemView Background="Transparent"/>
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>

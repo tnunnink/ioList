@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="ioList.Views.ListItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:core="http://CoreTools.com/wpf"
+             xmlns:observers="clr-namespace:ioList.Observers"
+             xmlns:converters="clr-namespace:CoreTools.WPF.Converters;assembly=CoreTools.WPF"
+             xmlns:resources="clr-namespace:ioList.Resources"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance Type=observers:ListFileObserver}"
+             mc:Ignorable="d"
+             d:DesignHeight="60" d:DesignWidth="300">
+
+  <Border CornerRadius="5">
+    <Grid Margin="10">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="30" />
+        <ColumnDefinition />
+        <ColumnDefinition Width="50" />
+      </Grid.ColumnDefinitions>
+
+      <core:Icon Grid.Column="0"
+                 Template="{StaticResource Icon.List}"
+                 Height="20" Width="20"
+                 Opacity="{Binding Exists, 
+                 Converter={resources:BooleanDoubleConverter TrueValue=100, FalseValue=60}}"
+                 Foreground="#B8CCEE" />
+
+      <StackPanel Grid.Column="1" Margin="10 0 5 0"
+                  VerticalAlignment="Center">
+        <TextBlock Text="{Binding ListName}"
+                   FontSize="16"
+                   VerticalAlignment="Center"
+                   Foreground="#DBDFE5"
+                   FontWeight="SemiBold" />
+        <TextBlock Text="{Binding ListPath}"
+                   VerticalAlignment="Center"
+                   Foreground="#7093C1"
+                   FontSize="11"
+                   Margin="0 2 0 0"
+                   FontWeight="Regular"
+                   TextTrimming="CharacterEllipsis" />
+      </StackPanel>
+
+      <Border Grid.Column="2"
+              BorderThickness="0"
+              CornerRadius="10"
+              Background="#30343D"
+              Height="24" Width="40"
+              Visibility="{Binding Exists, Converter={converters:BooleanVisibilityConverter}}">
+        <TextBlock Text="45%"
+                   FontSize="12"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Foreground="#7F89B2" />
+      </Border>
+
+      <core:Icon Grid.Column="2"
+                 Template="{StaticResource Icon.Error}"
+                 Height="20" Width="20"
+                 Foreground="#DC9E9E"
+                 Visibility="{Binding Exists, Converter={converters:BooleanVisibilityConverter IsInverse=True}}" />
+
+    </Grid>
+  </Border>
+</UserControl>
