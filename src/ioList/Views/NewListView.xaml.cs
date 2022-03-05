@@ -1,8 +1,8 @@
 ﻿namespace ioList.Views
 {
-    public partial class CreateListView
+    public partial class NewListView
     {
-        public CreateListView()
+        public NewListView()
         {
             InitializeComponent();
         }

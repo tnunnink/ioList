@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using ioList.Abstractions;
 using ioList.Model;
 
 namespace ioList.Services
@@ -25,7 +24,7 @@ namespace ioList.Services
 
             if (!fileInfo.Exists)
                 GenerateDocument(_fileName);
-            
+
             _document = XDocument.Load(_fileName);
         }
 
@@ -35,18 +34,21 @@ namespace ioList.Services
             _document.Save(_fileName);
         }
 
-        public IEnumerable<ListFile> GetAll() =>
-            _document.Descendants(ListFile).Select(e => new ListFile(e));
+        public IEnumerable<ListFile> GetAll() => _document.Descendants(ListFile).Select(Model.ListFile.Materialize);
 
         public void Add(ListFile listFile)
         {
             if (Exists(listFile.ListPath))
                 return;
-            
+
             _document.Root?.Add(listFile.Serialize());
 
             _document.Save(_fileName);
         }
+
+        private bool Exists(string fullName) =>
+            _document.Descendants(ListFile)
+                .Any(e => string.Equals(e.Value, fullName, StringComparison.OrdinalIgnoreCase));
 
         public void Remove(ListFile listFile)
         {
@@ -57,10 +59,6 @@ namespace ioList.Services
 
             _document.Save(_fileName);
         }
-
-        private bool Exists(string fullName) =>
-            _document.Descendants(ListFile)
-                .Any(e => string.Equals(e.Value, fullName, StringComparison.OrdinalIgnoreCase));
 
         private static void GenerateDocument(string fileName)
         {

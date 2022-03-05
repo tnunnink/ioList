@@ -1,7 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ui="clr-namespace:ioList.Resources.Properties"
-                    xmlns:controls="clr-namespace:ioList.Resources.Controls">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   
 </ResourceDictionary>

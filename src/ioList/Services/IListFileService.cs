@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ioList.Model;
 
-namespace ioList.Abstractions
+namespace ioList.Services
 {
     public interface IListFileService
     {

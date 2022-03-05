@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:ioList.Resources.Controls">
+                    xmlns:core="http://CoreTools.com/wpf">
   
-  <ControlTemplate x:Key="Icon.Window.Close" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Window.Close" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -13,7 +13,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Window.Maximize" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Window.Maximize" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -24,7 +24,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Window.Minimize" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Window.Minimize" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -35,7 +35,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Window.Restore" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Window.Restore" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -46,7 +46,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Window.Theme" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Window.Theme" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"

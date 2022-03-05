@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ioList.Resources.Styles
+namespace ioList.Resrouces.Styles
 {
     public partial class DialogStyle
     {

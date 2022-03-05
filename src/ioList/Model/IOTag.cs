@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using L5Sharp;
 
 namespace ioList.Model
 {
-    public class IoTag
+    public class IOTag
     {
-        public IoTag(IModule module, ITag<IDataType> tag)
+        public IOTag()
         {
-            ModuleName = module.Name;
-            CatalogNumber = module.CatalogNumber;
-            TagName = tag.TagName;
-            Rack = tag.TagName.Base;
-            Description = tag.Description;
-            
         }
         
         public string ModuleName { set; get; }

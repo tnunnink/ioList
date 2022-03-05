@@ -1,7 +1,7 @@
-﻿<ResourceDictionary x:Class="ioList.Resources.Styles.WindowStyles"
+﻿<ResourceDictionary x:Class="ioList.Resrouces.Styles.WindowStyles"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:ioList.Resources.Controls">
+                    xmlns:core="http://CoreTools.com/wpf">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="../Brushes.xaml" />
@@ -71,7 +71,7 @@
     <Setter Property="Template" Value="{StaticResource WindowsButtonTemplate}" />
   </Style>
   
-  <ControlTemplate x:Key="Icon.App" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.App" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -82,7 +82,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Close" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Close" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -93,7 +93,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Maximize" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Maximize" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -104,7 +104,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Minimize" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Minimize" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -115,7 +115,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="Icon.Restore" TargetType="{x:Type controls:Icon}">
+  <ControlTemplate x:Key="Icon.Restore" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
         Fill="{TemplateBinding Foreground}"
@@ -142,7 +142,7 @@
             Fill="{StaticResource Brush.WindowHeader.Background}" />
           <DockPanel LastChildFill="False">
             
-            <controls:Icon
+            <core:Icon
               Margin="8,0,0,0"
               DockPanel.Dock="Left"
               Template="{DynamicResource Icon.App}"
@@ -161,7 +161,7 @@
                     Click="OnCloseClick"
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowsButtonCloseStyle}">
-              <controls:Icon Template="{DynamicResource Icon.Close}"
+              <core:Icon Template="{DynamicResource Icon.Close}"
                              Height="10" Width="10"
                              Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
             </Button>
@@ -170,7 +170,7 @@
                     Click="OnMaximizeRestoreClick"
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowsButtonStandardStyle}">
-              <controls:Icon x:Name="MaximizeRestoreIcon"
+              <core:Icon x:Name="MaximizeRestoreIcon"
                              Template="{DynamicResource Icon.Maximize}"
                              Height="10" Width="10"
                              Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
@@ -180,7 +180,7 @@
                     Click="OnMinimizeClick"
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowsButtonStandardStyle}">
-              <controls:Icon Template="{DynamicResource Icon.Minimize}"
+              <core:Icon Template="{DynamicResource Icon.Minimize}"
                              Height="10" Width="10"
                              Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
             </Button>

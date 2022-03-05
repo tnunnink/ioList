@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using ioList.Abstractions;
 using ioList.Common;
 using ioList.Model;
 using ioList.Observers;
+using ioList.Services;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -47,7 +47,7 @@ namespace ioList.ViewModels
 
         private void ExecuteCreateListCommand()
         {
-            _dialogService.ShowDialog(DialogNames.CreateListDialog);
+            _dialogService.ShowDialog(DialogNames.NewListDialog);
         }
 
         private void Load()

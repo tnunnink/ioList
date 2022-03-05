@@ -10,12 +10,8 @@ namespace ioList.Observers
         {
         }
 
-        public string Name
-        {
-            get => GetValue<string>();
-            set => SetValue(value);
-        }
-        
+        public string Name => GetValue<string>();
+
         public DateTime LastWriteTime => GetValue<DateTime>();
     }
 }

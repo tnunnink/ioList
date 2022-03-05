@@ -7,37 +7,48 @@ namespace ioList.Model
     [Serializable]
     public class ListFile
     {
-        public ListFile(XElement element)
+        public ListFile(string name, string path)
+        {
+            ListName = name;
+            ListPath = path;
+            FileInfo = new FileInfo(path);
+            InitializeWatcher(FileInfo);
+        }
+
+        /// <summary>
+        /// Gets the string name of the list.
+        /// </summary>
+        public string ListName { get; set; }
+
+        /// <summary>
+        /// Gets the full path to the <see cref="IOList"/> file.
+        /// </summary>
+        public string ListPath { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="FileInfo"/> data for the IO list.
+        /// </summary>
+        public FileInfo FileInfo { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating that changes have been made to the underlying IO list file.
+        /// </summary>
+        public bool HasUpdates { get; private set; }
+
+        public int TotalTags { get; private set; }
+
+        public int ValidatedTag { get; private set; }
+
+        public static ListFile Materialize(XElement element)
         {
             if (element is null)
                 throw new ArgumentNullException(nameof(element));
 
-            ListName = element.Attribute(nameof(ListName))?.Value;
-            ListName = element.Attribute(nameof(TotalTags))?.Value;
-            ListName = element.Attribute(nameof(TotalValidated))?.Value;
-            ListPath = element.Value;
+            var name = element.Attribute(nameof(ListName))?.Value;
+            var path = element.Value;
 
+            return new ListFile(name, path);
         }
-        
-        public ListFile(string name, string fullPath, int totalTags = default, int totalValidated = default)
-        {
-            ListName = name;
-            ListPath = fullPath;
-            TotalTags = totalTags;
-            TotalValidated = totalValidated;
-            FileInfo = new FileInfo(fullPath);
-            InitializeWatcher(FileInfo);
-        }
-        
-        public string ListName { get; set; }
-        
-        public string ListPath { get; set; }
-
-        public int TotalTags { get; set; }
-        
-        public int TotalValidated { get; set; }
-
-        public FileInfo FileInfo { get; private set; }
 
         private void OnFileCreated(object sender, FileSystemEventArgs e)
         {
@@ -56,6 +67,16 @@ namespace ioList.Model
             
             FileInfo = new FileInfo(fullPath);
         }
+        
+        private void OnFileChanged(object sender, FileSystemEventArgs e)
+        {
+            var fullPath = e.FullPath;
+            
+            if (fullPath != ListPath) return;
+            
+            FileInfo = new FileInfo(fullPath);
+            HasUpdates = true;
+        }
 
         private void InitializeWatcher(FileInfo info)
         {
@@ -64,6 +85,7 @@ namespace ioList.Model
             var watcher = new FileSystemWatcher(info.DirectoryName, $"{info.Name}");
             watcher.Deleted += OnFileDeleted;
             watcher.Created += OnFileCreated;
+            watcher.Changed += OnFileChanged;
             watcher.EnableRaisingEvents = true;
         }
 
@@ -71,8 +93,6 @@ namespace ioList.Model
         {
             var element = new XElement(nameof(ListFile), ListPath);
             element.Add(new  XAttribute(nameof(ListName), ListName));
-            element.Add(new  XAttribute(nameof(TotalTags), TotalTags));
-            element.Add(new  XAttribute(nameof(TotalValidated), TotalValidated));
             return element;
         }
     }
