@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using ioList.Common;
-using ioList.Events;
-using ioList.Model;
+using ioList.Domain;
+using ioList.Module.Settings.Events;
 using ioList.Observers;
 using ioList.Services;
 using Prism.Commands;
@@ -16,47 +16,47 @@ namespace ioList.ViewModels
 {
     public class ListViewModel : BindableBase
     {
-        private readonly IListFileService _listFileService;
+        private readonly IListInfoService _listInfoService;
         private readonly IDialogService _dialogService;
         private readonly IRegionManager _regionManager;
         private DelegateCommand _createListCommand;
-        private DelegateCommand _openListCommand;
-        private ObservableCollection<ListFileObserver> _lists;
-        private ListFileObserver _selectedList;
+        private DelegateCommand _deleteListCommand;
+        private ObservableCollection<ListInfoObserver> _lists;
+        private ListInfoObserver _selectedList;
 
         public ListViewModel()
         {
-            Lists = new ObservableCollection<ListFileObserver>
+            Lists = new ObservableCollection<ListInfoObserver>
             {
-                new(new ListFile("List Name 01", "Path To File")),
-                new(new ListFile("List Name 01", "Path To File")),
-                new(new ListFile("List Name 01", "Path To File"))
+                new(new ListFile("Path To File")),
+                new(new ListFile("Path To File")),
+                new(new ListFile("Path To File"))
             };
         }
 
-        public ListViewModel(IListFileService listFileService, IEventAggregator eventAggregator,
+        public ListViewModel(IListInfoService listInfoService, IEventAggregator eventAggregator,
             IDialogService dialogService, IRegionManager regionManager)
         {
-            _listFileService = listFileService;
+            _listInfoService = listInfoService;
             _dialogService = dialogService;
             _regionManager = regionManager;
 
             eventAggregator.GetEvent<ListCreatedEvent>().Subscribe(OnListCreated);
 
-            Lists = new ObservableCollection<ListFileObserver>();
-            
+            Lists = new ObservableCollection<ListInfoObserver>();
+
             Load();
         }
 
         public string CurrentUser => Environment.UserName;
 
-        public ObservableCollection<ListFileObserver> Lists
+        public ObservableCollection<ListInfoObserver> Lists
         {
             get => _lists;
             private set => SetProperty(ref _lists, value);
         }
 
-        public ListFileObserver SelectedList
+        public ListInfoObserver SelectedList
         {
             get => _selectedList;
             set
@@ -69,6 +69,26 @@ namespace ioList.ViewModels
         public DelegateCommand CreateListCommand =>
             _createListCommand ??= new DelegateCommand(ExecuteCreateListCommand);
 
+        public DelegateCommand DeleteListCommand =>
+            _deleteListCommand ??= new DelegateCommand(ExecuteDeleteListCommand, CanExecuteDeleteListCommand)
+                .ObservesProperty(() => SelectedList);
+
+        private void ExecuteDeleteListCommand()
+        {
+            var file = SelectedList.Entity;
+            
+            //todo confirmation...
+
+            _listInfoService.Remove(file);
+            
+            Load();
+        }
+
+        private bool CanExecuteDeleteListCommand()
+        {
+            return SelectedList is not null;
+        }
+
         private void ExecuteCreateListCommand()
         {
             _dialogService.ShowDialog(DialogNames.NewListDialog);
@@ -77,13 +97,13 @@ namespace ioList.ViewModels
         private void Load()
         {
             Lists.Clear();
-            var lists = _listFileService.GetAll().Select(m => new ListFileObserver(m));
-            Lists = new ObservableCollection<ListFileObserver>(lists);
+            var lists = _listInfoService.GetAll().Select(m => new ListInfoObserver(m));
+            Lists = new ObservableCollection<ListInfoObserver>(lists);
         }
-        
+
         private void OnListCreated(ListFile file)
         {
-            _listFileService.Add(file);
+            _listInfoService.Add(file);
             Load();
             OpenList(file);
         }
@@ -91,6 +111,13 @@ namespace ioList.ViewModels
         private void OpenList(ListFile listFile)
         {
             var parameters = new NavigationParameters { { "ListFile", listFile } };
+
+            if (!listFile.Exists)
+            {
+                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListInvalidView", parameters);
+                return;
+            }
+
             _regionManager.RequestNavigate(RegionNames.ContentRegion, "ContentView", parameters);
         }
     }

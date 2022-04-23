@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="ioList.Views.ListBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:core="http://CoreTools.com/wpf"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance Type=viewModels:ListBarViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="50">
+
+  <UserControl.Resources>
+    <Style TargetType="{x:Type core:IconButton}" BasedOn="{StaticResource Style.Button.Icon}">
+      <Setter Property="Padding" Value="7" />
+      <Setter Property="Margin" Value="0 10"></Setter>
+      <Setter Property="IconHeight" Value="14" />
+      <Setter Property="IconWidth" Value="14" />
+      <Setter Property="core:BorderProperties.CornerRadius" Value="10" />
+    </Style>
+  </UserControl.Resources>
+
+  <Grid Background="{StaticResource Brush.WindowHeader.Background}">
+    <StackPanel HorizontalAlignment="Center">
+      <core:IconButton Icon="{StaticResource Icon.Expand.Right}"
+                       Foreground="#A6BED1"/>
+
+      <core:IconButton Icon="{StaticResource Icon.Add}"
+                       Background="#457EC9"
+                       Foreground="#AAF8F3"/>
+
+      <core:IconButton Icon="{StaticResource Icon.Load}"
+                       Background="#3EB8BC"
+                       Foreground="#B7FFE1" />
+
+      <core:IconButton Icon="{StaticResource Icon.Delete}"
+                       Background="#DC5959"
+                       Foreground="#FFECC5" />
+    </StackPanel>
+  </Grid>
+</UserControl>

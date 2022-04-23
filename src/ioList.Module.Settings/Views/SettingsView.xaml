@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="ioList.Module.Settings.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             prism:Dialog.WindowStyle="{DynamicResource LocalDialogStyle}"
+             xmlns:dialogs="http://prismlibrary.com/"
+             xmlns:viewModels="clr-namespace:ioList.Module.Settings.ViewModels"
+             xmlns:core="http://CoreTools.com/wpf"
+             d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ioList.Resources;component/Resources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style x:Key="LocalDialogStyle" BasedOn="{StaticResource DialogStyle}"
+             TargetType="{x:Type Window}">
+        <Setter Property="Height" Value="600" />
+        <Setter Property="Width" Value="800" />
+        <Setter Property="dialogs:Dialog.WindowStartupLocation" Value="CenterScreen" />
+      </Style>
+      
+      <Style x:Key="SettingItemStyle" TargetType="{x:Type ListViewItem}">
+        <Style.Triggers>
+          <Trigger Property="IsSelected" Value="True">
+            <Setter Property="Background" Value="#171A20" />
+            <Setter Property="Foreground" Value="#2398E6" />
+          </Trigger>
+          <Trigger Property="IsMouseOver" Value="True">
+            <Setter Property="Background" Value="#171A20" />
+          </Trigger>
+        </Style.Triggers>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Foreground" Value="#7895A4" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment"
+                Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template" Value="{StaticResource Template.ListViewItem}" />
+      </Style>
+      <Style BasedOn="{StaticResource Style.ListViewItem}" TargetType="{x:Type ListViewItem}" />
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Grid>
+
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="180" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+
+      <Border Grid.Column="0" 
+              Background="{StaticResource Brush.WindowHeader.Background}">
+        <ListView HorizontalContentAlignment="Stretch"
+                  Margin="10 20"
+                  Background="Transparent" 
+                  BorderThickness="0"
+                  SelectedIndex="{Binding SelectedIndex}"
+                  ItemContainerStyle="{StaticResource SettingItemStyle}">
+          <ListViewItem>
+            <StackPanel Orientation="Horizontal">
+              <core:Icon Template="{StaticResource Icon.List}"
+                         Height="16" Width="16"
+                         Margin="0 0 15 0" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+              <TextBlock VerticalAlignment="Center"
+                         Text="List"
+                         FontWeight="SemiBold" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+            </StackPanel>
+          </ListViewItem>
+          <ListViewItem>
+            <StackPanel Orientation="Horizontal">
+              <core:Icon Template="{StaticResource Icon.Settings}"
+                         Height="16" Width="16"
+                         Margin="0 0 15 0" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+              <TextBlock VerticalAlignment="Center"
+                         Text="Modules"
+                         FontWeight="SemiBold" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+            </StackPanel>
+          </ListViewItem>
+          <ListViewItem>
+            <StackPanel Orientation="Horizontal">
+              <core:Icon Template="{StaticResource Icon.Settings}"
+                         Height="16" Width="16"
+                         Margin="0 0 15 0" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+              <TextBlock VerticalAlignment="Center"
+                         Text="Filters"
+                         FontWeight="SemiBold" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+            </StackPanel>
+          </ListViewItem>
+          <ListViewItem>
+            <StackPanel Orientation="Horizontal">
+              <core:Icon Template="{StaticResource Icon.Settings}"
+                         Height="16" Width="16"
+                         Margin="0 0 15 0" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+              <TextBlock VerticalAlignment="Center"
+                         Text="Buffer Tags"
+                         FontWeight="SemiBold" 
+                         Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=Foreground}"/>
+            </StackPanel>
+          </ListViewItem>
+        </ListView>
+      </Border>
+      
+      <ContentControl Grid.Column="1" Grid.Row="0" prism:RegionManager.RegionName="ContentRegion" />
+    </Grid>
+
+
+    <Border Grid.Row="1"
+            Background="#DEE1E5">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Right"
+                  Margin="10">
+        <Button Height="26" Width="80" Content="Save" Margin="10 0"
+                Command="{Binding SaveCommand}" />
+        <Button Height="26" Width="80" Content="Cancel" Margin="10 0"
+                Command="{Binding CancelCommand}" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

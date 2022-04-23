@@ -12,7 +12,7 @@
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="360">
   <UserControl.Resources>
-    
+
     <Style BasedOn="{StaticResource Style.ListViewItem}" TargetType="{x:Type ListViewItem}">
       <Setter Property="Margin" Value="5 3" />
     </Style>
@@ -28,7 +28,7 @@
       <Setter Property="IconHeight" Value="14" />
       <Setter Property="IconWidth" Value="14" />
       <Setter Property="IconMargin" Value="5 0"></Setter>
-      <Setter Property="ContentMargin" Value="5 0"></Setter>
+      <Setter Property="ContentMargin" Value="3 0"></Setter>
       <Setter Property="core:BorderProperties.CornerRadius" Value="10" />
     </Style>
   </UserControl.Resources>
@@ -41,7 +41,7 @@
 
     <StackPanel Grid.Row="0">
 
-      <Grid>
+      <Grid Margin="10 10 10 0">
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
           <core:IconButton Icon="{StaticResource Icon.User}"
                            Margin="5"
@@ -54,7 +54,7 @@
           <core:IconButton Icon="{StaticResource Icon.Settings}"
                            Margin="5"
                            Foreground="#A6BED1" />
-          <core:IconButton Icon="{StaticResource Icon.CollapseLeft}"
+          <core:IconButton Icon="{StaticResource Icon.Collapse.Left}"
                            Margin="5"
                            Foreground="#A6BED1" />
         </StackPanel>
@@ -70,22 +70,26 @@
         <core:IconButton Grid.Column="0"
                          Style="{StaticResource LocalIconButtonStyle}"
                          Icon="{StaticResource Icon.Add}"
-                         Content="Create"
-                         Command="{Binding CreateListCommand}">
-        </core:IconButton>
+                         Content="New"
+                         Command="{Binding CreateListCommand}"
+                         FontWeight="Bold" />
+
         <core:IconButton Grid.Column="1"
                          Style="{StaticResource LocalIconButtonStyle}"
-                         Background="#3EB8BC"
-                         Foreground="#175C5E"
-                         Icon="{StaticResource Icon.Import}"
-                         Content="Load">
-        </core:IconButton>
-        <core:IconButton Grid.Column="2" Style="{StaticResource LocalIconButtonStyle}"
+                         Background="#49ABB7"
+                         Foreground="#B7FFE1"
+                         Icon="{StaticResource Icon.Load}"
+                         Content="Load"
+                         FontWeight="Bold" />
+
+        <core:IconButton Grid.Column="2"
+                         Style="{StaticResource LocalIconButtonStyle}"
                          Background="#DC5959"
                          Foreground="#FFECC5"
                          Icon="{StaticResource Icon.Delete}"
-                         Content="Delete">
-        </core:IconButton>
+                         Content="Delete"
+                         Command="{Binding DeleteListCommand}"
+                         FontWeight="Bold" />
       </Grid>
 
     </StackPanel>
@@ -93,13 +97,14 @@
     <ListView Grid.Row="1"
               ItemsSource="{Binding Lists}"
               SelectedItem="{Binding SelectedList}"
+              SelectionMode="Single"
               BorderThickness="0"
               Background="Transparent"
               HorizontalContentAlignment="Stretch"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <views:ListItemView Background="Transparent"/>
+          <views:ListItemView Background="Transparent" />
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>

@@ -3,10 +3,130 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:core="http://CoreTools.com/wpf"
+             xmlns:vm="clr-namespace:ioList.ViewModels"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance Type=vm:ContentViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="1200">
-  <Grid Background="{StaticResource Brush.Primary.Background}">
-    
-  </Grid>
+             d:DesignHeight="800" d:DesignWidth="1400">
+  <Border Background="{StaticResource Brush.Primary.Background}">
+    <Grid Margin="20">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0" Margin="0 0 0 20">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition MinWidth="200" />
+          <ColumnDefinition />
+          <ColumnDefinition MinWidth="200" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" DockPanel.Dock="Left">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding List.Name}"
+                       FontSize="24"
+                       FontWeight="SemiBold"
+                       Foreground="#5A5F67"
+                       Margin="0 0 30 0" />
+            <Border Background="#D7DDEB"
+                    CornerRadius="10"
+                    Height="20"
+                    Margin="0 0 10 0">
+              <TextBlock Text="10/235"
+                         Foreground="#7F89B2"
+                         VerticalAlignment="Center"
+                         Margin="10 0" />
+            </Border>
+            <Border Background="#D7DDEB"
+                    CornerRadius="10"
+                    Height="20">
+              <TextBlock Text="45%"
+                         Foreground="#7F89B2"
+                         VerticalAlignment="Center"
+                         Margin="10 0" />
+            </Border>
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal"
+                      Margin="0 4 0 0">
+            <TextBlock Text="{Binding List.CreatedOn}"
+                       FontSize="12"
+                       Foreground="#747E92"
+                       VerticalAlignment="Center" />
+            <Ellipse Height="4" Width="4" Fill="#575960"
+                     Margin="5 0"
+                     VerticalAlignment="Center"
+                     Opacity="0.5" />
+            <TextBlock Text="{Binding List.CreatedBy}"
+                       FontSize="12"
+                       Foreground="#747E92" />
+            <Ellipse Height="4" Width="4" Fill="#575960"
+                     Margin="5 0"
+                     VerticalAlignment="Center"
+                     Opacity="0.5" />
+            <TextBlock Text="{Binding List.Comment}"
+                       TextTrimming="CharacterEllipsis"
+                       FontSize="12"
+                       Foreground="#747E92" />
+          </StackPanel>
+        </StackPanel>
+
+        <Border Grid.Column="1"
+                BorderThickness="0"
+                CornerRadius="10"
+                Height="30"
+                MinWidth="300"
+                Margin="20 0"
+                Background="#FEFEFF">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox Grid.Column="0"
+                     Margin="10 3"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     VerticalContentAlignment="Center"
+                     core:TextBoxProperties.DefaultText="Search Everywhere" />
+            
+            <core:Icon Grid.Column="1" 
+                       Template="{StaticResource Icon.Search}" 
+                       Margin="0 0 10 0" Height="16" Width="16"
+                       Foreground="#3C5985"/>
+          </Grid>
+        </Border>
+
+        <StackPanel Grid.Column="2" DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+          <core:IconButton Icon="{StaticResource Icon.Filter.Menu}"
+                           Foreground="#3C5985"
+                           Margin="10 0 0 0" />
+
+          <Border BorderThickness="1 0 0 0"
+                  BorderBrush="#BBB7B7" Height="16"
+                  Margin="10 0" />
+
+          <core:IconButton Icon="{StaticResource Icon.Export}"
+                           Foreground="#3C5985" />
+          <core:IconButton Icon="{StaticResource Icon.Menu}"
+                           Foreground="#3C5985"
+                           Margin="10 0" />
+        </StackPanel>
+      </Grid>
+
+      <Grid Grid.Row="1">
+        <DataGrid>
+
+        </DataGrid>
+      </Grid>
+    </Grid>
+  </Border>
+
 </UserControl>

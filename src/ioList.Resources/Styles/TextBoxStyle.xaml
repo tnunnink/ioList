@@ -1,0 +1,75 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:core="http://CoreTools.com/wpf">
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="../Brushes.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <ControlTemplate x:Key="Template.TextBox" TargetType="{x:Type TextBox}">
+    <Grid SnapsToDevicePixels="true">
+      <Border x:Name="MainBorder"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, 
+              Path=(core:BorderProperties.CornerRadius)}"
+              SnapsToDevicePixels="True">
+        <Grid>
+          <ScrollViewer x:Name="PART_ContentHost"
+                        Focusable="false"
+                        HorizontalScrollBarVisibility="Hidden"
+                        VerticalScrollBarVisibility="Hidden" />
+        </Grid>
+      </Border>
+      <Border x:Name="FocusBorder"
+              BorderBrush="{StaticResource Brush.Control.FocusBorder}"
+              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, 
+              Path=(core:BorderProperties.CornerRadius)}"
+              Margin="-1"
+              BorderThickness="1"
+              Visibility="Collapsed">
+        <Border.Effect>
+          <BlurEffect Radius="3" KernelType="Gaussian" />
+        </Border.Effect>
+      </Border>
+    </Grid>
+    <ControlTemplate.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter TargetName="MainBorder" Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+      </Trigger>
+      <Trigger Property="IsKeyboardFocused" Value="True">
+        <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible" />
+      </Trigger>
+      <Trigger Property="IsFocused" Value="True">
+        <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible" />
+      </Trigger>
+      <Trigger Property="Validation.HasError" Value="True">
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Control.ErrorBorder}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{StaticResource Brush.Control.ErrorBorder}" />
+      </Trigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  
+  <Style x:Key="Style.TextBox" TargetType="{x:Type TextBox}">
+    <Setter Property="Background" Value="{StaticResource Brush.Control.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Control.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Control.Border}" />
+    <!--<Setter Property="SelectionBrush" Value="{t:ThemeResource ResourceKey=ControlHighlightBackground}" />
+    <Setter Property="CaretBrush" Value="{t:ThemeResource ResourceKey=ControlBorder}" />-->
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
+    <Setter Property="Height" Value="26" />
+    <Setter Property="Padding" Value="5 0 0 0" />
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="AllowDrop" Value="true" />
+    <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+    <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+    <Setter Property="Template" Value="{StaticResource Template.TextBox}" />
+  </Style>
+  <Style BasedOn="{StaticResource Style.TextBox}" TargetType="{x:Type TextBox}" />
+</ResourceDictionary>

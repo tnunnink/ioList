@@ -5,11 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:core="http://CoreTools.com/wpf"
-             xmlns:observers="clr-namespace:ioList.Observers"
-             xmlns:converters="clr-namespace:CoreTools.WPF.Converters;assembly=CoreTools.WPF"
-             xmlns:resources="clr-namespace:ioList.Resources"
+             xmlns:observers="clr-namespace:ioList.Observers;assembly=ioList.Observers"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DataContext="{d:DesignInstance Type=observers:ListFileObserver}"
+             d:DataContext="{d:DesignInstance Type=observers:ListInfoObserver}"
              mc:Ignorable="d"
              d:DesignHeight="60" d:DesignWidth="300">
 
@@ -25,7 +23,7 @@
                  Template="{StaticResource Icon.List}"
                  Height="20" Width="20"
                  Opacity="{Binding Exists, 
-                 Converter={resources:BooleanDoubleConverter TrueValue=100, FalseValue=60}}"
+                 Converter={core:BooleanDoubleConverter TrueValue=100, FalseValue=60}}"
                  Foreground="#B8CCEE" />
 
       <StackPanel Grid.Column="1" Margin="10 0 5 0"
@@ -49,7 +47,7 @@
               CornerRadius="10"
               Background="#30343D"
               Height="24" Width="40"
-              Visibility="{Binding Exists, Converter={converters:BooleanVisibilityConverter}}">
+              Visibility="{Binding Exists, Converter={core:BooleanVisibilityConverter}}">
         <TextBlock Text="45%"
                    FontSize="12"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -60,7 +58,7 @@
                  Template="{StaticResource Icon.Error}"
                  Height="20" Width="20"
                  Foreground="#DC9E9E"
-                 Visibility="{Binding Exists, Converter={converters:BooleanVisibilityConverter IsInverse=True}}" />
+                 Visibility="{Binding Exists, Converter={core:BooleanVisibilityConverter IsInverse=True}}" />
 
     </Grid>
   </Border>

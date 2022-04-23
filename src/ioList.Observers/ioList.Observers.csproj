@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ioList.Domain\ioList.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="EntityObserver" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="L5Sharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\L5Sharp\src\bin\Debug\netstandard2.1\L5Sharp.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
