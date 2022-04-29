@@ -7,7 +7,7 @@
              xmlns:core="http://CoreTools.com/wpf"
              xmlns:observers="clr-namespace:ioList.Observers;assembly=ioList.Observers"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DataContext="{d:DesignInstance Type=observers:ListInfoObserver}"
+             d:DataContext="{d:DesignInstance Type=observers:ListFileObserver}"
              mc:Ignorable="d"
              d:DesignHeight="60" d:DesignWidth="300">
 

@@ -7,12 +7,12 @@ namespace ioList.ViewModels
 {
     public class ListInvalidViewModel : NavigationViewModelBase
     {
-        private ListInfoObserver _listInfo;
+        private ListFileObserver _listFile;
 
-        public ListInfoObserver ListInfo
+        public ListFileObserver ListFile
         {
-            get => _listInfo;
-            private set => SetProperty(ref _listInfo, value);
+            get => _listFile;
+            private set => SetProperty(ref _listFile, value);
         }
 
         public override bool KeepAlive => false;
@@ -20,7 +20,7 @@ namespace ioList.ViewModels
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             var file = navigationContext.Parameters.GetValue<ListFile>("ListFile");
-            ListInfo = new ListInfoObserver(file);
+            ListFile = new ListFileObserver(file);
         }
     }
 }

@@ -4,6 +4,6 @@ namespace ioList.Services
 {
     public interface IListBuilder
     {
-        public bool Build(ListInfo info);
+        public void Build(List list);
     }
 }

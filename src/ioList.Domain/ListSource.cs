@@ -8,13 +8,16 @@ namespace ioList.Domain
         {
         }
         
-        public ListSource(string content)
+        public ListSource(List list, string content)
         {
+            ListId = list.Id;
+            List = list;
             Content = content;
         }
         
-        public int ListId { get; }
-        public string Content { get; }
+        public int ListId { get; private set; }
+        public List List { get; private set; }
+        public string Content { get; private set; }
 
         public ILogixContext Context() => LogixContext.Parse(Content);
     }

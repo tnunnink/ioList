@@ -10,12 +10,11 @@ namespace ioList.Data
         {
         }
         
-        private DbSet<ListInfo> ListInfo { get; set; }
-        public ListInfo List => ListInfo.FirstOrDefault();
+        internal DbSet<List> Lists { get; set; }
+        public List List => Lists.FirstOrDefault();
         public DbSet<Card> Cards { get; set; }
         public DbSet<Point> Points { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Label> Labels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

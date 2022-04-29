@@ -7,7 +7,7 @@ using ioList.Domain;
 
 namespace ioList.Services
 {
-    public class ListInfoService : IListInfoService
+    public class ListFileService : IListFileService
     {
         private const string DataFile = @"ioList\Lists.xml";
 
@@ -16,7 +16,7 @@ namespace ioList.Services
 
         private readonly XDocument _document;
 
-        public ListInfoService()
+        public ListFileService()
         {
             var fileInfo = new FileInfo(_fileName);
 

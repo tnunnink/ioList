@@ -16,17 +16,17 @@ namespace ioList.ViewModels
 {
     public class ListViewModel : BindableBase
     {
-        private readonly IListInfoService _listInfoService;
+        private readonly IListFileService _listFileService;
         private readonly IDialogService _dialogService;
         private readonly IRegionManager _regionManager;
         private DelegateCommand _createListCommand;
         private DelegateCommand _deleteListCommand;
-        private ObservableCollection<ListInfoObserver> _lists;
-        private ListInfoObserver _selectedList;
+        private ObservableCollection<ListFileObserver> _lists;
+        private ListFileObserver _selectedList;
 
         public ListViewModel()
         {
-            Lists = new ObservableCollection<ListInfoObserver>
+            Lists = new ObservableCollection<ListFileObserver>
             {
                 new(new ListFile("Path To File")),
                 new(new ListFile("Path To File")),
@@ -34,29 +34,29 @@ namespace ioList.ViewModels
             };
         }
 
-        public ListViewModel(IListInfoService listInfoService, IEventAggregator eventAggregator,
+        public ListViewModel(IListFileService listFileService, IEventAggregator eventAggregator,
             IDialogService dialogService, IRegionManager regionManager)
         {
-            _listInfoService = listInfoService;
+            _listFileService = listFileService;
             _dialogService = dialogService;
             _regionManager = regionManager;
 
             eventAggregator.GetEvent<ListCreatedEvent>().Subscribe(OnListCreated);
 
-            Lists = new ObservableCollection<ListInfoObserver>();
+            Lists = new ObservableCollection<ListFileObserver>();
 
             Load();
         }
 
         public string CurrentUser => Environment.UserName;
 
-        public ObservableCollection<ListInfoObserver> Lists
+        public ObservableCollection<ListFileObserver> Lists
         {
             get => _lists;
             private set => SetProperty(ref _lists, value);
         }
 
-        public ListInfoObserver SelectedList
+        public ListFileObserver SelectedList
         {
             get => _selectedList;
             set
@@ -79,7 +79,7 @@ namespace ioList.ViewModels
             
             //todo confirmation...
 
-            _listInfoService.Remove(file);
+            _listFileService.Remove(file);
             
             Load();
         }
@@ -97,13 +97,13 @@ namespace ioList.ViewModels
         private void Load()
         {
             Lists.Clear();
-            var lists = _listInfoService.GetAll().Select(m => new ListInfoObserver(m));
-            Lists = new ObservableCollection<ListInfoObserver>(lists);
+            var lists = _listFileService.GetAll().Select(m => new ListFileObserver(m));
+            Lists = new ObservableCollection<ListFileObserver>(lists);
         }
 
         private void OnListCreated(ListFile file)
         {
-            _listInfoService.Add(file);
+            _listFileService.Add(file);
             Load();
             OpenList(file);
         }

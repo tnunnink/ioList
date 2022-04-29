@@ -19,12 +19,12 @@ namespace ioList.Module.Settings.ViewModels
             ".L5X"
         };
 
-        private SettingsObserver _settings;
+        private ListObserver _list;
 
-        public SettingsObserver Settings
+        public ListObserver List
         {
-            get => _settings;
-            private set => SetProperty(ref _settings, value);
+            get => _list;
+            private set => SetProperty(ref _list, value);
         }
 
         public bool IsValidFile
@@ -35,7 +35,7 @@ namespace ioList.Module.Settings.ViewModels
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Settings = navigationContext.Parameters.GetValue<SettingsObserver>("Option");
+            List = navigationContext.Parameters.GetValue<ListObserver>("Option");
         }
 
         public void DragOver(IDropInfo dropInfo)
@@ -60,7 +60,7 @@ namespace ioList.Module.Settings.ViewModels
             if (info is null || !info.Exists || !ValidExtensions.Contains(info.Extension))
                 return;
 
-            Settings.SourceFile = info.FullName;
+            List.SourceFile = info.FullName;
         }
     }
 }

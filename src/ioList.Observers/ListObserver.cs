@@ -8,9 +8,9 @@ using L5Sharp;
 
 namespace ioList.Observers
 {
-    public class SettingsObserver : Observer<ListOption>
+    public class ListObserver : Observer<List>
     {
-        public SettingsObserver(ListOption model) : base(model)
+        public ListObserver(List model) : base(model)
         {
         }
 

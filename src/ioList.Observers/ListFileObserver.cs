@@ -4,13 +4,13 @@ using ioList.Domain;
 
 namespace ioList.Observers
 {
-    public class ListInfoObserver : Observer<ListFile>
+    public class ListFileObserver : Observer<ListFile>
     {
-        public ListInfoObserver() : base(new ListFile(@"C:\Users\tnunnink\Desktop\My Lists\List Name.xml"))
+        public ListFileObserver() : base(new ListFile(@"C:\Users\tnunnink\Desktop\My Lists\List Name.xml"))
         {
         }
         
-        public ListInfoObserver(ListFile model) : base(model)
+        public ListFileObserver(ListFile model) : base(model)
         {
         }
 

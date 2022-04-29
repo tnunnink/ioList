@@ -3,7 +3,7 @@ using ioList.Domain;
 
 namespace ioList.Services
 {
-    public interface IListInfoService
+    public interface IListFileService
     {
         IEnumerable<ListFile> GetAll();
         void Add(ListFile listFile);

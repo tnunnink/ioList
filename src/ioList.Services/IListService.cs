@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ioList.Domain;
 
 namespace ioList.Services
 {
-    public interface IListService
+    public interface IListService : IDisposable
     {
         IEnumerable<Card> GetCards();
         Card GetCard(int id);
-        Card GetCard(string name);
-        void AddCard(Card card);
-        void RemoveCard(Card card);
+        void ExcludeCard(int id);
+
+        IEnumerable<Point> GetList();
+
+        void AddPoint(Point point);
+        
+        void SetPointInclusion(int pointId, bool include);
     }
 }

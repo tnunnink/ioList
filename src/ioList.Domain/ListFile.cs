@@ -21,7 +21,6 @@ namespace ioList.Domain
         public DateTime CreationTime => _info.CreationTime;
         public DateTime LastWriteTime => _info.LastWriteTime;
         public DateTime LastAccessTime => _info.LastAccessTime;
-
         public event EventHandler<ListFile> FileChanged;
         public event EventHandler<ListFile> FileRenamed;
 

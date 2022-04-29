@@ -30,13 +30,12 @@ namespace ioList.Module.Settings.ViewModels
         public SettingsViewModel(IListBuilder builder)
         {
             _builder = builder;
-            Settings = new SettingsObserver(new ListOption());
         }
 
         public override DelegateCommand SaveCommand => _saveCommand ??=
             new DelegateCommand(ExecuteSaveCommand, ExecuteCanSaveCommand)
-                .ObservesProperty(() => Settings.HasErrors)
-                .ObservesProperty(() => Settings.IsChanged);
+                .ObservesProperty(() => List.HasErrors)
+                .ObservesProperty(() => List.IsChanged);
 
         public int SelectedIndex
         {
@@ -48,13 +47,13 @@ namespace ioList.Module.Settings.ViewModels
             }
         }
 
-        public SettingsObserver Settings { get; }
+        public ListObserver List { get; }
 
         protected override bool ExecuteCanSaveCommand()
         {
-            return !string.IsNullOrEmpty(Settings.Name) 
-                   && !string.IsNullOrEmpty(Settings.Directory) 
-                   && !string.IsNullOrEmpty(Settings.SourceFile);
+            return !string.IsNullOrEmpty(List.Name) 
+                   && !string.IsNullOrEmpty(List.Directory) 
+                   && !string.IsNullOrEmpty(List.SourceFile);
         }
 
         protected override void ExecuteSaveCommand()
@@ -80,7 +79,7 @@ namespace ioList.Module.Settings.ViewModels
         {
             var viewName = SettingsViews[index];
 
-            var parameters = new NavigationParameters { { "Option", Settings } };
+            var parameters = new NavigationParameters { { "Option", List } };
 
             RegionManager?.RequestNavigate("ContentRegion", viewName, parameters);
         }

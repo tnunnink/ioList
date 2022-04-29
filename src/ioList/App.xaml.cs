@@ -17,7 +17,10 @@ namespace ioList
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IListInfoService, ListInfoService>();
+            containerRegistry.Register<IListFileService, ListFileService>();
+            containerRegistry.Register<IListBuilder, ListBuilder>();
+            containerRegistry.Register<IListServiceProvider, ListServiceProvider>();
+            containerRegistry.Register<IListService, IListService>();
 
             containerRegistry.RegisterForNavigation<ContentView, ContentViewModel>();
             containerRegistry.RegisterForNavigation<ListInvalidView, ListInvalidViewModel>();

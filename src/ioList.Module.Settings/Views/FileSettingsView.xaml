@@ -71,7 +71,7 @@
             </StackPanel>
 
             <TextBox Grid.Column="1" 
-                     Text="{Binding Settings.Name}" />
+                     Text="{Binding List.Name}" />
           </Grid>
         </Border>
 
@@ -99,7 +99,7 @@
 
             <TextBox Grid.Column="1" Height="60"
                      VerticalContentAlignment="Top"
-                     Text="{Binding Settings.Comment}"/>
+                     Text="{Binding List.Comment}"/>
           </Grid>
         </Border>
 
@@ -127,7 +127,7 @@
             </StackPanel>
 
             <core:FolderBrowserTextBox Grid.Column="1" Height="26"
-                                       Text="{Binding Settings.Directory}"
+                                       Text="{Binding List.Directory}"
                                        VerticalContentAlignment="Center"
                                        core:BorderProperties.CornerRadius="10"
                                        Background="#EFF1F2"
@@ -197,7 +197,7 @@
           <core:FolderBrowserTextBox
             Grid.Row="0" Grid.Column="1"
             Height="26"
-            Text="{Binding Settings.SourceFile}"
+            Text="{Binding List.SourceFile}"
             VerticalContentAlignment="Center"
             core:BorderProperties.CornerRadius="10"
             Background="#EFF1F2"

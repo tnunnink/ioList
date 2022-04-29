@@ -21,7 +21,7 @@ namespace ioList.Module.Settings.ViewModels
             nameof(ScalingSettingsView),
         };
 
-        private readonly SettingsObserver _settings;
+        private readonly ListObserver _list;
         private DelegateCommand _nextCommand;
         private DelegateCommand _backCommand;
         private DelegateCommand _createCommand;
@@ -33,13 +33,12 @@ namespace ioList.Module.Settings.ViewModels
         public NewListViewModel()
         {
             Title = "New List";
-            Settings = new SettingsObserver(new ListOption());
         }
 
-        public SettingsObserver Settings
+        public ListObserver List
         {
-            get => _settings;
-            init => SetProperty(ref _settings, value);
+            get => _list;
+            init => SetProperty(ref _list, value);
         }
 
         private int Index
@@ -67,7 +66,7 @@ namespace ioList.Module.Settings.ViewModels
 
         public DelegateCommand NextCommand =>
             _nextCommand ??= new DelegateCommand(ExecuteNextCommand, CanExecuteNextCommand)
-                .ObservesProperty(() => Settings.IsChanged);
+                .ObservesProperty(() => List.IsChanged);
         
         public DelegateCommand BackCommand =>
             _backCommand ??= new DelegateCommand(ExecuteBackCommand, CanExecuteBackCommand)
@@ -78,9 +77,9 @@ namespace ioList.Module.Settings.ViewModels
 
         private void ExecuteCreateCommand()
         {
-            Settings.Validate(ValidationOption.All);
+            List.Validate(ValidationOption.All);
 
-            if (!Settings.HasErrors)
+            if (!List.HasErrors)
             {
                 //todo create list
             }
@@ -98,24 +97,24 @@ namespace ioList.Module.Settings.ViewModels
 
         private void ExecuteNextCommand()
         {
-            Settings.Validate(ValidationOption.All);
+            List.Validate(ValidationOption.All);
 
-            if (!Settings.HasErrors)
+            if (!List.HasErrors)
                 NavigateSetting(++Index);
         } 
 
         private bool CanExecuteNextCommand() =>
-            !string.IsNullOrEmpty(Settings.Name) 
-            && !string.IsNullOrEmpty(Settings.Directory) 
-            && !string.IsNullOrEmpty(Settings.SourceFile)
-            && !Settings.HasErrors
+            !string.IsNullOrEmpty(List.Name) 
+            && !string.IsNullOrEmpty(List.Directory) 
+            && !string.IsNullOrEmpty(List.SourceFile)
+            && !List.HasErrors
             && Index < SettingsViews.Count;
 
         private void NavigateSetting(int index)
         {
             var viewName = SettingsViews[index];
 
-            var parameters = new NavigationParameters { { "Option", Settings } };
+            var parameters = new NavigationParameters { { "Option", List } };
 
             RegionManager?.RequestNavigate("ContentRegion", viewName, parameters);
         }
