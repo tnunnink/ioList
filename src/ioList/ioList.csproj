@@ -17,6 +17,9 @@
       <Reference Include="CoreTools.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>..\..\..\CoreTools.WPF\src\CoreTools.WPF\bin\Debug\net5.0-windows\CoreTools.WPF.dll</HintPath>
       </Reference>
+      <Reference Include="L5Sharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\L5Sharp\src\bin\Release\netstandard2.1\L5Sharp.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <ItemGroup>

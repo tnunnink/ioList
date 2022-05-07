@@ -19,11 +19,13 @@ namespace ioList
         {
             containerRegistry.Register<IListFileService, ListFileService>();
             containerRegistry.Register<IListBuilder, ListBuilder>();
-            containerRegistry.Register<IListServiceProvider, ListServiceProvider>();
-            containerRegistry.Register<IListService, IListService>();
+            containerRegistry.Register<IListProvider, ListProvider>();
+            containerRegistry.Register<IListService, ListService>();
 
             containerRegistry.RegisterForNavigation<ContentView, ContentViewModel>();
             containerRegistry.RegisterForNavigation<ListInvalidView, ListInvalidViewModel>();
+            
+            containerRegistry.RegisterDialog<NewListView>(DialogNames.NewListDialog);
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
@@ -51,11 +53,7 @@ namespace ioList
 
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion<ListView>(RegionNames.ListRegion);
-        }
-
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            moduleCatalog.AddModule<SettingsModule>();
+            regionManager.RegisterViewWithRegion<FooterView>(RegionNames.FooterRegion);
         }
     }
 }

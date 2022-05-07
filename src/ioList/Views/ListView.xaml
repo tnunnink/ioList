@@ -12,87 +12,39 @@
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="360">
   <UserControl.Resources>
-
     <Style BasedOn="{StaticResource Style.ListViewItem}" TargetType="{x:Type ListViewItem}">
       <Setter Property="Margin" Value="5 3" />
-    </Style>
-
-    <Style x:Key="LocalIconButtonStyle"
-           TargetType="{x:Type core:IconButton}"
-           BasedOn="{StaticResource Style.Button.Icon}">
-      <Setter Property="Background" Value="#457EC9" />
-      <Setter Property="Foreground" Value="#AAF8F3" />
-      <Setter Property="Margin" Value="5" />
-      <Setter Property="Padding" Value="6" />
-      <Setter Property="BorderThickness" Value="0"></Setter>
-      <Setter Property="IconHeight" Value="14" />
-      <Setter Property="IconWidth" Value="14" />
-      <Setter Property="IconMargin" Value="5 0"></Setter>
-      <Setter Property="ContentMargin" Value="3 0"></Setter>
-      <Setter Property="core:BorderProperties.CornerRadius" Value="10" />
     </Style>
   </UserControl.Resources>
 
   <Grid Background="{StaticResource Brush.WindowHeader.Background}">
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
+      <RowDefinition Height="40" />
       <RowDefinition />
     </Grid.RowDefinitions>
 
-    <StackPanel Grid.Row="0">
-
-      <Grid Margin="10 10 10 0">
+    <Border Grid.Row="0">
+      <Grid>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-          <core:IconButton Icon="{StaticResource Icon.User}"
-                           Margin="5"
-                           Foreground="#A6BED1" />
-          <TextBlock Text="{Binding CurrentUser}"
-                     Foreground="#A6BED1"
-                     VerticalAlignment="Center" />
+          <Button Command="{Binding NewListCommand}"
+                  Height="26"
+                  Padding="5"
+                  Margin="10 0"
+                  Foreground="#AAF8F3"
+                  Background="#457EC9">
+            <StackPanel Orientation="Horizontal">
+              <core:Icon Template="{StaticResource Icon.Add}" Margin="0 0 5 0"/>
+              <TextBlock Text="New List" VerticalAlignment="Center"/>
+            </StackPanel>
+          </Button>
         </StackPanel>
+        
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-          <core:IconButton Icon="{StaticResource Icon.Settings}"
-                           Margin="5"
-                           Foreground="#A6BED1" />
           <core:IconButton Icon="{StaticResource Icon.Collapse.Left}"
-                           Margin="5"
-                           Foreground="#A6BED1" />
+                           Margin="10 0"/>
         </StackPanel>
-      </Grid>
-
-      <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
-        <core:IconButton Grid.Column="0"
-                         Style="{StaticResource LocalIconButtonStyle}"
-                         Icon="{StaticResource Icon.Add}"
-                         Content="New"
-                         Command="{Binding CreateListCommand}"
-                         FontWeight="Bold" />
-
-        <core:IconButton Grid.Column="1"
-                         Style="{StaticResource LocalIconButtonStyle}"
-                         Background="#49ABB7"
-                         Foreground="#B7FFE1"
-                         Icon="{StaticResource Icon.Load}"
-                         Content="Load"
-                         FontWeight="Bold" />
-
-        <core:IconButton Grid.Column="2"
-                         Style="{StaticResource LocalIconButtonStyle}"
-                         Background="#DC5959"
-                         Foreground="#FFECC5"
-                         Icon="{StaticResource Icon.Delete}"
-                         Content="Delete"
-                         Command="{Binding DeleteListCommand}"
-                         FontWeight="Bold" />
-      </Grid>
-
-    </StackPanel>
+      </Grid> 
+    </Border>
 
     <ListView Grid.Row="1"
               ItemsSource="{Binding Lists}"

@@ -4,7 +4,7 @@ using Microsoft.Data.Sqlite;
 
 namespace ioList.Data
 {
-    public class ListServiceProvider : IListServiceProvider
+    public class ListProvider : IListProvider
     {
         public IListService Connect(string listPath)
         {

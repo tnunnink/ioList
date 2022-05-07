@@ -3,11 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using ioList.Common;
 using ioList.Domain;
-using ioList.Module.Settings.Events;
 using ioList.Observers;
 using ioList.Services;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
@@ -34,21 +32,17 @@ namespace ioList.ViewModels
             };
         }
 
-        public ListViewModel(IListFileService listFileService, IEventAggregator eventAggregator,
+        public ListViewModel(IListFileService listFileService,
             IDialogService dialogService, IRegionManager regionManager)
         {
             _listFileService = listFileService;
             _dialogService = dialogService;
             _regionManager = regionManager;
 
-            eventAggregator.GetEvent<ListCreatedEvent>().Subscribe(OnListCreated);
-
             Lists = new ObservableCollection<ListFileObserver>();
 
             Load();
         }
-
-        public string CurrentUser => Environment.UserName;
 
         public ObservableCollection<ListFileObserver> Lists
         {
@@ -66,7 +60,7 @@ namespace ioList.ViewModels
             }
         }
 
-        public DelegateCommand CreateListCommand =>
+        public DelegateCommand NewListCommand =>
             _createListCommand ??= new DelegateCommand(ExecuteCreateListCommand);
 
         public DelegateCommand DeleteListCommand =>
@@ -76,11 +70,11 @@ namespace ioList.ViewModels
         private void ExecuteDeleteListCommand()
         {
             var file = SelectedList.Entity;
-            
+
             //todo confirmation...
 
             _listFileService.Remove(file);
-            
+
             Load();
         }
 

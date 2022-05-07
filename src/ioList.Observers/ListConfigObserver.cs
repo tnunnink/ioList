@@ -8,9 +8,9 @@ using L5Sharp;
 
 namespace ioList.Observers
 {
-    public class ListObserver : Observer<List>
+    public class ListConfigObserver : Observer<ListConfig>
     {
-        public ListObserver(List model) : base(model)
+        public ListConfigObserver(ListConfig model) : base(model)
         {
         }
 
@@ -22,7 +22,7 @@ namespace ioList.Observers
             get => GetValue<string>();
             set => SetValue(value);
         }
-
+ 
         public string Comment
         {
             get => GetValue<string>();
@@ -40,6 +40,30 @@ namespace ioList.Observers
         public string SourceFile
         {
             get => GetValue<string>();
+            set => SetValue(value);
+        }
+
+        public bool FilterOnReferenced
+        {
+            get => GetValue<bool>();
+            set => SetValue(value);
+        }
+
+        public bool FilterOnCommented
+        {
+            get => GetValue<bool>();
+            set => SetValue(value);
+        }
+        
+        public bool SearchBuffer
+        {
+            get => GetValue<bool>();
+            set => SetValue(value);
+        }
+
+        public bool SearchScaling
+        {
+            get => GetValue<bool>();
             set => SetValue(value);
         }
 

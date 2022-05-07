@@ -17,11 +17,6 @@ namespace ioList.Module.Settings.ViewModels
 
         private static readonly List<string> SettingsViews = new()
         {
-            nameof(FileSettingsView),
-            nameof(ModuleSettingsView),
-            nameof(FilterSettingsView),
-            nameof(BufferSettingsView),
-            nameof(ScalingSettingsView)
         };
 
         private int _selectedIndex;
@@ -47,7 +42,7 @@ namespace ioList.Module.Settings.ViewModels
             }
         }
 
-        public ListObserver List { get; }
+        public ListConfigObserver List { get; }
 
         protected override bool ExecuteCanSaveCommand()
         {
@@ -61,7 +56,7 @@ namespace ioList.Module.Settings.ViewModels
             try
             {
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //log error
                 RaiseRequestClose(new DialogResult(ButtonResult.Abort));

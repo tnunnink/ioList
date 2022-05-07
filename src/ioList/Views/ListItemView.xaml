@@ -22,18 +22,16 @@
       <core:Icon Grid.Column="0"
                  Template="{StaticResource Icon.List}"
                  Height="20" Width="20"
-                 Opacity="{Binding Exists, 
-                 Converter={core:BooleanDoubleConverter TrueValue=100, FalseValue=60}}"
                  Foreground="#B8CCEE" />
 
       <StackPanel Grid.Column="1" Margin="10 0 5 0"
                   VerticalAlignment="Center">
-        <TextBlock Text="{Binding ListName}"
+        <TextBlock Text="{Binding Name}"
                    FontSize="16"
                    VerticalAlignment="Center"
                    Foreground="#DBDFE5"
                    FontWeight="SemiBold" />
-        <TextBlock Text="{Binding ListPath}"
+        <TextBlock Text="{Binding Path}"
                    VerticalAlignment="Center"
                    Foreground="#7093C1"
                    FontSize="11"

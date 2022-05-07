@@ -15,22 +15,30 @@
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource ShellStyle}">
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="30"/>
+    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="360" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <Border Grid.Column="0"
+    <Border Grid.Row="0" Grid.Column="0"
             Background="{StaticResource Brush.WindowHeader.Background}"
             BorderThickness="0">
       <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ListRegion}" />
     </Border>
 
-    <Border Grid.Column="1"
+    <Border Grid.Row="0" Grid.Column="1"
             Background="{StaticResource Brush.Primary.Background}"
             BorderThickness="0">
       <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />
     </Border>
 
+    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+            BorderThickness="0">
+      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.FooterRegion}" />
+    </Border>
   </Grid>
 </Window>

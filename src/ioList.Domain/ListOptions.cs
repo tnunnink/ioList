@@ -16,8 +16,8 @@
         public List List { get; private set; }
         public bool FilterOnReferenced { get; set; }
         public bool FilterOnComment { get; set; }
-        public bool SearchForBuffers { get; set; }
-        public bool SearchForScaling { get; set; }
+        public bool SearchBuffers { get; set; }
+        public bool SearchScalings { get; set; }
 
         public static ListOptions Default(List list)
         {
@@ -25,8 +25,8 @@
             {
                 FilterOnReferenced = true,
                 FilterOnComment = true,
-                SearchForBuffers = true,
-                SearchForScaling = true
+                SearchBuffers = true,
+                SearchScalings = true
             };
         }
     }

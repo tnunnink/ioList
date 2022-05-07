@@ -22,8 +22,8 @@
   
   <SolidColorBrush x:Key="Brush.Panel.Background" Color="#FFFFFF" />
   
-  <SolidColorBrush x:Key="Brush.Icon.Foreground" Color="#FFFFFF" />
-  <SolidColorBrush x:Key="Brush.Icon.MouseOverForeground" Color="#FFFFFF" />
+  <SolidColorBrush x:Key="Brush.Icon.Foreground" Color="#A6B5D2" />
+  <SolidColorBrush x:Key="Brush.Icon.MouseOverForeground" Color="#EC65E3" />
   <SolidColorBrush x:Key="Brush.Icon.MouseOverBackground" Color="#FFFFFF" />
   <SolidColorBrush x:Key="Brush.Icon.PressedBackground" Color="#FFFFFF" />
   <SolidColorBrush x:Key="Brush.Icon.PressedBorder" Color="#FFFFFF" />
@@ -40,10 +40,10 @@
   <SolidColorBrush x:Key="Brush.Button.Secondary.MouseOver" Color="#A6AAAF" />
   <SolidColorBrush x:Key="Brush.Button.Secondary.Pressed" Color="#7B808B" />
   
-  <SolidColorBrush x:Key="Brush.Control.Background" Color="#FBFDFF" />
+  <SolidColorBrush x:Key="Brush.Control.Background" Color="#FFFFFF" />
   <SolidColorBrush x:Key="Brush.Control.Foreground" Color="#385B6E" />
-  <SolidColorBrush x:Key="Brush.Control.Border" Color="#BBC6CC" />
-  <SolidColorBrush x:Key="Brush.Control.FocusBorder" Color="#3988D9" />
+  <SolidColorBrush x:Key="Brush.Control.Border" Color="#D7E1E6" />
+  <SolidColorBrush x:Key="Brush.Control.FocusBorder" Color="#71CEF1" />
   <SolidColorBrush x:Key="Brush.Control.ErrorBorder" Color="#D99AA5" />
   
   

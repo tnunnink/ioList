@@ -11,65 +11,41 @@
               Background="{TemplateBinding Background}"
               BorderBrush="{TemplateBinding BorderBrush}"
               BorderThickness="{TemplateBinding BorderThickness}"
-              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(core:BorderProperties.CornerRadius)}">
-        <Border x:Name="InnerBorder"
-                Margin="{TemplateBinding Padding}">
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <core:Icon x:Name="Icon"
-                           Grid.Column="0"
-                           Template="{TemplateBinding Icon}"
-                           Height="{TemplateBinding IconHeight}"
-                           Width="{TemplateBinding IconWidth}"
-                           Margin="{TemplateBinding ContentMargin}"/>  
-            <ContentPresenter Grid.Column="1" x:Name="ContentPresenter"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Margin="{TemplateBinding ContentMargin}"
-                              Focusable="False"
-                              RecognizesAccessKey="True"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-          </Grid>
-        </Border>
+              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},
+               Path=(core:BorderProperties.CornerRadius)}">
+        <core:Icon x:Name="Icon"
+                   Template="{TemplateBinding Icon}"
+                   Margin="{TemplateBinding Padding}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
       </Border>
     </Grid>
-
-    <ControlTemplate.Triggers>
-      <Trigger Property="IsEnabled" Value="False">
-        <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
-      </Trigger>
-    </ControlTemplate.Triggers>
   </ControlTemplate>
 
   <Style x:Key="Style.Button.Icon" TargetType="{x:Type core:IconButton}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
         <Setter Property="Foreground" Value="{StaticResource Brush.Icon.MouseOverForeground}" />
-        <Setter Property="Background" Value="{StaticResource Brush.Icon.MouseOverBackground}" />
       </Trigger>
-      <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.Icon.PressedBackground}" />
-        <Setter Property="BorderBrush" Value="{StaticResource Brush.Icon.PressedBorder}" />
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
       </Trigger>
     </Style.Triggers>
+    <Setter Property="Template" Value="{StaticResource Template.Button.Icon}" />
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Icon.Foreground}" />
+    <Setter Property="UseLayoutRounding" Value="False" />
+    <Setter Property="SnapsToDevicePixels" Value="False" />
+    <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Icon.Foreground}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Padding" Value="3" />
-    <Setter Property="IconHeight" Value="16" />
-    <Setter Property="IconWidth" Value="16" />
-    <Setter Property="UseLayoutRounding" Value="False" />
-    <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="IsTabStop" Value="False" />
-    <Setter Property="Template" Value="{StaticResource Template.Button.Icon}" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="Width" Value="20" />
   </Style>
   <Style TargetType="{x:Type core:IconButton}" BasedOn="{StaticResource Style.Button.Icon}" />
 </ResourceDictionary>

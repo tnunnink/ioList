@@ -1,6 +1,6 @@
 ﻿namespace ioList.Services
 {
-    public interface IListServiceProvider
+    public interface IListProvider
     {
         public IListService Connect(string listPath);
     }

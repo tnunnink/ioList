@@ -6,6 +6,7 @@
     <ResourceDictionary Source="Styles/ListViewItemStyle.xaml" />
     <ResourceDictionary Source="Styles/IconButtonStyle.xaml" />
     <ResourceDictionary Source="Styles/TextBoxStyle.xaml" />
+    <ResourceDictionary Source="Styles/FileExplorerTextBox.xaml" />
     <ResourceDictionary Source="Styles/WindowStyle.xaml"/>
     <ResourceDictionary Source="Styles/DialogStyle.xaml" />
     <ResourceDictionary Source="Icons/GenericIcons.xaml" />

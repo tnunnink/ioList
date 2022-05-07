@@ -15,8 +15,6 @@
     <Style TargetType="{x:Type core:IconButton}" BasedOn="{StaticResource Style.Button.Icon}">
       <Setter Property="Padding" Value="7" />
       <Setter Property="Margin" Value="0 10"></Setter>
-      <Setter Property="IconHeight" Value="14" />
-      <Setter Property="IconWidth" Value="14" />
       <Setter Property="core:BorderProperties.CornerRadius" Value="10" />
     </Style>
   </UserControl.Resources>
