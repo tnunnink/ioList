@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ioList.Domain;
 using ioList.Services;
 
@@ -15,6 +16,16 @@ namespace ioList.Data
         public void Dispose()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void RenameList(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name can not be null or empty.");
+            
+            _context.List.Name = name;
+
+            _context.SaveChanges();
         }
 
         public IEnumerable<Card> GetCards()

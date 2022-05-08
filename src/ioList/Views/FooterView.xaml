@@ -13,11 +13,21 @@
   <Border Background="#E4E8EC">
     <Grid>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto" />
         <ColumnDefinition />
-        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      
+
+      <StackPanel Grid.Column="0" Orientation="Horizontal">
+        <core:IconButton Icon="{StaticResource Icon.Notification}"
+                         Margin="5" 
+                         ToolTip="Event Log"/>
+        <TextBlock Text="{Binding LogMessage}"
+                   FontSize="11"
+                   Foreground="{StaticResource Brush.Control.Foreground}"
+                   VerticalAlignment="Center" />
+      </StackPanel>
+
       <StackPanel Grid.Column="2" Orientation="Horizontal">
         <!--Place Buttons here-->
       </StackPanel>

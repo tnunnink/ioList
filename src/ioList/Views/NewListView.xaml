@@ -32,127 +32,155 @@
 
   <Border Background="#F4F6F8">
     <Grid Margin="20">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-      <StackPanel Grid.Row="0">
-        <TextBlock
-          Text="List File"
-          FontSize="18"
-          FontWeight="SemiBold"
-          Margin="0 2"
-          Foreground="#4B8DB8"
-          HorizontalAlignment="Left" />
-        <TextBlock
-          Text="Specify the file name and directory in which to create a new IO list."
-          FontSize="11"
-          TextWrapping="Wrap"
-          Foreground="#81878D"
-          HorizontalAlignment="Left" />
-      </StackPanel>
-
-      <StackPanel Grid.Row="1"
-                  Margin="0 20">
-        <Border CornerRadius="5 5 0 0"
-                Background="#F9FBFC"
-                BorderThickness="1 1 1 0"
-                BorderBrush="#D7E1E6">
-          <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition Width="4*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0"
-                       Text="List Name"
-                       FontSize="12"
-                       FontWeight="SemiBold"
-                       Foreground="#4C6C7D"
-                       HorizontalAlignment="Left"
-                       Margin="0 5 0 0" />
-            <StackPanel Grid.Column="1">
-              <TextBox Text="{Binding ListName}" />
-              <TextBlock Text="Represents the name of the list file. This is a required field."
-                         FontSize="11"
-                         Margin="2 5"
-                         Foreground="#92A3AB"
-                         HorizontalAlignment="Left" />
-            </StackPanel>
-          </Grid>
-        </Border>
-
-        <Border Background="#F9FBFC"
-                BorderThickness="1 1 1 0"
-                BorderBrush="#D7E1E6">
-          <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition Width="4*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0"
-                       Text="List Directory"
-                       FontSize="12"
-                       FontWeight="SemiBold"
-                       Foreground="#4C7094"
-                       HorizontalAlignment="Left"
-                       Margin="0 5 0 0" />
-            <StackPanel Grid.Column="1">
-              <core:FileExplorerTextBox Style="{StaticResource Style.FileExplorerTextBox}"
-                                        Text="{Binding ListDirectory}"
-                                        SelectFolder="True" />
-              <TextBlock Text="The directory in which to create the list."
-                         FontSize="11"
-                         Margin="2 5"
-                         Foreground="#7B92AA"
-                         HorizontalAlignment="Left" />
-            </StackPanel>
-          </Grid>
-        </Border>
-
-        <Border CornerRadius="0 0 5 5"
-                Background="#F9FBFC"
-                BorderThickness="1"
-                BorderBrush="#D7E1E6">
-          <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition Width="4*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0"
-                       Text="Comment"
-                       FontSize="12"
-                       FontWeight="SemiBold"
-                       Foreground="#4C7094"
-                       HorizontalAlignment="Left"
-                       Margin="0 5 0 0" />
-            <StackPanel Grid.Column="1">
-              <TextBox Text="{Binding Comment}" />
-              <TextBlock Text="Add additional comments if desired."
-                         FontSize="11"
-                         Margin="2 5"
-                         Foreground="#7B92AA"
-                         HorizontalAlignment="Left" />
-            </StackPanel>
-          </Grid>
-        </Border>
-      </StackPanel>
-
-      <Border Grid.Row="3">
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right">
-          <Button Height="26" Width="80"
-                  Content="Create" Margin="10 0 0 0"
-                  Command="{Binding CreateListCommand}" />
-          <Button Height="26" Width="80"
-                  Content="Cancel" Margin="10 0 0 0"
-                  Command="{Binding CancelCommand}"
-                  Style="{StaticResource Style.Button.Secondary}" />
+        <StackPanel Grid.Row="0"
+                    Visibility="{Binding Creating, Converter={core:BooleanVisibilityConverter IsInverse=True}}">
+          <TextBlock
+            Text="New List"
+            FontSize="20"
+            FontWeight="SemiBold"
+            Margin="0 2"
+            Foreground="#4B8DB8"
+            HorizontalAlignment="Left" />
+          <TextBlock
+            Text="Specify the file name and directory in which to create a new IO list."
+            FontSize="11"
+            TextWrapping="Wrap"
+            Foreground="#81878D"
+            HorizontalAlignment="Left" />
         </StackPanel>
-      </Border>
+
+        <StackPanel Grid.Row="1"
+                    Margin="0 20"
+                    Visibility="{Binding Creating, Converter={core:BooleanVisibilityConverter IsInverse=True}, IsAsync=True}">
+          <Border CornerRadius="5 5 0 0"
+                  Background="#F9FBFC"
+                  BorderThickness="1 1 1 0"
+                  BorderBrush="#D7E1E6">
+            <Grid Margin="10">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0"
+                         Text="List Name"
+                         FontSize="12"
+                         FontWeight="SemiBold"
+                         Foreground="#4C6C7D"
+                         HorizontalAlignment="Left"
+                         Margin="0 5 0 0" />
+              <StackPanel Grid.Column="1">
+                <TextBox Text="{Binding List.Name}" />
+                <TextBlock Text="Represents the name of the list file. This is a required field."
+                           FontSize="11"
+                           Margin="2 5"
+                           Foreground="#92A3AB"
+                           HorizontalAlignment="Left" />
+              </StackPanel>
+            </Grid>
+          </Border>
+
+          <Border Background="#F9FBFC"
+                  BorderThickness="1 1 1 0"
+                  BorderBrush="#D7E1E6">
+            <Grid Margin="10">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0"
+                         Text="List Directory"
+                         FontSize="12"
+                         FontWeight="SemiBold"
+                         Foreground="#4C7094"
+                         HorizontalAlignment="Left"
+                         Margin="0 5 0 0" />
+              <StackPanel Grid.Column="1">
+                <core:FileExplorerTextBox Style="{StaticResource Style.FileExplorerTextBox}"
+                                          Text="{Binding List.Directory}"
+                                          SelectFolder="True" />
+                <TextBlock Text="The directory in which to create the list."
+                           FontSize="11"
+                           Margin="2 5"
+                           Foreground="#7B92AA"
+                           HorizontalAlignment="Left" />
+              </StackPanel>
+            </Grid>
+          </Border>
+
+          <Border CornerRadius="0 0 5 5"
+                  Background="#F9FBFC"
+                  BorderThickness="1"
+                  BorderBrush="#D7E1E6">
+            <Grid Margin="10">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0"
+                         Text="Comment"
+                         FontSize="12"
+                         FontWeight="SemiBold"
+                         Foreground="#4C7094"
+                         HorizontalAlignment="Left"
+                         Margin="0 5 0 0" />
+              <StackPanel Grid.Column="1">
+                <TextBox Text="{Binding List.Comment}" />
+                <TextBlock Text="Add additional comments if desired."
+                           FontSize="11"
+                           Margin="2 5"
+                           Foreground="#7B92AA"
+                           HorizontalAlignment="Left" />
+              </StackPanel>
+            </Grid>
+          </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Margin="0 20"
+                    Visibility="{Binding Creating, Converter={core:BooleanVisibilityConverter}, IsAsync=True}">
+          <core:Icon Template="{StaticResource Icon.App}"
+                     Height="30" Width="30"
+                     Foreground="#4B8DB8"
+                     Margin="0 10 0 0" />
+          <TextBlock Text="Creating New List"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Center"
+                     Foreground="#4B8DB8"
+                     FontSize="20"
+                     FontWeight="SemiBold"
+                     Margin="0 10 0 0" />
+          <TextBlock
+            Text="Hang tight while we create this awesome new IO list. This should not take long. If something is wrong, press Cancel to abort the creation process."
+            TextWrapping="Wrap"
+            TextAlignment="Center"
+            Foreground="#81878D"
+            Margin="20 10" />
+        </StackPanel>
+
+        <Border Grid.Row="3">
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Right">
+            <Button Height="26" Width="80"
+                    Content="Create" Margin="10 0 0 0"
+                    Command="{Binding CreateListCommand}"
+                    Visibility="{Binding Creating, Converter={core:BooleanVisibilityConverter IsInverse=True}, IsAsync=True}" />
+            <Button Height="26" Width="80"
+                    Content="Cancel" Margin="10 0 0 0"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource Style.Button.Secondary}" />
+          </StackPanel>
+        </Border>
+      </Grid>
     </Grid>
+
   </Border>
 
 </UserControl>

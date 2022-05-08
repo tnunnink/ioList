@@ -7,9 +7,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              prism:Dialog.WindowStyle="{DynamicResource LocalDialogStyle}"
              xmlns:dialogs="http://prismlibrary.com/"
-             xmlns:viewModels="clr-namespace:ioList.Module.Settings.ViewModels"
              xmlns:core="http://CoreTools.com/wpf"
-             d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
   <UserControl.Resources>

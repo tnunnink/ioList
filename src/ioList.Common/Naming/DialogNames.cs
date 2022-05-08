@@ -1,9 +1,10 @@
-﻿namespace ioList.Common
+﻿namespace ioList.Common.Naming
 {
     public class DialogNames
     {
         public static readonly string FileLoadingDialog = nameof(FileLoadingDialog);
         public static readonly string SettingsDialog = nameof(SettingsDialog);
         public static readonly string NewListDialog = nameof(NewListDialog);
+        public static readonly string RenameListDialog = nameof(RenameListDialog);
     }
 }

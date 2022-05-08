@@ -13,8 +13,8 @@ namespace ioList.Domain
             InitializeWatcher(_info);
         }
 
-        public string Name => _info.Name;
-        public string Path => _info.DirectoryName;
+        public string Name => Path.GetFileNameWithoutExtension(_info.Name);
+        public string DirectoryName => _info.DirectoryName;
         public string FullName => _info.FullName;
         public string Extension => _info.Extension;
         public bool Exists => _info.Exists;
@@ -23,6 +23,16 @@ namespace ioList.Domain
         public DateTime LastAccessTime => _info.LastAccessTime;
         public event EventHandler<ListFile> FileChanged;
         public event EventHandler<ListFile> FileRenamed;
+
+        public void Rename(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name can not be null or empty.");
+            
+            var newName = Path.Combine(DirectoryName, name);
+            
+            File.Move(FullName, newName);
+        }
 
         private void OnFileCreated(object sender, FileSystemEventArgs e)
         {

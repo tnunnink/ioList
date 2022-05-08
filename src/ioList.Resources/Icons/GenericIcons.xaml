@@ -156,6 +156,17 @@
     </Viewbox>
   </ControlTemplate>
   
+  <ControlTemplate x:Key="Icon.List.Add" TargetType="{x:Type core:Icon}">
+    <Viewbox>
+      <Path
+        Fill="{TemplateBinding Foreground}"
+        Stretch="Uniform"
+        SnapsToDevicePixels="False"
+        UseLayoutRounding="False"
+        Data="M2,16H10V14H2M18,14V10H16V14H12V16H16V20H18V16H22V14M14,6H2V8H14M14,10H2V12H14V10Z" />
+    </Viewbox>
+  </ControlTemplate>
+  
   <ControlTemplate x:Key="Icon.Load" TargetType="{x:Type core:Icon}">
     <Viewbox>
       <Path
@@ -175,6 +186,17 @@
         SnapsToDevicePixels="False"
         UseLayoutRounding="False"
         Data="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z" />
+    </Viewbox>
+  </ControlTemplate>
+  
+  <ControlTemplate x:Key="Icon.Notification" TargetType="{x:Type core:Icon}">
+    <Viewbox>
+      <Path
+        Fill="{TemplateBinding Foreground}"
+        Stretch="Uniform"
+        SnapsToDevicePixels="False"
+        UseLayoutRounding="False"
+        Data="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" />
     </Viewbox>
   </ControlTemplate>
   

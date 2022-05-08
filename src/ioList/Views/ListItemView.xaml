@@ -22,7 +22,8 @@
       <core:Icon Grid.Column="0"
                  Template="{StaticResource Icon.List}"
                  Height="20" Width="20"
-                 Foreground="#B8CCEE" />
+                 Foreground="#B8CCEE" 
+                 Visibility="{Binding }"/>
 
       <StackPanel Grid.Column="1" Margin="10 0 5 0"
                   VerticalAlignment="Center">
@@ -31,7 +32,7 @@
                    VerticalAlignment="Center"
                    Foreground="#DBDFE5"
                    FontWeight="SemiBold" />
-        <TextBlock Text="{Binding Path}"
+        <TextBlock Text="{Binding DirectoryName}"
                    VerticalAlignment="Center"
                    Foreground="#7093C1"
                    FontSize="11"

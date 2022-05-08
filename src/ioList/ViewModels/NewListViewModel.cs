@@ -1,68 +1,74 @@
-﻿using CoreTools.WPF.Mvvm;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using CoreTools.WPF.Mvvm;
+using EntityObserver;
 using ioList.Domain;
+using ioList.Observers;
 using ioList.Services;
+using NLog;
 using Prism.Commands;
+using Prism.Services.Dialogs;
 
 namespace ioList.ViewModels
 {
     public class NewListViewModel : DialogViewModelBase
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly IListBuilder _listBuilder;
-        private string _listName;
-        private string _listDirectory;
-        private string _comment;
         private DelegateCommand _createListCommand;
-
-        public NewListViewModel()
-        {
-        }
+        private readonly ListObserver _list;
+        private bool _creating;
 
         public NewListViewModel(IListBuilder listBuilder)
         {
             _listBuilder = listBuilder;
+            List = new ListObserver(new List());
             Title = "New List";
         }
 
-
-        public string ListName
+        public ListObserver List
         {
-            get => _listName;
-            set => SetProperty(ref _listName, value);
+            get => _list;
+            private init => SetProperty(ref _list, value);
         }
 
-        public string ListDirectory
+        public bool Creating
         {
-            get => _listDirectory;
-            set => SetProperty(ref _listDirectory, value);
-        }
-        
-        public string Comment
-        {
-            get => _comment;
-            set => SetProperty(ref _comment, value);
+            get => _creating;
+            set => SetProperty(ref _creating, value);
         }
 
         public DelegateCommand CreateListCommand =>
             _createListCommand ??= new DelegateCommand(ExecuteCreateListCommand, CanExecuteCreateListCommand)
-                .ObservesProperty(() => ListName)
-                .ObservesProperty(() => ListDirectory);
+                .ObservesProperty(() => List.IsChanged);
 
         private void ExecuteCreateListCommand()
         {
-            var list = new List(ListName, ListDirectory, Comment);
-            _listBuilder.Build(list);
+            List.Validate(ValidationOption.All);
+
+            if (List.HasErrors) return;
+
+            Creating = true;
+            
+            _listBuilder.BuildAsync(List.Entity, CancellationToken.None)
+                .Await(ListCreationComplete, ListCreationError, true);
         }
 
-        private bool CanExecuteCreateListCommand() => IsValidName(ListName) && IsValidDirectory(ListDirectory);
+        private bool CanExecuteCreateListCommand() =>
+            !string.IsNullOrEmpty(List.Name) && !string.IsNullOrEmpty(List.Directory);
 
-        private static bool IsValidName(string name)
+        private void ListCreationComplete()
         {
-            return !string.IsNullOrEmpty(name);
+            Logger.Info($"IO list {List.Name} was created by {List.Entity.CreatedBy}");
+            var parameters = new DialogParameters { { "List", List } };
+            RaiseRequestClose(new DialogResult(ButtonResult.OK, parameters));
         }
 
-        private static bool IsValidDirectory(string directory)
+        private void ListCreationError(Exception obj)
         {
-            return !string.IsNullOrEmpty(directory);
+            Logger.Error(obj, $"IO list creation failed with message {obj.Message}");
+            RaiseRequestClose(new DialogResult(ButtonResult.None));
         }
     }
 }

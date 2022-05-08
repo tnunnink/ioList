@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using ioList.Domain;
 using ioList.Services;
 using Microsoft.Data.Sqlite;
@@ -8,16 +9,15 @@ namespace ioList.Data
 {
     public class ListBuilder : IListBuilder
     {
-        public void Build(List list)
+        public async Task BuildAsync(List list, CancellationToken token)
         {
-            var path = Path.Combine(list.Directory, $"{list.Name}.db");
-            var connection = new SqliteConnectionStringBuilder { DataSource = path };
+            var connection = new SqliteConnectionStringBuilder { DataSource = list.FullPath };
             var options = new DbContextOptionsBuilder<ListContext>().UseSqlite(connection.ConnectionString).Options;
-            
-            using var context = new ListContext(options);
-            context.Database.EnsureCreated();
-            context.Lists.Add(list);
-            context.SaveChanges();
+
+            await using var context = new ListContext(options);
+            await context.Database.EnsureCreatedAsync(token);
+            await context.Lists.AddAsync(list, token);
+            await context.SaveChangesAsync(token);
         }
     }
 }

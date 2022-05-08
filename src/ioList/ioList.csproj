@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="EntityObserver" Version="1.0.0" />
+      <PackageReference Include="NLog" Version="4.7.15" />
       <PackageReference Include="Prism.Core" Version="8.1.97" />
       <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />

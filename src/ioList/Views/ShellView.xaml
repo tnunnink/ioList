@@ -6,6 +6,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:viewModels="clr-namespace:ioList.ViewModels"
         xmlns:common="clr-namespace:ioList.Common;assembly=ioList.Common"
+        xmlns:naming="clr-namespace:ioList.Common.Naming;assembly=ioList.Common"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
@@ -27,18 +28,18 @@
     <Border Grid.Row="0" Grid.Column="0"
             Background="{StaticResource Brush.WindowHeader.Background}"
             BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ListRegion}" />
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ListRegion}" />
     </Border>
 
     <Border Grid.Row="0" Grid.Column="1"
             Background="{StaticResource Brush.Primary.Background}"
             BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}" />
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ContentRegion}" />
     </Border>
 
     <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
             BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.FooterRegion}" />
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.FooterRegion}" />
     </Border>
   </Grid>
 </Window>

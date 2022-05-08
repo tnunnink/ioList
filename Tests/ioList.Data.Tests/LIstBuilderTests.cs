@@ -17,12 +17,15 @@ namespace ioList.Data.Tests
             var path = Path.Combine(Environment.CurrentDirectory, @"TestFiles");
             var context = LogixContext.Load(L5X);
 
-            var list = new List("Test", path, context.ToString(), "This is a test");
+            var list = new List
+            {
+                Name = "Test",
+                Directory = path,
+                Comment = "This is a test"
+            };
             
             var builder = new ListBuilder();
 
-            builder.Build(list);
-            
             FileAssert.Exists(Path.Combine(path, "Test.db"));
         }
     }

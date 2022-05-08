@@ -1,9 +1,11 @@
-﻿using ioList.Domain;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ioList.Domain;
 
 namespace ioList.Services
 {
     public interface IListBuilder
     {
-        public void Build(List list);
+        public Task BuildAsync(List list, CancellationToken token);
     }
 }

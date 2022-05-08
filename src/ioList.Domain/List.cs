@@ -5,25 +5,22 @@ namespace ioList.Domain
 {
     public class List
     {
-        private List()
+        public List()
         {
-        }
-
-        public List(string name, string directory, string comment = null)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Comment = comment ?? string.Empty;
-            Directory = directory ?? throw new ArgumentNullException(nameof(directory));
+            Id = 0;
+            Name = string.Empty;
+            Directory = string.Empty;
+            Comment = string.Empty;
             CreatedBy = Environment.UserName;
             CreatedOn = DateTime.Now;
         }
 
-        public int Id { get; }
-        public string Name { get; private set; }
-        public string Comment { get; private set; }
-        public string Directory { get; private set; }
-        public string FullPath => Path.Combine(Directory, $"{Name}.db");
+        public int Id { get; private set; }
+        public string Name { get; set; }
+        public string Directory { get; set; }
+        public string Comment { get; set; }
         public string CreatedBy { get; private set; }
         public DateTime CreatedOn { get; private set; }
+        public string FullPath => Path.Combine(Directory, $"{Name}.db");
     }
 }

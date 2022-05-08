@@ -1,4 +1,4 @@
-namespace ioList.Common
+namespace ioList.Common.Naming
 {
     public class RegionNames
     {
