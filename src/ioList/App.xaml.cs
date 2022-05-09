@@ -28,6 +28,7 @@ namespace ioList
             
             containerRegistry.RegisterDialog<NewListView>(DialogNames.NewListDialog);
             containerRegistry.RegisterDialog<RenameListView>(DialogNames.RenameListDialog);
+            containerRegistry.RegisterDialog<DeleteListView>(DialogNames.DeleteListDialog);
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
@@ -62,6 +63,7 @@ namespace ioList
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion<ListView>(RegionNames.ListRegion);
             regionManager.RegisterViewWithRegion<FooterView>(RegionNames.FooterRegion);
+            regionManager.RegisterViewWithRegion<DefaultView>(RegionNames.ContentRegion);
         }
 
         private static void ConfigureLogging()

@@ -24,8 +24,6 @@ namespace ioList.ViewModels
         private DelegateCommand _deleteListCommand;
         private ObservableCollection<ListFileObserver> _lists;
         private ListFileObserver _selectedList;
-        private bool _addingList;
-
 
         public ListViewModel()
         {
@@ -59,12 +57,6 @@ namespace ioList.ViewModels
         {
             get => _selectedList;
             set => SetProperty(ref _selectedList, value);
-        }
-
-        public bool AddingList
-        {
-            get => _addingList;
-            set => SetProperty(ref _addingList, value);
         }
 
         public DelegateCommand NewListCommand =>
@@ -109,18 +101,26 @@ namespace ioList.ViewModels
 
         private void ExecuteRemoveListCommand()
         {
-            var file = SelectedList.Entity;
-
-            //todo confirmation...
-
-            _listFileService.Remove(file);
-
-            Load();
+            _dialogService.ShowDialog(DialogNames.RemoveListDialog, r =>
+            {
+                if (r.Result != ButtonResult.OK) return;
+                
+                _listFileService.Remove(SelectedList.Entity);
+                Lists.Remove(SelectedList);
+            });
         }
 
         private void ExecuteDeleteListCommand()
         {
-            //_dialogService.ShowConfigirmationDialog();
+            var parameters = new DialogParameters { { "ListName", SelectedList.Name } };
+            _dialogService.ShowDialog(DialogNames.DeleteListDialog, parameters, r =>
+            {
+                if (r.Result != ButtonResult.Yes) return;
+                
+                _listFileService.Remove(SelectedList.Entity);
+                SelectedList.Entity.Delete();
+                Lists.Remove(SelectedList);
+            });
         }
 
         private bool CanExecuteRemoveListCommand() => SelectedList is not null;

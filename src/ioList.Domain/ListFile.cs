@@ -34,6 +34,8 @@ namespace ioList.Domain
             File.Move(FullName, newName);
         }
 
+        public void Delete() => File.Delete(FullName);
+
         private void OnFileCreated(object sender, FileSystemEventArgs e)
         {
             var fullPath = e.FullPath;

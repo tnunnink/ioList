@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:core="http://CoreTools.com/wpf"
              prism:ViewModelLocator.AutoWireViewModel="True"
              prism:Dialog.WindowStyle="{DynamicResource LocalDialogStyle}"
-             d:DataContext="{d:DesignInstance Type=viewModels:RenameListViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewModels:DeleteListViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="400">
   <UserControl.Resources>
@@ -26,37 +27,61 @@
       </Style>
     </ResourceDictionary>
   </UserControl.Resources>
-  
-  <Border Background="{StaticResource Brush.Primary.Background}">
-    <Grid Margin="20 10">
+
+  <Border Background="{StaticResource Brush.WindowHeader.Background}">
+    <Grid Margin="20">
       <Grid.RowDefinitions>
         <RowDefinition />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-      <TextBlock Grid.Row="0"
-                 Margin="0 5"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"
-                 Text="{Binding Message}"
-                 FontSize="16"
-                 FontWeight="SemiBold"
-                 TextWrapping="Wrap"
-                 Foreground="#81878D"/>
+      <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <core:Icon Grid.Column="0"
+                   Template="{StaticResource Icon.Warning}"
+                   Height="36" Width="36" 
+                   Foreground="Salmon"
+                   VerticalAlignment="Top"
+                   Opacity="0.7" />
+
+        <StackPanel Grid.Column="1" Margin="20 0" >
+          <TextBlock
+            Text="Delete List Confirmation"
+            FontSize="16"
+            FontWeight="DemiBold"
+            Foreground="Salmon"
+            VerticalAlignment="Center"/>
+          <TextBlock
+            VerticalAlignment="Center"
+            Margin="0 10"
+            Text="{Binding Message}"
+            FontSize="14"
+            TextWrapping="Wrap"
+            Foreground="#81878D" />
+        </StackPanel>
+
+      </Grid>
+
       <StackPanel Grid.Row="1"
                   Margin="0 5"
                   Orientation="Horizontal"
                   HorizontalAlignment="Right">
-        <Button Height="26" 
+        <Button Height="26"
                 Width="80"
                 Margin="10 0 0 0"
-                Content="Yes" 
+                Content="Delete"
+                Background="Salmon"
+                Foreground="Firebrick"
                 Command="{Binding YesCommand}" />
-        <Button Height="26" 
+        <Button Height="26"
                 Width="80"
                 Margin="10 0 0 0"
-                Content="No"
-                Command="{Binding NoCommand}"
+                Content="Cancel"
+                Command="{Binding CancelCommand}"
                 Style="{StaticResource Style.Button.Secondary}" />
       </StackPanel>
     </Grid>
