@@ -2,13 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="http://CoreTools.com/wpf">
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Brushes.xaml" />
+    <ResourceDictionary Source="../Brushes/DarkBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/LightBrushes.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <ControlTemplate x:Key="Template.TextBox" TargetType="{x:Type TextBox}">
     <Grid>
       <Border x:Name="FocusShadow"
-              BorderBrush="{StaticResource Brush.Control.FocusBorder}"
+              BorderBrush="{StaticResource Brush.Common.Control.Accent}"
               CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, 
               Path=(core:BorderProperties.CornerRadius)}"
               Margin="-1"
@@ -17,7 +19,7 @@
         <Border.Effect>
           <DropShadowEffect Color="Black"
                             BlurRadius="8"
-                            ShadowDepth="2"
+                            ShadowDepth="3"
                             Opacity="0.4" />
         </Border.Effect>
       </Border>
@@ -37,7 +39,7 @@
         </Grid>
       </Border>
       <Border x:Name="FocusBorder"
-              BorderBrush="{StaticResource Brush.Control.FocusBorder}"
+              BorderBrush="{StaticResource Brush.Common.Control.Accent}"
               CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, 
               Path=(core:BorderProperties.CornerRadius)}"
               Margin="-1"
@@ -58,21 +60,24 @@
         <Setter TargetName="FocusShadow" Property="Visibility" Value="Visible" />
       </Trigger>
       <Trigger Property="Validation.HasError" Value="True">
-        <Setter Property="BorderBrush" Value="{StaticResource Brush.Control.ErrorBorder}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Common.Control.Error}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{StaticResource Brush.Control.ErrorBorder}" />
+        <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{StaticResource Brush.Common.Control.Error}" />
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <Style x:Key="Style.TextBox" TargetType="{x:Type TextBox}">
+  <Style x:Key="Style.TextBox.Dark" TargetType="{x:Type TextBox}">
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
     <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
-    <Setter Property="Background" Value="{StaticResource Brush.Control.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Control.Foreground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource Brush.Control.Border}" />
-    <!--<Setter Property="SelectionBrush" Value="{t:ThemeResource ResourceKey=ControlHighlightBackground}" />
-    <Setter Property="CaretBrush" Value="{t:ThemeResource ResourceKey=ControlBorder}" />-->
+    <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+    <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+    <Setter Property="Background" Value="{StaticResource Brush.Dark.Control.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Control.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Control.Border}" />
+    <Setter Property="SelectionBrush" Value="{StaticResource Brush.Dark.Control.Selection}" />
+    <Setter Property="CaretBrush" Value="{StaticResource Brush.Dark.Control.Caret}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
     <Setter Property="Height" Value="26" />
@@ -80,10 +85,29 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="AllowDrop" Value="true" />
-    <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
-    <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
-    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
     <Setter Property="Template" Value="{StaticResource Template.TextBox}" />
   </Style>
-  <Style BasedOn="{StaticResource Style.TextBox}" TargetType="{x:Type TextBox}" />
+  
+  <Style x:Key="Style.TextBox.Light" TargetType="{x:Type TextBox}">
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+    <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+    <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+    <Setter Property="Background" Value="{StaticResource Brush.Light.Control.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Light.Control.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Light.Control.Border}" />
+    <Setter Property="SelectionBrush" Value="{StaticResource Brush.Light.Control.Selection}" />
+    <Setter Property="CaretBrush" Value="{StaticResource Brush.Dark.Control.Selection}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
+    <Setter Property="Height" Value="26" />
+    <Setter Property="Padding" Value="5 0 0 0" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="AllowDrop" Value="true" />
+    <Setter Property="Template" Value="{StaticResource Template.TextBox}" />
+  </Style>
+  
+  <Style BasedOn="{StaticResource Style.TextBox.Dark}" TargetType="{x:Type TextBox}" />
 </ResourceDictionary>

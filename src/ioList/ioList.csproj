@@ -26,6 +26,8 @@
     <ItemGroup>
       <ProjectReference Include="..\ioList.Common\ioList.Common.csproj" />
       <ProjectReference Include="..\ioList.Domain\ioList.Domain.csproj" />
+      <ProjectReference Include="..\ioList.Module.Dialogs\ioList.Module.Dialogs.csproj" />
+      <ProjectReference Include="..\ioList.Module.Import\ioList.Module.Import.csproj" />
       <ProjectReference Include="..\ioList.Module.Settings\ioList.Module.Settings.csproj" />
       <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />

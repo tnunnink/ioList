@@ -5,7 +5,8 @@
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="../Icons/GenericIcons.xaml" />
-    <ResourceDictionary Source="../Brushes.xaml" />
+    <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/DarkBrushes.xaml" />
     <ResourceDictionary Source="IconButtonStyle.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
@@ -20,7 +21,7 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="Transparent" />
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Icon.Default}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
@@ -28,7 +29,7 @@
   <ControlTemplate x:Key="Template.FileExplorerTextBox" TargetType="{x:Type core:FileExplorerTextBox}">
     <Grid>
       <Border x:Name="FocusShadow"
-              BorderBrush="{StaticResource Brush.Control.FocusBorder}"
+              BorderBrush="{StaticResource Brush.Common.Control.Accent}"
               CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, 
               Path=(core:BorderProperties.CornerRadius)}"
               Margin="-1"
@@ -71,7 +72,7 @@
         </Grid>
       </Border>
       <Border x:Name="FocusBorder"
-              BorderBrush="{StaticResource Brush.Control.FocusBorder}"
+              BorderBrush="{StaticResource Brush.Common.Control.Accent}"
               CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, 
               Path=(core:BorderProperties.CornerRadius)}"
               Margin="-1"
@@ -92,22 +93,24 @@
         <Setter TargetName="FocusShadow" Property="Visibility" Value="Visible" />
       </Trigger>
       <Trigger Property="Validation.HasError" Value="True">
-        <Setter Property="BorderBrush" Value="{StaticResource Brush.Control.ErrorBorder}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Common.Control.Error}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{StaticResource Brush.Control.ErrorBorder}" />
+        <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{StaticResource Brush.Common.Control.Error}" />
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <Style x:Key="Style.FileExplorerTextBox" TargetType="{x:Type core:FileExplorerTextBox}">
+  <Style x:Key="Style.FileExplorerTextBox.Dark" TargetType="{x:Type core:FileExplorerTextBox}">
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
     <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
     <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
-    <Setter Property="Background" Value="{StaticResource Brush.Control.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Control.Foreground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource Brush.Control.Border}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Dark.Control.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Control.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Control.Border}" />
+    <Setter Property="SelectionBrush" Value="{StaticResource Brush.Dark.Control.Selection}" />
+    <Setter Property="CaretBrush" Value="{StaticResource Brush.Dark.Control.Caret}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
     <Setter Property="Height" Value="26" />
@@ -117,5 +120,5 @@
     <Setter Property="AllowDrop" Value="true" />
     <Setter Property="Template" Value="{StaticResource Template.FileExplorerTextBox}" />
   </Style>
-  <Style BasedOn="{StaticResource Style.FileExplorerTextBox}" TargetType="{x:Type core:FileExplorerTextBox}" />
+  <Style BasedOn="{StaticResource Style.FileExplorerTextBox.Dark}" TargetType="{x:Type core:FileExplorerTextBox}" />
 </ResourceDictionary>

@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="http://CoreTools.com/wpf">
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Brushes.xaml" />
+    <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/LightBrushes.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <ControlTemplate x:Key="Template.Button.Icon" TargetType="{x:Type core:IconButton}">
@@ -25,7 +26,7 @@
   <Style x:Key="Style.Button.Icon" TargetType="{x:Type core:IconButton}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Foreground" Value="{StaticResource Brush.Icon.MouseOverForeground}" />
+        <Setter Property="Foreground" Value="{StaticResource Brush.Common.Icon.MouseOver}" />
       </Trigger>
       <Trigger Property="IsEnabled" Value="False">
         <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
@@ -38,7 +39,7 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="Transparent" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Icon.Foreground}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Icon.Default}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -48,4 +49,31 @@
     <Setter Property="Width" Value="20" />
   </Style>
   <Style TargetType="{x:Type core:IconButton}" BasedOn="{StaticResource Style.Button.Icon}" />
+  
+  <Style x:Key="Style.IconButton.Secondary" TargetType="{x:Type core:IconButton}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource Brush.Common.Icon.MouseOver}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Common.Icon.MouseOver}" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="Template" Value="{StaticResource Template.Button.Icon}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="UseLayoutRounding" Value="False" />
+    <Setter Property="SnapsToDevicePixels" Value="False" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Background" Value="#E4E8EC" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Common.Icon.Default}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Icon.Default}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="Height" Value="22" />
+    <Setter Property="Width" Value="30" />
+  </Style>
 </ResourceDictionary>

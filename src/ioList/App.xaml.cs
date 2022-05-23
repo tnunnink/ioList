@@ -1,15 +1,19 @@
 ﻿using System.Windows;
 using CoreTools.WPF.Prism;
 using CoreTools.WPF.Prism.RegionBehaviors;
+using ioList.Commands;
 using ioList.Common.Logging;
 using ioList.Common.Naming;
 using ioList.Data;
+using ioList.Module.Dialogs;
+using ioList.Module.Import;
 using ioList.Services;
 using ioList.ViewModels;
 using ioList.Views;
 using NLog;
 using NLog.Config;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Regions;
 
 namespace ioList
@@ -21,14 +25,12 @@ namespace ioList
             containerRegistry.Register<IListFileService, ListFileService>();
             containerRegistry.Register<IListBuilder, ListBuilder>();
             containerRegistry.Register<IListProvider, ListProvider>();
-            containerRegistry.Register<IListService, ListService>();
+            containerRegistry.Register<IListRepository, ListRepository>();
 
-            containerRegistry.RegisterForNavigation<ContentView, ContentViewModel>();
+            containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
+
+            containerRegistry.RegisterForNavigation<ListView, ListViewModel>();
             containerRegistry.RegisterForNavigation<ListInvalidView, ListInvalidViewModel>();
-            
-            containerRegistry.RegisterDialog<NewListView>(DialogNames.NewListDialog);
-            containerRegistry.RegisterDialog<RenameListView>(DialogNames.RenameListDialog);
-            containerRegistry.RegisterDialog<DeleteListView>(DialogNames.DeleteListDialog);
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
@@ -44,6 +46,11 @@ namespace ioList
             base.ConfigureDefaultRegionBehaviors(regionBehaviors);
         }
 
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<DialogsModule>();
+            moduleCatalog.AddModule<ImportModule>();
+        }
 
         protected override Window CreateShell()
         {
@@ -61,7 +68,8 @@ namespace ioList
             base.OnInitialized();
 
             var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion<ListView>(RegionNames.ListRegion);
+            regionManager.RegisterViewWithRegion<ListMenuView>(RegionNames.ListRegion);
+            regionManager.RegisterViewWithRegion<ListBarView>(RegionNames.ListBarRegion);
             regionManager.RegisterViewWithRegion<FooterView>(RegionNames.FooterRegion);
             regionManager.RegisterViewWithRegion<DefaultView>(RegionNames.ContentRegion);
         }

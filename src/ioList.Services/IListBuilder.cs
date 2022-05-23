@@ -6,6 +6,6 @@ namespace ioList.Services
 {
     public interface IListBuilder
     {
-        public Task BuildAsync(List list, CancellationToken token);
+        public Task Build(List list, CancellationToken token);
     }
 }

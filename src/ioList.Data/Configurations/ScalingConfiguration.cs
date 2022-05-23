@@ -8,7 +8,7 @@ namespace ioList.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Scaling> builder)
         {
-            builder.ToTable(nameof(Scaling)).HasKey(x => x.PointId);
+            builder.ToTable(nameof(Scaling)).HasKey(x => x.TagId);
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  
+  <SolidColorBrush x:Key="Brush.Dark.Primary.Background" Color="#2A2F37" />
+  <SolidColorBrush x:Key="Brush.Dark.Primary.Foreground" Color="#9FB6DB" />
+  <SolidColorBrush x:Key="Brush.Dark.Primary.Border" Color="#242B36" />
+  
+  <SolidColorBrush x:Key="Brush.Dark.Secondary.Background" Color="#363D47" />
+  <SolidColorBrush x:Key="Brush.Dark.Secondary.Foreground" Color="#68788F" />
+  
+  <SolidColorBrush x:Key="Brush.Dark.Button.Default.Background" Color="#363F48" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Default.Foreground" Color="#5C7187" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Default.Border" Color="#242A30" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Default.MouseOver" Color="#2E353D" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Default.Pressed" Color="#22272D" />
+  
+  <SolidColorBrush x:Key="Brush.Dark.Button.Accent.Background" Color="#65A9EC" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Accent.Foreground" Color="#173B60" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Accent.Border" Color="#173B60" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Accent.MouseOver" Color="#4A81B8" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Accent.Pressed" Color="#B4CFE9" />
+  
+  <SolidColorBrush x:Key="Brush.Dark.Button.Critical.Background" Color="#DF9B9B" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Critical.Foreground" Color="#952929" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Critical.Border" Color="#952929" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Critical.MouseOver" Color="#C77171" />
+  <SolidColorBrush x:Key="Brush.Dark.Button.Critical.Pressed" Color="#E5CACA" />
+  
+  <SolidColorBrush x:Key="Brush.Dark.Control.Background" Color="#20252D" />
+  <SolidColorBrush x:Key="Brush.Dark.Control.Foreground" Color="#C5EDFF" />
+  <SolidColorBrush x:Key="Brush.Dark.Control.Border" Color="#181F2A" />
+  <SolidColorBrush x:Key="Brush.Dark.Control.Selection" Color="#65A9EC" />
+  <SolidColorBrush x:Key="Brush.Dark.Control.Caret" Color="#3675D4" />
+  
+</ResourceDictionary>

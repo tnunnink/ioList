@@ -6,7 +6,7 @@ namespace ioList.Data
 {
     public class ListProvider : IListProvider
     {
-        public IListService Connect(string listPath)
+        public IListRepository Connect(string listPath)
         {
             var connection = new SqliteConnectionStringBuilder
             {
@@ -17,7 +17,7 @@ namespace ioList.Data
 
             var context = new ListContext(options);
 
-            return new ListService(context);
+            return new ListRepository(context);
         }
     }
 }

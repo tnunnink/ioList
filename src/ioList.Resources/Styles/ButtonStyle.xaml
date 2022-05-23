@@ -2,15 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="http://CoreTools.com/wpf">
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Brushes.xaml" />
+    <ResourceDictionary Source="../Brushes/DarkBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/LightBrushes.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <ControlTemplate x:Key="Template.Button" TargetType="{x:Type Button}">
     <Grid SnapsToDevicePixels="True">
       <Border x:Name="RootBorder"
               Background="{TemplateBinding BorderBrush}"
-              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},
-               Path=(core:BorderProperties.CornerRadius)}">
+              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(core:BorderProperties.CornerRadius)}">
         <Border x:Name="MainBorder"
                 Background="{TemplateBinding Background}"
                 Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}"
@@ -55,44 +56,60 @@
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="UseLayoutRounding" Value="False" />
-    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="SnapsToDevicePixels" Value="False" />
     <Setter Property="Padding" Value="2" />
     <Setter Property="FontWeight" Value="SemiBold" />
     <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
     <Setter Property="Template" Value="{StaticResource Template.Button}" />
   </Style>
   
-  <Style x:Key="Style.Button.Primary" 
+  <Style x:Key="Style.Button.Dark.Default" 
          TargetType="{x:Type Button}"
          BasedOn="{StaticResource Style.Button}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.Button.Primary.MouseOver}" />
+        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Default.MouseOver}" />
       </Trigger>
       <Trigger Property="IsPressed" Value="True">
-        <Setter Property="BorderBrush" Value="{StaticResource Brush.Button.Primary.Pressed}" />
+        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Default.Pressed}" />
       </Trigger>
     </Style.Triggers>
-    <Setter Property="Background" Value="{StaticResource Brush.Button.Primary.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Button.Primary.Foreground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource Brush.Button.Primary.Background}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Default.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Button.Default.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Button.Default.Border}" />
   </Style>
   
-  <Style x:Key="Style.Button.Secondary" 
+  <Style x:Key="Style.Button.Dark.Accent" 
          TargetType="{x:Type Button}"
          BasedOn="{StaticResource Style.Button}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.Button.Secondary.MouseOver}" />
+        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Accent.MouseOver}" />
       </Trigger>
       <Trigger Property="IsPressed" Value="True">
-        <Setter Property="BorderBrush" Value="{StaticResource Brush.Button.Secondary.Pressed}" />
+        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Accent.Pressed}" />
       </Trigger>
     </Style.Triggers>
-    <Setter Property="Background" Value="{StaticResource Brush.Button.Secondary.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Button.Secondary.Foreground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource Brush.Button.Secondary.Background}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Accent.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Button.Accent.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Button.Accent.Border}" />
   </Style>
   
-  <Style BasedOn="{StaticResource Style.Button.Primary}" TargetType="{x:Type Button}" />
+  <Style x:Key="Style.Button.Dark.Critical" 
+         TargetType="{x:Type Button}"
+         BasedOn="{StaticResource Style.Button}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Critical.MouseOver}" />
+      </Trigger>
+      <Trigger Property="IsPressed" Value="True">
+        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Critical.Pressed}" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Critical.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Button.Critical.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Button.Critical.Border}" />
+  </Style>
+  
+  <Style BasedOn="{StaticResource Style.Button.Dark.Default}" TargetType="{x:Type Button}" />
 </ResourceDictionary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using L5Sharp;
+using System.Threading;
+using System.Threading.Tasks;
 using List = ioList.Domain.List;
 using NUnit.Framework;
 
@@ -12,10 +13,9 @@ namespace ioList.Data.Tests
         private static readonly string L5X = Path.Combine(Environment.CurrentDirectory, @"TestFiles\Test.L5X");
         
         [Test]
-        public void Build_Default_ShouldWork()
+        public async Task Build_Default_ShouldWork()
         {
             var path = Path.Combine(Environment.CurrentDirectory, @"TestFiles");
-            var context = LogixContext.Load(L5X);
 
             var list = new List
             {
@@ -23,10 +23,16 @@ namespace ioList.Data.Tests
                 Directory = path,
                 Comment = "This is a test"
             };
-            
+
             var builder = new ListBuilder();
+            
+            await builder.Build(list, CancellationToken.None);
 
             FileAssert.Exists(Path.Combine(path, "Test.db"));
+            
+            File.Delete(list.FullPath);
+            
+            FileAssert.DoesNotExist(Path.Combine(path, "Test.db"));
         }
     }
 }

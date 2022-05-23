@@ -2,12 +2,12 @@
 {
     public class Scaling
     {
-        public int PointId { get; private set; }
-        public Point Point { get; private set; }
-        public float EngineeringMax { get; private set; }
-        public float EngineeringMin { get; private set; }
-        public float RawMin { get; private set; }
-        public float RawMax { get; private set; }
+        public int TagId { get; set; }
+        public Tag Tag { get; set; }
+        public float EngineeringMax { get; set; }
+        public float EngineeringMin { get; set; }
+        public float RawMin { get; set; }
+        public float RawMax { get; set; }
 
         public override string ToString()
         {

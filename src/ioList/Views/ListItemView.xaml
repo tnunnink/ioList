@@ -12,50 +12,50 @@
              d:DesignHeight="60" d:DesignWidth="300">
 
   <Border CornerRadius="5">
-    <Grid Margin="10">
+    <Border.InputBindings>
+      <MouseBinding MouseAction="{x:Static MouseAction.LeftDoubleClick}"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.OpenListCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}" />
+    </Border.InputBindings>
+    <Grid Margin="5 10">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="30" />
         <ColumnDefinition />
-        <ColumnDefinition Width="50" />
+        <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
 
       <core:Icon Grid.Column="0"
                  Template="{StaticResource Icon.List}"
                  Height="20" Width="20"
-                 Foreground="#B8CCEE" 
-                 Visibility="{Binding }"/>
+                 Visibility="{Binding }" />
 
-      <StackPanel Grid.Column="1" Margin="10 0 5 0"
+      <StackPanel Grid.Column="1" Margin="5 0"
                   VerticalAlignment="Center">
         <TextBlock Text="{Binding Name}"
-                   FontSize="16"
+                   FontSize="13"
                    VerticalAlignment="Center"
-                   Foreground="#DBDFE5"
                    FontWeight="SemiBold" />
         <TextBlock Text="{Binding DirectoryName}"
                    VerticalAlignment="Center"
-                   Foreground="#7093C1"
-                   FontSize="11"
+                   Foreground="{StaticResource Brush.Dark.Secondary.Foreground}"
+                   FontSize="12"
                    Margin="0 2 0 0"
                    FontWeight="Regular"
                    TextTrimming="CharacterEllipsis" />
       </StackPanel>
 
-      <Border Grid.Column="2"
-              BorderThickness="0"
-              CornerRadius="10"
-              Background="#30343D"
-              Height="24" Width="40"
-              Visibility="{Binding Exists, Converter={core:BooleanVisibilityConverter}}">
-        <TextBlock Text="45%"
-                   FontSize="12"
-                   VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Foreground="#7F89B2" />
-      </Border>
-
+      <core:Icon Grid.Column="2"
+                 Template="{StaticResource Icon.Menu}"
+                 Height="16" Width="16"
+                 Margin="10 0"
+                 Visibility="{Binding IsMouseOver, 
+                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, 
+                 Converter={core:BooleanVisibilityConverter}}"/>
+      
       <core:Icon Grid.Column="2"
                  Template="{StaticResource Icon.Error}"
                  Height="20" Width="20"
+                 Margin="10 0"
                  Foreground="#DC9E9E"
                  Visibility="{Binding Exists, Converter={core:BooleanVisibilityConverter IsInverse=True}}" />
 

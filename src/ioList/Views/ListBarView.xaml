@@ -19,22 +19,28 @@
     </Style>
   </UserControl.Resources>
 
-  <Grid Background="{StaticResource Brush.WindowHeader.Background}">
+  <Grid Background="{StaticResource Brush.Dark.Primary.Background}">
     <StackPanel HorizontalAlignment="Center">
-      <core:IconButton Icon="{StaticResource Icon.Expand.Right}"
-                       Foreground="#A6BED1"/>
-
-      <core:IconButton Icon="{StaticResource Icon.Add}"
-                       Background="#457EC9"
-                       Foreground="#AAF8F3"/>
-
-      <core:IconButton Icon="{StaticResource Icon.Load}"
-                       Background="#3EB8BC"
-                       Foreground="#B7FFE1" />
-
-      <core:IconButton Icon="{StaticResource Icon.Delete}"
-                       Background="#DC5959"
-                       Foreground="#FFECC5" />
+      <core:IconButton Icon="{StaticResource Icon.List.Hide}"
+                       Command="{Binding ApplicationCommands.ToggleListMenu}"
+                       Height="26" Width="26" 
+                       Padding="0"
+                       Margin="0 10"
+                       RenderTransformOrigin="0.5,0.5">
+        <core:IconButton.RenderTransform>
+          <RotateTransform Angle="180"/>
+        </core:IconButton.RenderTransform>
+      </core:IconButton>
+      
+      <Button Command="{Binding ApplicationCommands.NewListCommand}"
+              Style="{StaticResource Style.Button.Dark.Accent}"
+              Padding="5"
+              Margin="0 10">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <core:Icon Template="{StaticResource Icon.List.Add}"
+                     Height="16" Width="16" Margin="2 1 0 0" />
+        </StackPanel>
+      </Button>
     </StackPanel>
   </Grid>
 </UserControl>

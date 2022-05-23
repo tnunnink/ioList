@@ -1,150 +1,109 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using CoreTools.WPF.Mvvm;
 using ioList.Common.Naming;
 using ioList.Domain;
 using ioList.Observers;
 using ioList.Services;
 using NLog;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 
 namespace ioList.ViewModels
 {
-    public class ListViewModel : BindableBase
+    public class ListViewModel : NavigationViewModelBase
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IListFileService _listFileService;
+        private readonly IListProvider _listProvider;
         private readonly IDialogService _dialogService;
-        private readonly IRegionManager _regionManager;
-        private DelegateCommand _createListCommand;
-        private DelegateCommand _renameListCommand;
-        private DelegateCommand _removeListCommand;
-        private DelegateCommand _deleteListCommand;
-        private ObservableCollection<ListFileObserver> _lists;
-        private ListFileObserver _selectedList;
+        private ListFile _listFile;
+        private ListObserver _list;
+        private ObservableCollection<Tag> _tags;
+        private bool _hasPoints;
 
         public ListViewModel()
         {
-            Lists = new ObservableCollection<ListFileObserver>
+            List = new ListObserver(new List
             {
-                new(new ListFile("Path To File")),
-                new(new ListFile("Path To File")),
-                new(new ListFile("Path To File"))
-            };
-        }
-
-        public ListViewModel(IListFileService listFileService,
-            IDialogService dialogService, IRegionManager regionManager)
-        {
-            _listFileService = listFileService;
-            _dialogService = dialogService;
-            _regionManager = regionManager;
-
-            Lists = new ObservableCollection<ListFileObserver>();
-
-            Load();
-        }
-
-        public ObservableCollection<ListFileObserver> Lists
-        {
-            get => _lists;
-            private set => SetProperty(ref _lists, value);
-        }
-
-        public ListFileObserver SelectedList
-        {
-            get => _selectedList;
-            set => SetProperty(ref _selectedList, value);
-        }
-
-        public DelegateCommand NewListCommand =>
-            _createListCommand ??= new DelegateCommand(ExecuteCreateListCommand);
-
-        public DelegateCommand RenameListCommand =>
-            _renameListCommand ??= new DelegateCommand(ExecuteRenameListCommand, CanExecuteListCommand)
-                .ObservesProperty(() => SelectedList);
-
-        public DelegateCommand RemoveListCommand =>
-            _removeListCommand ??= new DelegateCommand(ExecuteRemoveListCommand, CanExecuteRemoveListCommand)
-                .ObservesProperty(() => SelectedList);
-        public DelegateCommand DeleteListCommand =>
-            _deleteListCommand ??= new DelegateCommand(ExecuteDeleteListCommand, CanExecuteListCommand)
-                .ObservesProperty(() => SelectedList);
-
-        private void ExecuteCreateListCommand()
-        {
-            _dialogService.ShowDialog(DialogNames.NewListDialog, r =>
-            {
-                if (r.Result != ButtonResult.OK) return;
-                
-                var list = r.Parameters.GetValue<ListObserver>("List");
-                
-                var listFile = new ListFile(list.Entity.FullPath);
-                _listFileService.Add(listFile);
-                
-                Lists.Add(new ListFileObserver(listFile));
+                Name = "My Test List",
+                Comment = "This is a test list for development purposes",
+                Directory = @"C:\users\files\TestList.db"
             });
         }
 
-        private void ExecuteRenameListCommand()
+        public ListViewModel(IListProvider listProvider, IDialogService dialogService)
         {
-            var parameters = new DialogParameters { { "List", SelectedList } };
+            _listProvider = listProvider;
+            _dialogService = dialogService;
+        }
+
+        public override bool KeepAlive => false;
+
+        public ListObserver List
+        {
+            get => _list;
+            private set => SetProperty(ref _list, value);
+        }
+
+        public ObservableCollection<Tag> Tags
+        {
+            get => _tags;
+            set => SetProperty(ref _tags, value);
+        }
+
+        public bool HasPoints
+        {
+            get => _hasPoints;
+            set => SetProperty(ref _hasPoints, value);
+        }
+
+        private DelegateCommand _importCommand;
+
+        public DelegateCommand ImportCommand =>
+            _importCommand ??= new DelegateCommand(ExecuteImportCommand);
+
+        private void ExecuteImportCommand()
+        {
+            var parameters = new DialogParameters { { "List", List } };
             
-            _dialogService.ShowDialog(DialogNames.RenameListDialog, parameters, r =>
+            _dialogService.ShowDialog(DialogNames.ImportDialog, parameters, r =>
             {
                 if (r.Result == ButtonResult.OK)
-                    Load();
+                {
+                    //LoadTags().Await(OnLoadPointsError);
+                }
             });
         }
 
-        private void ExecuteRemoveListCommand()
+        private static void OnLoadPointsError(Exception exception)
         {
-            _dialogService.ShowDialog(DialogNames.RemoveListDialog, r =>
-            {
-                if (r.Result != ButtonResult.OK) return;
-                
-                _listFileService.Remove(SelectedList.Entity);
-                Lists.Remove(SelectedList);
-            });
+            Logger.Error(exception);
         }
 
-        private void ExecuteDeleteListCommand()
+        public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var parameters = new DialogParameters { { "ListName", SelectedList.Name } };
-            _dialogService.ShowDialog(DialogNames.DeleteListDialog, parameters, r =>
-            {
-                if (r.Result != ButtonResult.Yes) return;
-                
-                _listFileService.Remove(SelectedList.Entity);
-                SelectedList.Entity.Delete();
-                Lists.Remove(SelectedList);
-            });
+            _listFile = navigationContext.Parameters.GetValue<ListFileObserver>("ListFile").Entity;
+
+            LoadAsync().Await();
         }
 
-        private bool CanExecuteRemoveListCommand() => SelectedList is not null;
-
-        private bool CanExecuteListCommand() => SelectedList is not null && SelectedList.Exists;
-
-        private void Load()
+        protected override async Task LoadAsync()
         {
-            Lists.Clear();
-            var lists = _listFileService.GetAll().Select(m => new ListFileObserver(m));
-            Lists = new ObservableCollection<ListFileObserver>(lists);
+            using var service = _listProvider.Connect(_listFile.FullName);
+
+            var list = await service.GetList();
+            List = new ListObserver(list);
         }
 
-        private void OpenList(ListFile listFile)
+        private async Task LoadTags()
         {
-            var parameters = new NavigationParameters { { "ListFile", listFile } };
+            using var service = _listProvider.Connect(_listFile.FullName);
 
-            if (!listFile.Exists)
-            {
-                _regionManager.RequestNavigate(RegionNames.ContentRegion, "ListInvalidView", parameters);
-                return;
-            }
+            var tags = await service.GetTags();
 
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "ContentView", parameters);
+            Tags = new ObservableCollection<Tag>(tags);
         }
     }
 }

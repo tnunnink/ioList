@@ -9,8 +9,7 @@ namespace ioList.Data.Configurations
         public void Configure(EntityTypeBuilder<Label> builder)
         {
             builder.ToTable(nameof(Label)).HasKey(x => x.Id);
-
-            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Value).IsRequired();
         }
     }
 }

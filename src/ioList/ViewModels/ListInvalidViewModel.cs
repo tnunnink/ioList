@@ -19,8 +19,7 @@ namespace ioList.ViewModels
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var file = navigationContext.Parameters.GetValue<ListFile>("ListFile");
-            ListFile = new ListFileObserver(file);
+            ListFile = navigationContext.Parameters.GetValue<ListFileObserver>("ListFile");
         }
     }
 }

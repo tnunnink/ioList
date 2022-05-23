@@ -3,7 +3,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="http://CoreTools.com/wpf">
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Brushes.xaml" />
+    <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes/DarkBrushes.xaml" />
   </ResourceDictionary.MergedDictionaries>
   
   <ControlTemplate x:Key="WindowsButtonTemplate" TargetType="{x:Type Button}">
@@ -26,7 +27,7 @@
   <Style x:Key="WindowsButtonStandardStyle" TargetType="{x:Type Button}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="true">
-        <Setter Property="Background" Value="{StaticResource Brush.WindowHeader.MouseOverBackgroundStandard}" />
+        <Setter Property="Background" Value="{StaticResource Brush.Common.Window.MouseOverBackgroundStandard}" />
       </Trigger>
     </Style.Triggers>
     <Setter Property="UseLayoutRounding" Value="True" />
@@ -35,8 +36,8 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.WindowHeader.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.WindowHeader.Foreground}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Common.Window.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Window.Foreground}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0" />
@@ -49,7 +50,7 @@
   <Style x:Key="WindowsButtonCloseStyle" TargetType="{x:Type Button}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.WindowHeader.MouseOverBackgroundClose}" />
+        <Setter Property="Background" Value="{StaticResource Brush.Common.Window.MouseOverBackgroundClose}" />
         <Setter Property="Foreground" Value="White" />
       </Trigger>
     </Style.Triggers>
@@ -59,8 +60,8 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.WindowHeader.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.WindowHeader.Foreground}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Common.Window.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Window.Foreground}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0" />
@@ -71,13 +72,12 @@
   </Style>
   
   <ControlTemplate x:Key="Icon.App" TargetType="{x:Type core:Icon}">
-    <Viewbox>
-      <Path
-        Fill="{TemplateBinding Foreground}"
-        Stretch="Uniform"
-        SnapsToDevicePixels="False"
-        UseLayoutRounding="False"
-        Data="M6,13H18V11H6M3,6V8H21V6M10,18H14V16H10V18Z" />
+    <Viewbox SnapsToDevicePixels="False"
+             UseLayoutRounding="False">
+      <Canvas Width="24" Height="24">
+        <Path Fill="{TemplateBinding Foreground}" 
+              Data="M2 14H8V20H2M16 8H10V10H16M2 10H8V4H2M10 4V6H22V4M10 20H16V18H10M10 16H22V14H10" />
+      </Canvas>
     </Viewbox>
   </ControlTemplate>
 
@@ -127,7 +127,7 @@
 
   <ControlTemplate x:Key="ShellTemplate" TargetType="{x:Type Window}">
     <Border x:Name="RootBorder"
-            BorderBrush="{StaticResource Brush.WindowHeader.Border}"
+            BorderBrush="{StaticResource Brush.Common.Window.Border}"
             BorderThickness="1">
       <Grid>
         <Grid.RowDefinitions>
@@ -138,22 +138,22 @@
         <Grid Grid.Row="0">
           <Rectangle
             Height="30"
-            Fill="{StaticResource Brush.WindowHeader.Background}" />
+            Fill="{StaticResource Brush.Common.Window.Background}" />
           <DockPanel LastChildFill="False">
             
             <core:Icon
               Margin="8,0,0,0"
               DockPanel.Dock="Left"
               Template="{DynamicResource Icon.App}"
-              Foreground="{StaticResource Brush.WindowHeader.Foreground}"
-              Height="16" Width="16"
+              Foreground="{StaticResource Brush.Common.Window.Foreground}"
+              Height="20" Width="20"
               WindowChrome.IsHitTestVisibleInChrome="True" />
             
             <TextBlock
               Margin="8,0,0,0"
               VerticalAlignment="Center"
               DockPanel.Dock="Left"
-              Foreground="{StaticResource Brush.WindowHeader.Foreground}"
+              Foreground="{StaticResource Brush.Common.Window.Foreground}"
               Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
             
             <Button x:Name="CloseButton"
@@ -209,8 +209,8 @@
 
   <Style x:Key="ShellStyle" TargetType="{x:Type Window}">
     <Setter Property="UseLayoutRounding" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.Primary.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Primary.Foreground}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Dark.Primary.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Primary.Foreground}" />
     <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
     <Setter Property="WindowChrome.WindowChrome">

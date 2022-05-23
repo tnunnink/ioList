@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="ioList.Module.Dialogs.Views.ConfirmationDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ioList.Module.Dialogs.ViewModels"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:core="http://CoreTools.com/wpf"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             mvvm:Dialog.WindowStyle="{DynamicResource LocalDialogStyle}"
+             d:DataContext="{d:DesignInstance Type=viewModels:ConfirmationDialogViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="200" d:DesignWidth="400">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ioList.Resources;component/Resources.xaml" />
+        <ResourceDictionary Source="/CoreTools.WPF;component/Resources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style x:Key="LocalDialogStyle" BasedOn="{StaticResource DialogStyle}"
+             TargetType="{x:Type Window}">
+        <Setter Property="Height" Value="200" />
+        <Setter Property="Width" Value="400" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="SizeToContent" Value="Height" />
+        <Setter Property="mvvm:Dialog.WindowStartupLocation" Value="CenterScreen" />
+      </Style>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Border Background="{StaticResource Brush.Dark.Primary.Background}">
+    <DockPanel>
+      <Grid DockPanel.Dock="Top" Margin="20">
+        <DockPanel>
+          <core:Icon DockPanel.Dock="Left" 
+            Template="{StaticResource Icon.Question}"
+                     Height="30" Width="30"
+                     Foreground="{StaticResource Brush.Dark.Primary.Foreground}"
+                     VerticalAlignment="Top"
+                     Opacity="0.7" />
+          
+          <Grid Margin="20 0">
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" 
+                       Text="{Binding Message}"
+                       Foreground="{StaticResource Brush.Dark.Primary.Foreground}"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       FontWeight="SemiBold" />
+            
+            <TextBlock Grid.Row="1"
+                       Text="{Binding Caption}"
+                       Foreground="{StaticResource Brush.Dark.Primary.Foreground}"
+                       VerticalAlignment="Center"
+                       Margin="0 10"
+                       TextWrapping="Wrap"
+                       FontSize="12" />
+          </Grid>
+        </DockPanel>
+      </Grid>
+
+      <Border DockPanel.Dock="Bottom"
+              VerticalAlignment="Bottom">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="10">
+          <Button Height="26" Width="80"
+                  Style="{StaticResource Style.Button.Dark.Accent}"
+                  Content="OK"
+                  Command="{Binding OkCommand}"/>
+          <Button Height="26" Width="80"
+                  Content="Cancel" Margin="10 0 0 0"
+                  Command="{Binding CancelCommand}" />
+        </StackPanel>
+      </Border>
+    </DockPanel>
+  </Border>
+</UserControl>

@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="ioList.Views.ListMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:core="http://CoreTools.com/wpf"
+             xmlns:views="clr-namespace:ioList.Views"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance Type=viewModels:ListMenuViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="360">
+  <UserControl.Resources>
+    <Style BasedOn="{StaticResource Style.ListViewItem}" TargetType="{x:Type ListViewItem}">
+      <Setter Property="Margin" Value="10 3" />
+    </Style>
+  </UserControl.Resources>
+
+  <Grid Background="{StaticResource Brush.Dark.Primary.Background}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+
+    <Border Grid.Row="0"
+            Margin="10"
+            VerticalAlignment="Center">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Left">
+            <Button Command="{Binding ApplicationCommands.NewListCommand}"
+                    Style="{StaticResource Style.Button.Dark.Accent}"
+                    Padding="5">
+              <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <core:Icon Template="{StaticResource Icon.List.Add}"
+                           Height="16" Width="16" Margin="2 1 0 0" />
+                <TextBlock Text="New" Margin="5 0"></TextBlock>
+              </StackPanel>
+            </Button>
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Right">
+            <core:IconButton Icon="{StaticResource Icon.List.Hide}"
+                             Command="{Binding ApplicationCommands.ToggleListMenu}"
+                             Height="26" Width="26" Padding="0" />
+          </StackPanel>
+        </Grid>
+        
+        <TextBox Grid.Row="1" Margin="0 10 0 0" />
+      </Grid>
+    </Border>
+
+    <ListView Grid.Row="1"
+              ItemsSource="{Binding Lists}"
+              SelectedItem="{Binding SelectedList}"
+              SelectionMode="Single"
+              BorderThickness="0"
+              Background="Transparent"
+              HorizontalContentAlignment="Stretch"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+      <ListView.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Rename" Command="{Binding RenameListCommand}" />
+          <MenuItem Header="Remove" Command="{Binding RemoveListCommand}" />
+          <MenuItem Header="Duplicate" />
+          <MenuItem Header="Delete" Command="{Binding DeleteListCommand}" />
+          <Separator />
+          <MenuItem Header="Export List" />
+          <MenuItem Header="Pin List" />
+          <MenuItem Header="Open In Explorer" />
+        </ContextMenu>
+      </ListView.ContextMenu>
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <views:ListItemView />
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
+</UserControl>

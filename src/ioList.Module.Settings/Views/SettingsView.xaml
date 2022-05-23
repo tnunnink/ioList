@@ -64,7 +64,7 @@
       </Grid.ColumnDefinitions>
 
       <Border Grid.Column="0" 
-              Background="{StaticResource Brush.WindowHeader.Background}">
+              Background="{StaticResource Brush.Common.Window.Background}">
         <ListView HorizontalContentAlignment="Stretch"
                   Margin="10 20"
                   Background="Transparent" 

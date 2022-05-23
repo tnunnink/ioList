@@ -2,6 +2,6 @@
 {
     public interface IListProvider
     {
-        public IListService Connect(string listPath);
+        public IListRepository Connect(string listPath);
     }
 }

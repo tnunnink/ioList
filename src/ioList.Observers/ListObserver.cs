@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using EntityObserver;
@@ -31,6 +32,18 @@ namespace ioList.Observers
         public string Comment
         {
             get => GetValue<string>();
+            set => SetValue(value);
+        }
+
+        public string CreatedBy
+        {
+            get => GetValue<string>();
+            set => SetValue(value);
+        }
+
+        public DateTime CreatedOn
+        {
+            get => GetValue<DateTime>();
             set => SetValue(value);
         }
 

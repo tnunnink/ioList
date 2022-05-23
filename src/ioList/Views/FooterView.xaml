@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=viewModels:FooterViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="30" d:DesignWidth="1000">
-  <Border Background="#E4E8EC">
+  <Border Background="{StaticResource Brush.Light.Secondary.Background}">
     <Grid>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -24,7 +24,7 @@
                          ToolTip="Event Log"/>
         <TextBlock Text="{Binding LogMessage}"
                    FontSize="11"
-                   Foreground="{StaticResource Brush.Control.Foreground}"
+                   Foreground="{StaticResource Brush.Light.Secondary.Background}"
                    VerticalAlignment="Center" />
       </StackPanel>
 

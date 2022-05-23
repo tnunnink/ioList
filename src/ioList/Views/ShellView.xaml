@@ -5,8 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:viewModels="clr-namespace:ioList.ViewModels"
-        xmlns:common="clr-namespace:ioList.Common;assembly=ioList.Common"
         xmlns:naming="clr-namespace:ioList.Common.Naming;assembly=ioList.Common"
+        xmlns:core="http://CoreTools.com/wpf"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
@@ -15,30 +15,59 @@
         Title="ioList"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource ShellStyle}">
-  <Grid>
+  <Window.InputBindings>
+    <KeyBinding  Modifiers="Control"
+                 Key="N"
+                 Command="{Binding ElementName=Root, Path=DataContext.ApplicationCommands.NewListCommand}" />
+  </Window.InputBindings>
+  
+  <Grid x:Name="Root">
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition Height="30"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="360" />
+      <core:CollapsibleColumnDefinition Width="50"
+                                        Visible="{Binding ShowListBar}"/>
+      <core:CollapsibleColumnDefinition Width="300" 
+                                        MinWidth="260"
+                                        MaxWidth="500"
+                                        Visible="{Binding ShowListMenu}"/>
+      <ColumnDefinition Width="Auto"/>
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-
+    
     <Border Grid.Row="0" Grid.Column="0"
-            Background="{StaticResource Brush.WindowHeader.Background}"
+            Background="{StaticResource Brush.Dark.Primary.Background}"
             BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ListRegion}" />
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ListBarRegion}" />
     </Border>
 
     <Border Grid.Row="0" Grid.Column="1"
-            Background="{StaticResource Brush.Primary.Background}"
+            Background="{StaticResource Brush.Dark.Primary.Background}"
+            BorderThickness="0">
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ListRegion}" />
+    </Border>
+    
+    <GridSplitter Grid.Row="0" Grid.Column="2"
+                  Width="5"
+                  Visibility="{Binding ShowListMenu, Converter={core:BooleanVisibilityConverter}}"
+                  Margin="-3 0 0 0" 
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
+                  ResizeDirection="Columns"
+                  Background="Transparent"
+                  Panel.ZIndex="1"/>
+
+    <Border Grid.Row="0" Grid.Column="3"
+            Background="{StaticResource Brush.Light.Primary.Background}"
             BorderThickness="0">
       <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ContentRegion}" />
     </Border>
 
-    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-            BorderThickness="0">
+    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+            BorderThickness="0"
+            Background="{StaticResource Brush.Light.Secondary.Background}">
       <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.FooterRegion}" />
     </Border>
   </Grid>

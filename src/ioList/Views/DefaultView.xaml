@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="1000">
   
-  <Border Background="{StaticResource Brush.Primary.Background}">
+  <Border Background="{StaticResource Brush.Light.Primary.Background}">
     <Grid>
       <StackPanel VerticalAlignment="Center" 
                   HorizontalAlignment="Center">

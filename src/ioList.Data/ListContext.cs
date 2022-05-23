@@ -12,8 +12,8 @@ namespace ioList.Data
         
         internal DbSet<List> Lists { get; set; }
         public List List => Lists.FirstOrDefault();
-        public DbSet<Card> Cards { get; set; }
-        public DbSet<Point> Points { get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<Label> Labels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

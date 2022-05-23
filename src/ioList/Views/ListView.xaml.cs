@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace ioList.Views
+﻿namespace ioList.Views
 {
-    public partial class ListView : UserControl
+    public partial class ListView
     {
         public ListView()
         {

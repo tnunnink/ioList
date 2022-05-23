@@ -3,85 +3,124 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:ioList.ViewModels"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:vm="clr-namespace:ioList.ViewModels"
              xmlns:core="http://CoreTools.com/wpf"
-             xmlns:views="clr-namespace:ioList.Views"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DataContext="{d:DesignInstance Type=viewModels:ListViewModel}"
+             d:DataContext="{d:DesignInstance Type=vm:ListViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="360">
-  <UserControl.Resources>
-    <Style BasedOn="{StaticResource Style.ListViewItem}" TargetType="{x:Type ListViewItem}">
-      <Setter Property="Margin" Value="5 3" />
-    </Style>
-  </UserControl.Resources>
+             d:DesignHeight="800" d:DesignWidth="1400">
 
-  <Grid Background="{StaticResource Brush.WindowHeader.Background}">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="40" />
-      <RowDefinition Height="40" />
-      <RowDefinition />
-    </Grid.RowDefinitions>
+  <Border Background="{StaticResource Brush.Light.Primary.Background}">
+    <Grid Margin="10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
 
-    <Border Grid.Row="0"
-            Margin="10 0" >
-      <Grid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-          <core:IconButton Icon="{StaticResource Icon.List.Add}"
-                           Command="{Binding NewListCommand}"
-                           Background="#457EC9" Foreground="#AAF8F3"
-                           Height="26" Width="26" Padding="5">
-            <core:IconButton.ContextMenu>
-              <ContextMenu>
-                <MenuItem Header="New List"/>
-                <MenuItem Header="Exiting List"/>
-              </ContextMenu>
-            </core:IconButton.ContextMenu>
-          </core:IconButton>
+      <Grid Grid.Row="0"
+            Margin="0 0 0 20">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition MinWidth="200" />
+          <ColumnDefinition />
+          <ColumnDefinition MinWidth="200" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding List.Name}"
+                       FontSize="24"
+                       FontWeight="SemiBold"
+                       Foreground="#5A5F67"
+                       Margin="0 0 30 0" />
+            <Border Background="#D7DDEB"
+                    CornerRadius="10"
+                    Height="20"
+                    Margin="0 0 10 0">
+              <TextBlock Text="10/235"
+                         Foreground="#7F89B2"
+                         VerticalAlignment="Center"
+                         Margin="10 0" />
+            </Border>
+            <Border Background="#D7DDEB"
+                    CornerRadius="10"
+                    Height="20">
+              <TextBlock Text="45%"
+                         Foreground="#7F89B2"
+                         VerticalAlignment="Center"
+                         Margin="10 0" />
+            </Border>
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal"
+                      Margin="0 4 0 0">
+            <TextBlock Text="{Binding List.CreatedOn}"
+                       FontSize="12"
+                       Foreground="#747E92"
+                       VerticalAlignment="Center" />
+            <Ellipse Height="4" Width="4" Fill="#575960"
+                     Margin="5 0"
+                     VerticalAlignment="Center"
+                     Opacity="0.5" />
+            <TextBlock Text="{Binding List.CreatedBy}"
+                       FontSize="12"
+                       Foreground="#747E92" />
+            <Ellipse Height="4" Width="4" Fill="#575960"
+                     Margin="5 0"
+                     VerticalAlignment="Center"
+                     Opacity="0.5" />
+            <TextBlock Text="{Binding List.Comment}"
+                       TextTrimming="CharacterEllipsis"
+                       FontSize="12"
+                       Foreground="#747E92" />
+          </StackPanel>
         </StackPanel>
-        
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-          <core:IconButton Icon="{StaticResource Icon.Collapse.Left}"
-                           Height="26" Width="26" Padding="5"/>
-        </StackPanel>
-      </Grid> 
-    </Border>
-    
-    <Border Grid.Row="1"
-            Background="Black"
-            Margin="10 0" BorderBrush="#457EC9"
-            UseLayoutRounding="False"
-            SnapsToDevicePixels="False"
-            BorderThickness="1" 
-            Height="26" CornerRadius="5">
-    </Border>
 
-    <ListView Grid.Row="2"
-              ItemsSource="{Binding Lists}"
-              SelectedItem="{Binding SelectedList}"
-              SelectionMode="Single"
-              BorderThickness="0"
-              Background="Transparent"
-              HorizontalContentAlignment="Stretch"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-      <ListView.ContextMenu>
-        <ContextMenu>
-          <MenuItem Header="Rename" Command="{Binding RenameListCommand}" />
-          <MenuItem Header="Remove" Command="{Binding RemoveListCommand}" />
-          <MenuItem Header="Duplicate" />
-          <MenuItem Header="Delete" Command="{Binding DeleteListCommand}" />
-          <Separator />
-          <MenuItem Header="Export List" />
-          <MenuItem Header="Pin List" />
-          <MenuItem Header="Open In Explorer" />
-        </ContextMenu>
-      </ListView.ContextMenu>
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <views:ListItemView Background="Transparent" />
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
-  </Grid>
+        <StackPanel Grid.Column="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 5 0">
+          <core:IconButton Icon="{StaticResource Icon.Upload}" 
+                           Style="{StaticResource Style.IconButton.Secondary}"
+                           core:BorderProperties.CornerRadius="5 0 0 5"
+                           Command="{Binding ImportCommand}"
+                           ToolTip="Import"/>
+          <core:IconButton Icon="{StaticResource Icon.Settings}" 
+                           Style="{StaticResource Style.IconButton.Secondary}"
+                           Margin="-1 0 0 0"
+                           core:BorderProperties.CornerRadius="0"/>
+          <core:IconButton Icon="{StaticResource Icon.Menu}" 
+                           Style="{StaticResource Style.IconButton.Secondary}"
+                           Margin="-1 0 0 0"
+                           core:BorderProperties.CornerRadius="0 5 5 0"/>
+        </StackPanel>
+      </Grid>
+
+      <Grid Grid.Row="1"
+            Margin="0 0 0 20">
+        <Border BorderBrush="Azure" BorderThickness="1"
+                CornerRadius="5">
+          <TextBox Style="{StaticResource Style.TextBox.Light}"
+                   Height="30"/>
+        </Border>
+      </Grid>
+
+      <Grid Grid.Row="2">
+        <ListView ItemsSource="{Binding Tags}"
+                  BorderThickness="0"
+                  Background="Transparent"
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Visibility="{Binding HasPoints, Converter={core:BooleanVisibilityConverter}}" />
+
+        <TextBlock Text="Whats the tag..."
+                   FontSize="24"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Visibility="{Binding HasPoints, Converter={core:BooleanVisibilityConverter}}"/>
+      </Grid>
+    </Grid>
+  </Border>
+
 </UserControl>
