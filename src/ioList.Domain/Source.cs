@@ -10,6 +10,5 @@ namespace ioList.Domain
         public string Content { get; set; }
         public DateTime ImportedOn { get; set; }
         public string ImportedBy { get; set; }
-        public ILogixContext Context => LogixContext.Parse(Content);
     }
 }

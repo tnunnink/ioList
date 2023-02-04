@@ -13,7 +13,6 @@ namespace ioList.Data.Configurations
             builder.Property(s => s.Content).IsRequired();
             builder.Property(s => s.ImportedOn).IsRequired();
             builder.Property(s => s.ImportedBy).IsRequired();
-            builder.Ignore(s => s.Context);
         }
     }
 }
