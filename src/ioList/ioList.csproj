@@ -4,6 +4,15 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>0.0.1</Version>
+        <Title>ioList</Title>
+        <Authors>Timothy Nunnink</Authors>
+        <Description>An application for managing PLC IO Lists.</Description>
+        <Copyright>Copyright (c) Timothy Nunnink 2023</Copyright>
+        <RepositoryUrl>https://github.com/tnunnink/ioList</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>Test release.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
