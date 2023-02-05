@@ -35,9 +35,4 @@
       <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Resources" />
-      <Folder Include="Features" />
-    </ItemGroup>
-
 </Project>
