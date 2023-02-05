@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:viewModels="clr-namespace:ioList.ViewModels"
-        xmlns:naming="clr-namespace:ioList.Common.Naming;assembly=ioList.Common"
+        xmlns:naming="clr-namespace:ioList.Core.Naming;assembly=ioList.Core"
         xmlns:core="http://CoreTools.com/wpf"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"

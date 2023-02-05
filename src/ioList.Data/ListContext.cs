@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using ioList.Domain;
+using ioList.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ioList.Data

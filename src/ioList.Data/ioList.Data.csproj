@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Domain\ioList.Domain.csproj" />
+      <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj" />
       <ProjectReference Include="..\ioList.Services\ioList.Services.csproj" />
     </ItemGroup>
 

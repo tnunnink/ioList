@@ -1,20 +1,21 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using CoreTools.WPF.Prism;
 using CoreTools.WPF.Prism.RegionBehaviors;
-using ioList.Commands;
-using ioList.Common.Logging;
-using ioList.Common.Naming;
+using ioList.Core.Logging;
+using ioList.Core.Naming;
 using ioList.Data;
-using ioList.Module.Dialogs;
-using ioList.Module.Import;
+using ioList.Dialogs;
+using ioList.Import;
 using ioList.Services;
-using ioList.ViewModels;
-using ioList.Views;
+using ioList.Startup;
 using NLog;
 using NLog.Config;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Squirrel;
 
 namespace ioList
 {
@@ -26,11 +27,6 @@ namespace ioList
             containerRegistry.Register<IListBuilder, ListBuilder>();
             containerRegistry.Register<IListProvider, ListProvider>();
             containerRegistry.Register<IListRepository, ListRepository>();
-
-            containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
-
-            containerRegistry.RegisterForNavigation<ListView, ListViewModel>();
-            containerRegistry.RegisterForNavigation<ListInvalidView, ListInvalidViewModel>();
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
@@ -48,19 +44,30 @@ namespace ioList
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            moduleCatalog.AddModule<StartupModule>();
             moduleCatalog.AddModule<DialogsModule>();
             moduleCatalog.AddModule<ImportModule>();
         }
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<ShellView>();
+            return Container.Resolve<StartupView>();
         }
 
         protected override void Initialize()
         {
             ConfigureLogging();
+
+            CheckForUpdates();
+            
             base.Initialize();
+        }
+
+        private async Task CheckForUpdates()
+        {
+            using var manager = UpdateManager.GitHubUpdateManager("https://github.com/tnunnink/ioList");
+
+            await manager.Result.UpdateApp();
         }
 
         protected override void OnInitialized()
@@ -68,10 +75,6 @@ namespace ioList
             base.OnInitialized();
 
             var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion<ListMenuView>(RegionNames.ListRegion);
-            regionManager.RegisterViewWithRegion<ListBarView>(RegionNames.ListBarRegion);
-            regionManager.RegisterViewWithRegion<FooterView>(RegionNames.FooterRegion);
-            regionManager.RegisterViewWithRegion<DefaultView>(RegionNames.ContentRegion);
         }
 
         private static void ConfigureLogging()

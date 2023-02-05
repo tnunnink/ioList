@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ioList.Domain;
+using ioList.Entities;
 using ioList.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;

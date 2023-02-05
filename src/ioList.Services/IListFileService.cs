@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ioList.Domain;
+using ioList.Entities;
 
 namespace ioList.Services
 {

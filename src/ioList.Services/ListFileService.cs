@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using ioList.Domain;
+using ioList.Entities;
 
 namespace ioList.Services
 {

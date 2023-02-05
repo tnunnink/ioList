@@ -12,6 +12,7 @@
       <PackageReference Include="Prism.Core" Version="8.1.97" />
       <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+      <PackageReference Include="squirrel.windows" Version="1.9.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,13 +25,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Common\ioList.Common.csproj" />
-      <ProjectReference Include="..\ioList.Domain\ioList.Domain.csproj" />
-      <ProjectReference Include="..\ioList.Module.Dialogs\ioList.Module.Dialogs.csproj" />
-      <ProjectReference Include="..\ioList.Module.Import\ioList.Module.Import.csproj" />
-      <ProjectReference Include="..\ioList.Module.Settings\ioList.Module.Settings.csproj" />
+      <ProjectReference Include="..\ioList.Core\ioList.Core.csproj" />
+      <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj" />
+      <ProjectReference Include="..\ioList.Dialogs\ioList.Dialogs.csproj" />
+      <ProjectReference Include="..\ioList.Import\ioList.Import.csproj" />
+      <ProjectReference Include="..\ioList.Settings\ioList.Settings.csproj" />
       <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
+      <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Resources" />
+      <Folder Include="Features" />
     </ItemGroup>
 
 </Project>

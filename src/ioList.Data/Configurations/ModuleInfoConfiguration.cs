@@ -1,5 +1,5 @@
 ﻿using System;
-using ioList.Domain;
+using ioList.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

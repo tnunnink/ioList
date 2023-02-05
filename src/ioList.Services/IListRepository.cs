@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ioList.Domain;
+using ioList.Entities;
 
 namespace ioList.Services
 {
