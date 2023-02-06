@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace ioList.ViewModels
+namespace ioList
 {
     public class ShellViewModel : BindableBase
     {

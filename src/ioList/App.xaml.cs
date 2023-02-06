@@ -58,20 +58,32 @@ namespace ioList
         {
             ConfigureLogging();
 
+            CheckForUpdates().Await(OnCheckForUpdatesComplete, OnCheckForUpdatedFailed);
+
             base.Initialize();
         }
 
-        /*private void OnCheckForUpdatesComplete()
+        private void OnCheckForUpdatedFailed(Exception obj)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(obj.Message);
         }
 
-        private async Task CheckForUpdates()
+        private void OnCheckForUpdatesComplete()
         {
-            using var manager = UpdateManager.GitHubUpdateManager("https://github.com/tnunnink/ioList");
+            //todo what do to here?
+        }
 
-            await manager.Result.UpdateApp();
-        }*/
+        private static async Task CheckForUpdates()
+        {
+            using var manager = await UpdateManager.GitHubUpdateManager("https://github.com/tnunnink/ioList");
+
+            var updates = await manager.CheckForUpdate();
+            
+            if (updates.ReleasesToApply.Count > 0)
+            {
+                await manager.UpdateApp();   
+            }
+        }
 
         protected override void OnInitialized()
         {

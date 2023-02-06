@@ -17,7 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Core\ioList.Core.csproj" />
       <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj" />
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
     </ItemGroup>

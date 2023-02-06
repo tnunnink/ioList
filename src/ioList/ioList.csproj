@@ -9,59 +9,41 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CoreTools.WPF" Version="0.2.2" />
-      <PackageReference Include="EntityObserver" Version="1.0.0" />
-      <PackageReference Include="NLog" Version="4.7.15" />
-      <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Prism.Core" Version="8.1.97" />
-      <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
-      <PackageReference Include="Prism.Wpf" Version="8.1.97" />
-      <PackageReference Include="squirrel.windows" Version="1.9.0" />
+        <PackageReference Include="CoreTools.WPF" Version="0.2.2"/>
+        <PackageReference Include="EntityObserver" Version="1.0.0"/>
+        <PackageReference Include="NLog" Version="5.1.1"/>
+        <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Prism.Core" Version="8.1.97"/>
+        <PackageReference Include="Prism.DryIoc" Version="8.1.97"/>
+        <PackageReference Include="Prism.Wpf" Version="8.1.97"/>
+        <PackageReference Include="squirrel.windows" Version="1.9.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Core\ioList.Core.csproj" />
-      <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj" />
-      <ProjectReference Include="..\ioList.Dialogs\ioList.Dialogs.csproj" />
-      <ProjectReference Include="..\ioList.Import\ioList.Import.csproj" />
-      <ProjectReference Include="..\ioList.Settings\ioList.Settings.csproj" />
-      <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj" />
-      <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
-      <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj" />
+        <ProjectReference Include="..\ioList.Core\ioList.Core.csproj"/>
+        <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj"/>
+        <ProjectReference Include="..\ioList.Dialogs\ioList.Dialogs.csproj"/>
+        <ProjectReference Include="..\ioList.Import\ioList.Import.csproj"/>
+        <ProjectReference Include="..\ioList.Settings\ioList.Settings.csproj"/>
+        <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj"/>
+        <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj"/>
+        <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj"/>
     </ItemGroup>
 
-    <!--<PropertyGroup>
+    <PropertyGroup>
         <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
         <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
-
-        <Version>0.1.0</Version>
-
-        <NuspecFile>$(SolutionDir)ioList\release.nuspec</NuspecFile>
-    </PropertyGroup>-->
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <PlatformTarget>x64</PlatformTarget>
+        <NuspecFile>$(SolutionDir)ioList\ioList.nuspec</NuspecFile>
     </PropertyGroup>
 
-    <!--<Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
-        <XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
-            <Output TaskParameter="Result" ItemName="ID" />
-        </XmlPeek>
-
-        &lt;!&ndash;<Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />&ndash;&gt;
-
-        &lt;!&ndash;<Exec Command="$(SquirrelTools)\Squirrel.exe &#45;&#45;releasify $(SolutionDir)ioList\bin\Release\@(ID).$(Version).nupkg &#45;&#45;releaseDir=$(SolutionDir)Releases" />&ndash;&gt;
-    </Target>-->
-
-    <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
+    <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
         <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
             <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
         </GetAssemblyIdentity>
         <Exec Command="nuget pack ioList.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
-        <Exec Command="squirrel --releasify $(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg" />
+        <Exec Command="Squirrel --releasify $(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=$(SolutionDir)..\releases"/>
     </Target>
-
 </Project>

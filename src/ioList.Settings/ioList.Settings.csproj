@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ioList.Core\ioList.Core.csproj" />
       <ProjectReference Include="..\ioList.Data\ioList.Data.csproj" />
       <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj" />
       <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj" />
