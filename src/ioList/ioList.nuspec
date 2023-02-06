@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ioList</id>
+        <!-- version will be replaced by MSBuild -->
+        <version>0.0.0.0</version>
+        <title>ioList</title>
+        <authors>Timothy Nunnink</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <!-- <icon>icon.png</icon> -->
+        <projectUrl>https://github.com/tnunnink/ioList</projectUrl>
+        <description>Appplication for creating and managing PLC IO lists using L5X export files.</description>
+        <releaseNotes>Test release.</releaseNotes>
+        <copyright>Copyright (c) Timothy Nunnink 2023</copyright>
+        <tags>PLC</tags>
+    </metadata>
+    <files>
+        <file src="*.*" target="lib\net45\" exclude="*.pdb;*.nupkg;*.vshost.*"/>
+    </files>
+</package>

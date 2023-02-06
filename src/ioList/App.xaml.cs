@@ -58,9 +58,12 @@ namespace ioList
         {
             ConfigureLogging();
 
-            CheckForUpdates();
-            
             base.Initialize();
+        }
+
+        /*private void OnCheckForUpdatesComplete()
+        {
+            throw new NotImplementedException();
         }
 
         private async Task CheckForUpdates()
@@ -68,7 +71,7 @@ namespace ioList
             using var manager = UpdateManager.GitHubUpdateManager("https://github.com/tnunnink/ioList");
 
             await manager.Result.UpdateApp();
-        }
+        }*/
 
         protected override void OnInitialized()
         {

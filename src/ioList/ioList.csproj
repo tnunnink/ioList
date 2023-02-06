@@ -6,7 +6,6 @@
         <UseWPF>true</UseWPF>
         <AssemblyVersion>0.1.0</AssemblyVersion>
         <FileVersion>0.1.0</FileVersion>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,27 +33,35 @@
       <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj" />
     </ItemGroup>
 
-    <PropertyGroup>
+    <!--<PropertyGroup>
         <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
         <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 
         <Version>0.1.0</Version>
 
         <NuspecFile>$(SolutionDir)ioList\release.nuspec</NuspecFile>
-    </PropertyGroup>
+    </PropertyGroup>-->
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
 
-    <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
+    <!--<Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
         <XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
             <Output TaskParameter="Result" ItemName="ID" />
         </XmlPeek>
 
-        <!--<Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />-->
+        &lt;!&ndash;<Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />&ndash;&gt;
 
-        <!--<Exec Command="$(SquirrelTools)\Squirrel.exe &#45;&#45;releasify $(SolutionDir)ioList\bin\Release\@(ID).$(Version).nupkg &#45;&#45;releaseDir=$(SolutionDir)Releases" />-->
+        &lt;!&ndash;<Exec Command="$(SquirrelTools)\Squirrel.exe &#45;&#45;releasify $(SolutionDir)ioList\bin\Release\@(ID).$(Version).nupkg &#45;&#45;releaseDir=$(SolutionDir)Releases" />&ndash;&gt;
+    </Target>-->
+
+    <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
+        <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+            <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
+        </GetAssemblyIdentity>
+        <Exec Command="nuget pack ioList.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
+        <Exec Command="squirrel --releasify $(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg" />
     </Target>
 
 </Project>
