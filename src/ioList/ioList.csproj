@@ -4,33 +4,23 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <FileVersion>0.1.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.0.1</Version>
-        <Title>ioList</Title>
-        <Authors>Timothy Nunnink</Authors>
-        <Description>An application for managing PLC IO Lists.</Description>
-        <Copyright>Copyright (c) Timothy Nunnink 2023</Copyright>
-        <RepositoryUrl>https://github.com/tnunnink/ioList</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>Test release.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CoreTools.WPF" Version="0.2.2" />
       <PackageReference Include="EntityObserver" Version="1.0.0" />
       <PackageReference Include="NLog" Version="4.7.15" />
+      <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Prism.Core" Version="8.1.97" />
       <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
       <PackageReference Include="Prism.Wpf" Version="8.1.97" />
       <PackageReference Include="squirrel.windows" Version="1.9.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="CoreTools.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\..\CoreTools.WPF\src\CoreTools.WPF\bin\Debug\net5.0-windows\CoreTools.WPF.dll</HintPath>
-      </Reference>
-      <Reference Include="L5Sharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\..\L5Sharp\src\bin\Release\netstandard2.1\L5Sharp.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
     <ItemGroup>
@@ -43,5 +33,28 @@
       <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
       <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj" />
     </ItemGroup>
+
+    <PropertyGroup>
+        <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
+        <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
+
+        <Version>0.1.0</Version>
+
+        <NuspecFile>$(SolutionDir)ioList\release.nuspec</NuspecFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
+        <XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
+            <Output TaskParameter="Result" ItemName="ID" />
+        </XmlPeek>
+
+        <!--<Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />-->
+
+        <!--<Exec Command="$(SquirrelTools)\Squirrel.exe &#45;&#45;releasify $(SolutionDir)ioList\bin\Release\@(ID).$(Version).nupkg &#45;&#45;releaseDir=$(SolutionDir)Releases" />-->
+    </Target>
 
 </Project>
