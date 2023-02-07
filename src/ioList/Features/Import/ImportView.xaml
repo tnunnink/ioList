@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="ioList.Features.Import.ImportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:import="clr-namespace:ioList.Features.Import"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             prism:Dialog.WindowStyle="{DynamicResource LocalDialogStyle}"
+             d:DataContext="{d:DesignInstance Type=import:ImportViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="600">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ioList.Resources;component/Resources.xaml" />
+        <ResourceDictionary Source="/CoreTools.WPF;component/Resources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style x:Key="LocalDialogStyle" BasedOn="{StaticResource DialogStyle}"
+             TargetType="{x:Type Window}">
+        <Setter Property="Height" Value="400" />
+        <Setter Property="Width" Value="560" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="SizeToContent" Value="Height" />
+        <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+      </Style>
+    </ResourceDictionary>
+  </UserControl.Resources>
+
+  <Border Background="{StaticResource Brush.Dark.Primary.Background}">
+    <DockPanel>
+      <Grid DockPanel.Dock="Top" Margin="20">
+        <ContentControl />
+      </Grid>
+      <Border DockPanel.Dock="Bottom"
+              VerticalAlignment="Bottom">
+        <Grid Margin="10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+
+          <TextBlock Grid.Column="0"
+                     Text="Import Settings"
+                     Foreground="{StaticResource Brush.Common.Accent}"
+                     VerticalAlignment="Center"
+                     Margin="10 0 0 0" />
+
+          <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <Button Height="26" Width="80"
+                    Style="{StaticResource Style.Button.Dark.Accent}"
+                    Content="Next"
+                    Command="{Binding NextCommand}" />
+            <Button Height="26" Width="80"
+                    Content="Cancel" Margin="10 0 0 0"
+                    Command="{Binding CancelCommand}" />
+          </StackPanel>
+        </Grid>
+      </Border>
+    </DockPanel>
+  </Border>
+</UserControl>

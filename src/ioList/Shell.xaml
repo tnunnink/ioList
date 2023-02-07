@@ -8,6 +8,7 @@
         xmlns:ioList="clr-namespace:ioList"
         xmlns:naming="clr-namespace:ioList.Core.Naming;assembly=ioList.Core"
         xmlns:appInfo="clr-namespace:ioList.Features.AppInfo"
+        xmlns:naming1="clr-namespace:ioList.Core.Naming"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance ioList:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
@@ -44,7 +45,7 @@
     </Border>
 
     <Border Background="{StaticResource Brush.Primary.Background}">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.PageRegion}" />
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming1:RegionNames.PageRegion}" />
     </Border>
   </DockPanel>
 </Window>

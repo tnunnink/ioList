@@ -1,0 +1,47 @@
+﻿<Window x:Class="ioList.Pages.StartupPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ioList.Pages"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:core="http://CoreTools.com/wpf"
+        xmlns:naming="clr-namespace:ioList.Core.Naming"
+        d:DataContext="{d:DesignInstance local:StartupPageViewModel, IsDesignTimeCreatable=True}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="{Binding Title}" Height="600" Width="800"
+        Style="{DynamicResource ShellStyle}">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="300"
+                        MinWidth="260"
+                        MaxWidth="500" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <Border Grid.Column="0"
+            BorderThickness="0">
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.StartupDockRegion}" />
+    </Border>
+
+    <GridSplitter Grid.Column="1"
+                  Width="5"
+                  Margin="-3 0 0 0"
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"
+                  ResizeDirection="Columns"
+                  Background="Transparent"
+                  Panel.ZIndex="1" />
+
+    <Border Grid.Column="2"
+            Background="{StaticResource Brush.Primary.Background}"
+            BorderThickness="0">
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="This is just the start" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.StartupPageRegion}" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

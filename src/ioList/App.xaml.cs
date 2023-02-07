@@ -1,21 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using CoreTools.WPF.Prism;
 using CoreTools.WPF.Prism.RegionBehaviors;
 using ioList.Core.Logging;
 using ioList.Core.Naming;
-using ioList.Data;
-using ioList.Dialogs;
-using ioList.Import;
-using ioList.Services;
-using ioList.Startup;
+using ioList.Pages;
 using NLog;
 using NLog.Config;
 using Prism.Ioc;
-using Prism.Modularity;
+using Prism.Mvvm;
 using Prism.Regions;
-using Squirrel;
 
 namespace ioList
 {
@@ -23,10 +16,7 @@ namespace ioList
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IListFileService, ListFileService>();
-            containerRegistry.Register<IListBuilder, ListBuilder>();
-            containerRegistry.Register<IListProvider, ListProvider>();
-            containerRegistry.Register<IListRepository, ListRepository>();
+            ViewModelLocationProvider.Register<StartupPage, StartupPageViewModel>();
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
@@ -40,13 +30,6 @@ namespace ioList
             regionBehaviors.AddIfMissing(RegionManagerAwareBehavior.BehaviorKey, typeof(RegionManagerAwareBehavior));
             regionBehaviors.AddIfMissing(DependentViewRegionBehavior.BehaviorKey, typeof(DependentViewRegionBehavior));
             base.ConfigureDefaultRegionBehaviors(regionBehaviors);
-        }
-
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            moduleCatalog.AddModule<StartupModule>();
-            moduleCatalog.AddModule<DialogsModule>();
-            moduleCatalog.AddModule<ImportModule>();
         }
 
         protected override Window CreateShell()
