@@ -1,8 +1,9 @@
-﻿using Prism.Mvvm;
+﻿using CoreTools.WPF.Mvvm;
+using Prism.Mvvm;
 
 namespace ioList
 {
-    public class ShellViewModel : BindableBase
+    public class ShellViewModel : ViewModelBase
     {
         public ShellViewModel()
         {

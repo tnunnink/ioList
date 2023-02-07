@@ -1,4 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   
+  <!--TitleBar-->
+  <SolidColorBrush x:Key="Brush.TitleBar.Background" Color="#48708D" />
+  <SolidColorBrush x:Key="Brush.TitleBar.Foreground" Color="#A1CBE1" />
+  <SolidColorBrush x:Key="Brush.TitleBar.Border" Color="#2A2F37" />
+  <SolidColorBrush x:Key="Brush.TitleBar.MouseOverBackground" Color="#335974" />
+  <SolidColorBrush x:Key="Brush.TitleBar.MouseCloseBackground" Color="#D66F6F" />
+  
+  <SolidColorBrush x:Key="Brush.Primary.Background" Color="#F4F6F9" />
+  <SolidColorBrush x:Key="Brush.Secondary.Background" Color="#E4EAF2" />
+  
+  <SolidColorBrush x:Key="Brush.Icon.Primary" Color="#728CA7" />
 </ResourceDictionary>

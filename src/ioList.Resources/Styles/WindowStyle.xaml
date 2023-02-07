@@ -3,8 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="http://CoreTools.com/wpf">
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
-    <ResourceDictionary Source="../Brushes/DarkBrushes.xaml" />
+    <ResourceDictionary Source="../Brushes.xaml" />
   </ResourceDictionary.MergedDictionaries>
   
   <ControlTemplate x:Key="WindowsButtonTemplate" TargetType="{x:Type Button}">
@@ -27,7 +26,7 @@
   <Style x:Key="WindowsButtonStandardStyle" TargetType="{x:Type Button}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="true">
-        <Setter Property="Background" Value="{StaticResource Brush.Common.Window.MouseOverBackgroundStandard}" />
+        <Setter Property="Background" Value="{StaticResource Brush.TitleBar.MouseOverBackground}" />
       </Trigger>
     </Style.Triggers>
     <Setter Property="UseLayoutRounding" Value="True" />
@@ -36,8 +35,8 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.Common.Window.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Window.Foreground}" />
+    <Setter Property="Background" Value="{StaticResource Brush.TitleBar.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.TitleBar.Foreground}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0" />
@@ -50,7 +49,7 @@
   <Style x:Key="WindowsButtonCloseStyle" TargetType="{x:Type Button}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.Common.Window.MouseOverBackgroundClose}" />
+        <Setter Property="Background" Value="{StaticResource Brush.TitleBar.MouseCloseBackground}" />
         <Setter Property="Foreground" Value="White" />
       </Trigger>
     </Style.Triggers>
@@ -60,8 +59,8 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.Common.Window.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Common.Window.Foreground}" />
+    <Setter Property="Background" Value="{StaticResource Brush.TitleBar.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.TitleBar.Foreground}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0" />
@@ -80,15 +79,14 @@
       </Canvas>
     </Viewbox>
   </ControlTemplate>
-
+  
   <ControlTemplate x:Key="Icon.Close" TargetType="{x:Type core:Icon}">
-    <Viewbox>
-      <Path
-        Fill="{TemplateBinding Foreground}"
-        Stretch="Uniform"
-        SnapsToDevicePixels="False"
-        UseLayoutRounding="False"
-        Data="M 7.21875 5.78125 L 5.78125 7.21875 L 14.5625 16 L 5.78125 24.78125 L 7.21875 26.21875 L 16 17.4375 L 24.78125 26.21875 L 26.21875 24.78125 L 17.4375 16 L 26.21875 7.21875 L 24.78125 5.78125 L 16 14.5625 Z" />
+    <Viewbox SnapsToDevicePixels="False"
+             UseLayoutRounding="False">
+      <Canvas Width="24" Height="24">
+        <Path Fill="{TemplateBinding Foreground}" 
+              Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+      </Canvas>
     </Viewbox>
   </ControlTemplate>
 
@@ -99,7 +97,7 @@
         Stretch="Uniform"
         SnapsToDevicePixels="False"
         UseLayoutRounding="False"
-        Data="M 5 5 L 5 6 L 5 27 L 27 27 L 27 5 L 5 5 z M 7 7 L 25 7 L 25 25 L 7 25 L 7 7 z" />
+        Data="M4,4H20V20H4V4M6,8V18H18V8H6Z" />
     </Viewbox>
   </ControlTemplate>
 
@@ -110,7 +108,7 @@
         Stretch="Uniform"
         SnapsToDevicePixels="False"
         UseLayoutRounding="False"
-        Data="M 5 15 L 5 17 L 27 17 L 27 15 Z" />
+        Data="M20,14H4V10H20" />
     </Viewbox>
   </ControlTemplate>
 
@@ -121,13 +119,13 @@
         Stretch="Uniform"
         SnapsToDevicePixels="False"
         UseLayoutRounding="False"
-        Data="M 10 5 L 10 10 L 5 10 L 5 11 L 5 27 L 22 27 L 22 22 L 27 22 L 27 5 L 10 5 z M 12 7 L 25 7 L 25 20 L 22 20 L 22 10 L 12 10 L 12 7 z M 7 12 L 20 12 L 20 25 L 7 25 L 7 12 z" />
+        Data="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" />
     </Viewbox>
   </ControlTemplate>
 
   <ControlTemplate x:Key="ShellTemplate" TargetType="{x:Type Window}">
     <Border x:Name="RootBorder"
-            BorderBrush="{StaticResource Brush.Common.Window.Border}"
+            BorderBrush="{StaticResource Brush.TitleBar.Border}"
             BorderThickness="1">
       <Grid>
         <Grid.RowDefinitions>
@@ -138,14 +136,14 @@
         <Grid Grid.Row="0">
           <Rectangle
             Height="30"
-            Fill="{StaticResource Brush.Common.Window.Background}" />
+            Fill="{StaticResource Brush.TitleBar.Background}" />
           <DockPanel LastChildFill="False">
             
             <core:Icon
               Margin="8,0,0,0"
               DockPanel.Dock="Left"
               Template="{DynamicResource Icon.App}"
-              Foreground="{StaticResource Brush.Common.Window.Foreground}"
+              Foreground="{StaticResource Brush.TitleBar.Foreground}"
               Height="20" Width="20"
               WindowChrome.IsHitTestVisibleInChrome="True" />
             
@@ -153,7 +151,7 @@
               Margin="8,0,0,0"
               VerticalAlignment="Center"
               DockPanel.Dock="Left"
-              Foreground="{StaticResource Brush.Common.Window.Foreground}"
+              Foreground="{StaticResource Brush.TitleBar.Foreground}"
               Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
             
             <Button x:Name="CloseButton"
@@ -161,7 +159,7 @@
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowsButtonCloseStyle}">
               <core:Icon Template="{DynamicResource Icon.Close}"
-                             Height="10" Width="10"
+                             Height="16" Width="16"
                              Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
             </Button>
             
@@ -171,7 +169,7 @@
                     Style="{StaticResource WindowsButtonStandardStyle}">
               <core:Icon x:Name="MaximizeRestoreIcon"
                              Template="{DynamicResource Icon.Maximize}"
-                             Height="10" Width="10"
+                             Height="16" Width="16"
                              Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
             </Button>
             
@@ -180,7 +178,7 @@
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowsButtonStandardStyle}">
               <core:Icon Template="{DynamicResource Icon.Minimize}"
-                             Height="10" Width="10"
+                             Height="16" Width="16"
                              Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
             </Button>
           </DockPanel>
@@ -209,8 +207,8 @@
 
   <Style x:Key="ShellStyle" TargetType="{x:Type Window}">
     <Setter Property="UseLayoutRounding" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.Dark.Primary.Background}" />
-    <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Primary.Foreground}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Primary.Background}" />
+    <Setter Property="Foreground" Value="#567791" />
     <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
     <Setter Property="WindowChrome.WindowChrome">

@@ -51,38 +51,14 @@ namespace ioList
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<StartupView>();
+            return Container.Resolve<Shell>();
         }
 
         protected override void Initialize()
         {
             ConfigureLogging();
 
-            CheckForUpdates().Await(OnCheckForUpdatesComplete, OnCheckForUpdatedFailed);
-
             base.Initialize();
-        }
-
-        private void OnCheckForUpdatedFailed(Exception obj)
-        {
-            MessageBox.Show(obj.Message);
-        }
-
-        private void OnCheckForUpdatesComplete()
-        {
-            //todo what do to here?
-        }
-
-        private static async Task CheckForUpdates()
-        {
-            using var manager = await UpdateManager.GitHubUpdateManager("https://github.com/tnunnink/ioList");
-
-            var updates = await manager.CheckForUpdate();
-            
-            if (updates.ReleasesToApply.Count > 0)
-            {
-                await manager.UpdateApp();   
-            }
         }
 
         protected override void OnInitialized()

@@ -3,10 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:core="http://CoreTools.com/wpf"
+             xmlns:ioList="clr-namespace:ioList"
              xmlns:local="clr-namespace:ioList.Features.AppInfo"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance local:AppInfoViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="120" d:DesignWidth="300">
   <Grid>
-    
+    <ListView VerticalContentAlignment="Stretch">
+      <ListViewItem Content="Update To Version 0.2.1" 
+                    Padding="10"/>
+      <Separator />
+      <ListViewItem Content="Report Issue"
+                    Padding="10"/>
+      <ListViewItem Content="Documentation"
+                    Padding="10"/>
+    </ListView>
   </Grid>
 </UserControl>

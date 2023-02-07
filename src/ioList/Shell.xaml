@@ -7,63 +7,44 @@
         xmlns:core="http://CoreTools.com/wpf"
         xmlns:ioList="clr-namespace:ioList"
         xmlns:naming="clr-namespace:ioList.Core.Naming;assembly=ioList.Core"
+        xmlns:appInfo="clr-namespace:ioList.Features.AppInfo"
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance ioList:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Height="800" Width="1400"
         d:DesignHeight="800" d:DesignWidth="1400"
-        Title="ioList"
+        Title="{Binding Title}"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource ShellStyle}">
-  
-  <Grid x:Name="Root">
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition Height="30"/>
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <core:CollapsibleColumnDefinition Width="50"
-                                        Visible="{Binding ShowListBar}"/>
-      <core:CollapsibleColumnDefinition Width="300" 
-                                        MinWidth="260"
-                                        MaxWidth="500"
-                                        Visible="{Binding ShowListMenu}"/>
-      <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    
-    <Border Grid.Row="0" Grid.Column="0"
-            Background="{StaticResource Brush.Dark.Primary.Background}"
-            BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ListBarRegion}" />
-    </Border>
 
-    <Border Grid.Row="0" Grid.Column="1"
-            Background="{StaticResource Brush.Dark.Primary.Background}"
-            BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ListRegion}" />
-    </Border>
-    
-    <GridSplitter Grid.Row="0" Grid.Column="2"
-                  Width="5"
-                  Visibility="{Binding ShowListMenu, Converter={core:BooleanVisibilityConverter}}"
-                  Margin="-3 0 0 0" 
-                  VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch"
-                  ResizeDirection="Columns"
-                  Background="Transparent"
-                  Panel.ZIndex="1"/>
-
-    <Border Grid.Row="0" Grid.Column="3"
-            Background="{StaticResource Brush.Light.Primary.Background}"
-            BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.ContentRegion}" />
-    </Border>
-
-    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+  <DockPanel LastChildFill="True">
+    <Border Height="30" DockPanel.Dock="Bottom"
             BorderThickness="0"
-            Background="{StaticResource Brush.Light.Secondary.Background}">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.FooterRegion}" />
+            Background="{StaticResource Brush.Secondary.Background}">
+      <StackPanel HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Margin="10 0">
+        <ToggleButton x:Name="TogglePopupButton"
+                      Background="Transparent"
+                      BorderThickness="0">
+          <StackPanel>
+            <core:Icon Template="{StaticResource Icon.Info}" Height="20" Width="20"
+                       Foreground="{StaticResource Brush.Icon.Primary}" />
+
+            <Popup IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}"
+                   Placement="Top"
+                   StaysOpen="False"
+                   PopupAnimation="Slide"
+                   AllowsTransparency="True">
+              <appInfo:AppInfoView />
+            </Popup>
+          </StackPanel>
+        </ToggleButton>
+      </StackPanel>
     </Border>
-  </Grid>
+
+    <Border Background="{StaticResource Brush.Primary.Background}">
+      <ContentControl prism:RegionManager.RegionName="{x:Static naming:RegionNames.PageRegion}" />
+    </Border>
+  </DockPanel>
 </Window>

@@ -4,7 +4,7 @@
   xmlns:core="http://CoreTools.com/wpf">
 
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Icons/GenericIcons.xaml" />
+    <ResourceDictionary Source="../Icons.xaml" />
     <ResourceDictionary Source="../Brushes/CommonBrushes.xaml" />
     <ResourceDictionary Source="../Brushes/DarkBrushes.xaml" />
     <ResourceDictionary Source="IconButtonStyle.xaml" />

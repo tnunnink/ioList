@@ -9,28 +9,28 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CoreTools.WPF" Version="0.2.2"/>
-        <PackageReference Include="EntityObserver" Version="1.0.0"/>
-        <PackageReference Include="NLog" Version="5.1.1"/>
+        <PackageReference Include="CoreTools.WPF" Version="0.2.2" />
+        <PackageReference Include="EntityObserver" Version="1.0.0" />
+        <PackageReference Include="NLog" Version="5.1.1" />
         <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Prism.Core" Version="8.1.97"/>
-        <PackageReference Include="Prism.DryIoc" Version="8.1.97"/>
-        <PackageReference Include="Prism.Wpf" Version="8.1.97"/>
-        <PackageReference Include="squirrel.windows" Version="1.9.0"/>
+        <PackageReference Include="Prism.Core" Version="8.1.97" />
+        <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+        <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+        <PackageReference Include="squirrel.windows" Version="1.9.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ioList.Core\ioList.Core.csproj"/>
-        <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj"/>
-        <ProjectReference Include="..\ioList.Dialogs\ioList.Dialogs.csproj"/>
-        <ProjectReference Include="..\ioList.Import\ioList.Import.csproj"/>
-        <ProjectReference Include="..\ioList.Settings\ioList.Settings.csproj"/>
-        <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj"/>
-        <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj"/>
-        <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj"/>
+        <ProjectReference Include="..\ioList.Core\ioList.Core.csproj" />
+        <ProjectReference Include="..\ioList.Entities\ioList.Entities.csproj" />
+        <ProjectReference Include="..\ioList.Dialogs\ioList.Dialogs.csproj" />
+        <ProjectReference Include="..\ioList.Import\ioList.Import.csproj" />
+        <ProjectReference Include="..\ioList.Settings\ioList.Settings.csproj" />
+        <ProjectReference Include="..\ioList.Observers\ioList.Observers.csproj" />
+        <ProjectReference Include="..\ioList.Resources\ioList.Resources.csproj" />
+        <ProjectReference Include="..\ioList.Startup\ioList.Startup.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
@@ -41,9 +41,9 @@
 
     <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
         <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-            <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
+            <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
         </GetAssemblyIdentity>
         <Exec Command="nuget pack ioList.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
-        <Exec Command="Squirrel --releasify $(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=$(SolutionDir)..\releases"/>
+        <Exec Command="Squirrel --releasify $(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=$(SolutionDir)..\releases" />
     </Target>
 </Project>
