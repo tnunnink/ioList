@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="ioList.Features.Startup.StartupSelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ioList.Features.Startup"
+             xmlns:core="http://CoreWPF.com"
+             d:DataContext="{d:DesignInstance local:StartupViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="760">
+  <UserControl.Resources>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style.Button}">
+      <Setter Property="Background" Value="#FBFDFF" />
+      <Setter Property="BorderBrush" Value="#96B1BE" />
+      <Setter Property="Height" Value="110" />
+      <Setter Property="Width" Value="140" />
+      <Setter Property="Margin" Value="20" />
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="#DEEEF8" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type TextBlock}">
+      <Setter Property="Foreground" Value="#3B5980" />
+      <Setter Property="Margin" Value="5" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+  </UserControl.Resources>
+  
+  <Grid Background="{StaticResource Brush.Page.Background}">
+    <StackPanel VerticalAlignment="Center">
+      <TextBlock Text="ioList" 
+                 FontSize="30" 
+                 FontWeight="SemiBold" 
+                 Foreground="#48708D" />
+      <TextBlock Text="1.0" />
+      <TextBlock Text="Start from from the following options"
+                 Margin="20"/>
+      
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <Button Command="{Binding NewCommand}">
+          <StackPanel>
+            <core:Icon Template="{StaticResource Icon.Cube}" Margin="5" 
+                       Height="30" Width="30"/>
+            <TextBlock Text="New Project" />
+          </StackPanel>
+        </Button>
+        <Button>
+          <StackPanel>
+            <core:Icon Template="{StaticResource Icon.Xml}" Margin="5" 
+                       Height="30" Width="30"/>
+            <TextBlock Text="Drop L5X" />
+          </StackPanel>
+        </Button>
+        <Button Command="{Binding OpenCommand}">
+          <StackPanel>
+            <core:Icon Template="{StaticResource Icon.Folder}" Margin="5" 
+                       Height="30" Width="30"/>
+            <TextBlock Text="Open Project" />
+          </StackPanel>
+        </Button>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</UserControl>

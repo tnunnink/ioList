@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:core="http://CoreWPF.com">
+  <ControlTemplate x:Key="PopupButtonTemplate" TargetType="{x:Type core:PopupButton}">
+    <Grid SnapsToDevicePixels="True">
+      <Border x:Name="MainBorder"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},
+               Path=(core:BorderProperties.CornerRadius)}">
+        <Grid>
+          <ContentPresenter x:Name="ContentPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Grid>
+      </Border>
+    </Grid>
+  </ControlTemplate>
+
+  <Style x:Key="Style.PopupButton.Icon" TargetType="{x:Type core:PopupButton}">
+    <Style.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+      </Trigger>
+      <Trigger Property="IsMouseOver" Value="True">
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="UseLayoutRounding" Value="False" />
+    <Setter Property="SnapsToDevicePixels" Value="False" />
+    <Setter Property="Template" Value="{StaticResource PopupButtonTemplate}" />
+  </Style>
+
+</ResourceDictionary>

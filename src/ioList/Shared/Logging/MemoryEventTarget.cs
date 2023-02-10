@@ -2,7 +2,7 @@
 using NLog;
 using NLog.Targets;
 
-namespace ioList.Core.Logging
+namespace ioList.Shared.Logging
 {
     public class MemoryEventTarget : Target
     {

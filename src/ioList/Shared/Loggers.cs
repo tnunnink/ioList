@@ -1,6 +1,6 @@
-﻿namespace ioList.Core.Naming
+﻿namespace ioList.Shared
 {
-    public class LoggerNames
+    public class Loggers
     {
         public static readonly string NotificationLogger = nameof(NotificationLogger);
     }

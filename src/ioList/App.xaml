@@ -5,7 +5,12 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <!--<ResourceDictionary Source="/ioList.Resources;component/Resources.xaml" />-->
+        <ResourceDictionary Source="Resources/Brushes.xaml" />
+        <ResourceDictionary Source="Resources/Icons.xaml" />
+        <ResourceDictionary Source="Resources/Styles/WindowStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/IconStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/ButtonStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/PopupButtonStyle.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -2,7 +2,7 @@
 
 namespace ioList.Entities
 {
-    public class ModuleInfo
+    public class DeviceInfo
     {
         public string CatalogNumber { get; set; }
         public string Description { get; set; }

@@ -1,4 +1,5 @@
-﻿using CoreTools.WPF.Prism;
+﻿
+using CoreWPF.Prism;
 using Prism.Regions;
 
 namespace ioList.Features.Settings

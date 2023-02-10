@@ -1,75 +1,134 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
-using CoreTools.WPF.Mvvm;
+using CoreWPF.Mvvm;
 using NLog;
 using Prism.Commands;
-using Prism.Regions;
 using Squirrel;
 
 namespace ioList.Features.AppInfo
 {
-    public class AppInfoViewModel : NavigationViewModelBase
+    public class AppInfoViewModel : ViewModelBase
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-        private const string GitRepo = "https://github.com/tnunnink/ioList";
-        private UpdateManager _manager;
-        private bool _updatesAvailable;
+        private DelegateCommand _launchRepository;
+        private DelegateCommand _launchIssues;
+        private DelegateCommand _launchPages;
         private DelegateCommand _updateCommand;
-
-        public override void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            LoadAsync().Await(OnLoadComplete, OnLoadError);
-        }
-
+        private DelegateCommand _checkForUpdates;
         private string _versionText;
+        private string _updateText;
+        private bool _updateAvailable;
+        private bool _checkingForUpdates;
+
+        public AppInfoViewModel()
+        {
+            VersionText = "ioList 0.0.0";
+            UpdateAvailable = false;
+            ExecuteCheckForUpdates();
+        }
 
         public string VersionText
         {
             get => _versionText;
-            set => SetProperty(ref _versionText, value);
+            private set => SetProperty(ref _versionText, value);
         }
 
-        public bool UpdatesAvailable
+        public string UpdateText
         {
-            get => _updatesAvailable;
-            set => SetProperty(ref _updatesAvailable, value);
+            get => _updateText;
+            private set => SetProperty(ref _updateText, value);
         }
+
+        public bool UpdateAvailable
+        {
+            get => _updateAvailable;
+            private set => SetProperty(ref _updateAvailable, value);
+        }
+
+        public bool CheckingForUpdates
+        {
+            get => _checkingForUpdates;
+            set => SetProperty(ref _checkingForUpdates, value);
+        }
+
+        public DelegateCommand LaunchRepository =>
+            _launchRepository ??= new DelegateCommand(() => LaunchSite(Shared.Application.RepositoryUrl));
+
+        public DelegateCommand LaunchIssues =>
+            _launchIssues ??= new DelegateCommand(() => LaunchSite(Shared.Application.IssuesUrl));
+
+        public DelegateCommand LaunchPages =>
+            _launchPages ??= new DelegateCommand(() => LaunchSite(Shared.Application.IssuesUrl));
+
+        public DelegateCommand CheckForUpdates =>
+            _checkForUpdates ??= new DelegateCommand(ExecuteCheckForUpdates, () => !CheckingForUpdates)
+                .ObservesProperty(() => CheckingForUpdates);
 
         public DelegateCommand UpdateCommand =>
             _updateCommand ??= new DelegateCommand(ExecuteUpdateCommand, CanExecuteUpdateCommand);
 
+        private void ExecuteCheckForUpdates()
+        {
+            Task.Run(async () =>
+            {
+                CheckingForUpdates = true;
+                using var manager = await UpdateManager.GitHubUpdateManager(Shared.Application.RepositoryUrl);
+                return await manager.CheckForUpdate();
+            }).Await(OnCheckForUpdatesComplete,
+                e =>
+                {
+                    Logger.Error(e, $"Unable to perform application update check for '{Shared.Application.RepositoryUrl}'.");
+                    CheckingForUpdates = false;
+                }, false);
+        }
+
+        private void OnCheckForUpdatesComplete(UpdateInfo updateInfo)
+        {
+            CheckingForUpdates = false;
+
+            if (updateInfo is null)
+                return;
+
+            VersionText = $"ioList {updateInfo.CurrentlyInstalledVersion.Version}";
+
+            UpdateAvailable = updateInfo.ReleasesToApply.Count > 0;
+
+            if (!UpdateAvailable) return;
+            var latest = updateInfo.ReleasesToApply.OrderBy(r => r.Version).LastOrDefault()?.Version;
+            UpdateText = $"Update to version {latest}";
+        }
+
         private void ExecuteUpdateCommand()
         {
-            _manager.UpdateApp().Await(OnUpdateComplete, OnUpdateFailed);
+            Task.Run(async () =>
+            {
+                using var manager = await UpdateManager.GitHubUpdateManager(Shared.Application.RepositoryUrl);
+                return await manager.UpdateApp();
+            }).Await(OnUpdateComplete,
+                e => Logger.Error(e, $"Unable to update application from repository '{Shared.Application.RepositoryUrl}'."));
         }
 
-        private void OnUpdateFailed(Exception obj)
+        private bool CanExecuteUpdateCommand() => UpdateAvailable;
+
+        private void OnUpdateComplete(ReleaseEntry entry)
         {
-            Logger.Error(obj, "Failed to update application");
+            Logger.Info($"Application updated to version {entry.Version}");
+            VersionText = $"ioList {entry.Version}";
+            UpdateAvailable = false;
         }
 
-        private void OnUpdateComplete(ReleaseEntry obj)
+        private static void LaunchSite(string url)
         {
-            Logger.Info($"Application Updates to version {obj.Version}");
-        }
-
-        private bool CanExecuteUpdateCommand() => UpdatesAvailable;
-
-        protected override async Task LoadAsync()
-        {
-            _manager = await UpdateManager.GitHubUpdateManager(GitRepo);
-            var updates = await _manager.CheckForUpdate();
-            UpdatesAvailable = updates.ReleasesToApply.Count > 0;
-        }
-
-        protected override void OnLoadError(Exception ex)
-        {
-            Logger.Error(ex, "Unable to connect to update manager");
-        }
-
-        public override void Destroy()
-        {
-            _manager.Dispose();
+            try
+            {
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Unable to open site {url}");
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ioList.Entities
 
         public int Id { get; set; }
         public int ModuleId { get; set; }
-        public Module Module { get; set; }
+        public Device Device { get; set; }
         public string Address { get; set; }
         public string DataType { get; set; }
         public string Description { get; set; }

@@ -1,22 +1,28 @@
 ﻿using System.Windows;
-using CoreTools.WPF.Prism;
-using CoreTools.WPF.Prism.RegionBehaviors;
-using ioList.Core.Logging;
-using ioList.Core.Naming;
-using ioList.Pages;
+using CoreWPF.Prism;
+using CoreWPF.Prism.RegionBehaviors;
+using ioList.Composites;
+using ioList.Features.Startup;
+using ioList.Shared;
+using ioList.Shared.Logging;
+using ioList.Shared.Services;
 using NLog;
 using NLog.Config;
 using Prism.Ioc;
-using Prism.Mvvm;
 using Prism.Regions;
 
 namespace ioList
 {
     public partial class App
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            ViewModelLocationProvider.Register<StartupPage, StartupPageViewModel>();
+            containerRegistry.Register<IScopedShellCreator, ShellCreator>();
+
+            containerRegistry.RegisterForNavigation<FooterView, FooterViewModel>();
+            containerRegistry.RegisterForNavigation<StartupView, StartupViewModel>();
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
@@ -34,8 +40,17 @@ namespace ioList
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<Shell>();
+            var creator = Container.Resolve<IScopedShellCreator>();
+            return creator.Create();
         }
+
+        protected override void InitializeShell(Window shell)
+        {
+            var regionManager = RegionManager.GetRegionManager(shell);
+            regionManager.RequestNavigate(Regions.ContentRegion, nameof(StartupView));
+            regionManager.RequestNavigate(Regions.FooterRegion, nameof(FooterView));
+            base.InitializeShell(shell);
+        } 
 
         protected override void Initialize()
         {
@@ -44,20 +59,13 @@ namespace ioList
             base.Initialize();
         }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            var regionManager = Container.Resolve<IRegionManager>();
-        }
-
         private static void ConfigureLogging()
         {
             ConfigurationItemFactory.Default.Targets.RegisterDefinition("MemoryEvent", typeof(MemoryEventTarget));
 
             var config = new LoggingConfiguration();
             
-            var notificationTarget = new MemoryEventTarget(LoggerNames.NotificationLogger);
+            var notificationTarget = new MemoryEventTarget(Loggers.NotificationLogger);
             config.AddTarget(notificationTarget);
             config.LoggingRules.Add(new LoggingRule("*", LogLevel.Info, notificationTarget));
             

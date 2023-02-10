@@ -4,48 +4,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:core="http://CoreTools.com/wpf"
         xmlns:ioList="clr-namespace:ioList"
-        xmlns:naming="clr-namespace:ioList.Core.Naming;assembly=ioList.Core"
-        xmlns:appInfo="clr-namespace:ioList.Features.AppInfo"
-        xmlns:naming1="clr-namespace:ioList.Core.Naming"
+        xmlns:shared="clr-namespace:ioList.Shared"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}"
+        ResizeMode="{Binding ResizeMode}"
+        WindowStartupLocation="CenterOwner"
+        Style="{DynamicResource ShellStyle}"
         d:DataContext="{d:DesignInstance ioList:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
-        Height="800" Width="1400"
-        d:DesignHeight="800" d:DesignWidth="1400"
-        Title="{Binding Title}"
-        WindowStartupLocation="CenterOwner"
-        Style="{DynamicResource ShellStyle}">
+        d:DesignHeight="600" d:DesignWidth="800">
 
-  <DockPanel LastChildFill="True">
-    <Border Height="30" DockPanel.Dock="Bottom"
-            BorderThickness="0"
-            Background="{StaticResource Brush.Secondary.Background}">
-      <StackPanel HorizontalAlignment="Right"
-                  VerticalAlignment="Center"
-                  Margin="10 0">
-        <ToggleButton x:Name="TogglePopupButton"
-                      Background="Transparent"
-                      BorderThickness="0">
-          <StackPanel>
-            <core:Icon Template="{StaticResource Icon.Info}" Height="20" Width="20"
-                       Foreground="{StaticResource Brush.Icon.Primary}" />
-
-            <Popup IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}"
-                   Placement="Top"
-                   StaysOpen="False"
-                   PopupAnimation="Slide"
-                   AllowsTransparency="True">
-              <appInfo:AppInfoView />
-            </Popup>
-          </StackPanel>
-        </ToggleButton>
-      </StackPanel>
-    </Border>
-
-    <Border Background="{StaticResource Brush.Primary.Background}">
-      <ContentControl prism:RegionManager.RegionName="{x:Static naming1:RegionNames.PageRegion}" />
-    </Border>
-  </DockPanel>
+  <Border BorderBrush="{StaticResource Brush.Page.Background}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      
+      <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static shared:Regions.ContentRegion}" />
+      <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static shared:Regions.FooterRegion}" />
+    </Grid>
+  </Border>
 </Window>

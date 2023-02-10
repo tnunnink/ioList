@@ -1,11 +1,11 @@
-﻿using CoreTools.WPF.Prism;
+﻿using CoreWPF.Prism;
 using Prism.Regions;
 
-namespace ioList.Pages
+namespace ioList.Features.Startup
 {
-    public partial class StartupPage
+    public partial class StartupView
     {
-        public StartupPage(IRegionManager regionManager)
+        public StartupView(IRegionManager regionManager)
         {
             InitializeComponent();
             var scopedRegion = regionManager.CreateRegionManager();
