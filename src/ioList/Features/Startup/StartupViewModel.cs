@@ -23,6 +23,7 @@ namespace ioList.Features.Startup
         private bool _hasProjects;
         private ObservableCollection<ProjectFileObserver> _projects;
         private ProjectFileObserver _project;
+        private string _sourceFile;
         private DelegateCommand _newCommand;
         private DelegateCommand _openCommand;
         private DelegateCommand _createCommand;
@@ -55,6 +56,12 @@ namespace ioList.Features.Startup
             set => SetProperty(ref _project, value);
         }
 
+        public string SourceFile
+        {
+            get => _sourceFile;
+            set => SetProperty(ref _sourceFile, value);
+        }
+
         public DelegateCommand NewCommand =>
             _newCommand ??= new DelegateCommand(() => NavigateProjectView(new ProjectFileObserver()));
 
@@ -77,8 +84,7 @@ namespace ioList.Features.Startup
                 var projects = Application.Data.Load<List<ProjectFile>>("Projects.json");
 
                 Projects = projects is not null
-                    ? new ObservableCollection<ProjectFileObserver>(
-                        projects.Select(p => new ProjectFileObserver(p)))
+                    ? new ObservableCollection<ProjectFileObserver>(projects.Select(p => new ProjectFileObserver(p)))
                     : new ObservableCollection<ProjectFileObserver>();
 
                 HasProjects = Projects.Count > 0;
@@ -109,13 +115,26 @@ namespace ioList.Features.Startup
             var fileName = FileService.SelectFile();
 
             if (string.IsNullOrEmpty(fileName)) return;
-            
+
             var projectFile = ProjectFile.FromFileName(fileName);
             Project = new ProjectFileObserver(projectFile);
             LaunchProject();
         }
-
-        private void LaunchProject() =>
-            _eventAggregator.GetEvent<LaunchProjectEvent>().Publish(Project.Entity);
+        
+        /// <summary>
+        /// Event is subscribed to in the main shell view model. There is where the process of
+        /// creating/migrating/connecting to the specified project is carried out.
+        /// </summary>
+        private void LaunchProject()
+        {
+            var args = new LaunchProjectEventArgs
+            {
+                ProjectFile = Project.Entity,
+                SourceFile = SourceFile
+            };
+            
+            _eventAggregator.GetEvent<LaunchProjectEvent>().Publish(args);
+        }
+            
     }
 }

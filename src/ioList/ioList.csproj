@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageReference Include="CoreWPF" Version="0.5.0" />
         <PackageReference Include="EntityObserver" Version="1.0.0" />
+        <PackageReference Include="FluentMigrator" Version="3.3.2" />
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
         <PackageReference Include="NLog" Version="5.1.1" />
         <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
@@ -43,6 +44,11 @@
 
     <ItemGroup>
       <None Remove="Features\Import\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\ProjectDb\Commands" />
+      <Folder Include="Data\ProjectDb\Queries" />
     </ItemGroup>
 
     <PropertyGroup>

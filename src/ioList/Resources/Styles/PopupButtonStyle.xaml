@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:core="http://CoreWPF.com">
-  <ControlTemplate x:Key="PopupButtonTemplate" TargetType="{x:Type core:PopupButton}">
-    <Grid SnapsToDevicePixels="True">
+  <ControlTemplate x:Key="Template.PopupButton" TargetType="{x:Type core:PopupButton}">
+    <Grid>
       <Border x:Name="MainBorder"
               Background="{TemplateBinding Background}"
               BorderBrush="{TemplateBinding BorderBrush}"
@@ -23,17 +23,19 @@
   <Style x:Key="Style.PopupButton.Icon" TargetType="{x:Type core:PopupButton}">
     <Style.Triggers>
       <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}"></Setter>
       </Trigger>
       <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="#5397C8"></Setter>
       </Trigger>
     </Style.Triggers>
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="0" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="UseLayoutRounding" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="False" />
-    <Setter Property="Template" Value="{StaticResource PopupButtonTemplate}" />
+    <Setter Property="Template" Value="{StaticResource Template.PopupButton}" />
   </Style>
 
 </ResourceDictionary>

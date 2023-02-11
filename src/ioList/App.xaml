@@ -5,6 +5,7 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/CoreWPF;component/resources.xaml" />
         <ResourceDictionary Source="Resources/Brushes.xaml" />
         <ResourceDictionary Source="Resources/Icons.xaml" />
         <ResourceDictionary Source="Resources/Styles/WindowStyle.xaml" />

@@ -13,7 +13,6 @@ namespace ioList
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IScopedShellCreator _shellCreator;
-        private ResizeMode _resizeMode = ResizeMode.CanMinimize;
 
         public ShellViewModel(IEventAggregator eventAggregator, IScopedShellCreator shellCreator)
         {
@@ -23,7 +22,7 @@ namespace ioList
             _eventAggregator.GetEvent<LaunchProjectEvent>().Subscribe(LaunchProject);
         }
 
-        private void LaunchProject(ProjectFile obj)
+        private void LaunchProject(LaunchProjectEventArgs args)
         {
             //todo close out the startup view.
             //kick off the project creation and migration.
@@ -33,12 +32,5 @@ namespace ioList
         }
 
         public IRegionManager RegionManager { get; set; }
-
-
-        public ResizeMode ResizeMode
-        {
-            get => _resizeMode;
-            set => SetProperty(ref _resizeMode, value);
-        }
     }
 }

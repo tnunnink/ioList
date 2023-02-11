@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace ioList.Entities
+﻿namespace ioList.Entities
 {
     public class Controller
     {
-        public IEnumerable<Device> Devices { get; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ProcessorType { get; set; }
     }
 }

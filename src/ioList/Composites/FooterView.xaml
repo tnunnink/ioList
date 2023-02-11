@@ -18,17 +18,17 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Margin="10 0">
-      <core:Icon Template="{StaticResource Icon.Settings}"
-                 Margin="5 0" />
-      <core:Icon Template="{StaticResource Icon.Notification}"
-                 Margin="5 0" />
-
     </StackPanel>
     <StackPanel Orientation="Horizontal"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
                 Margin="10 0">
-      <core:PopupButton Style="{StaticResource Style.PopupButton.Icon}">
+      <core:Icon Template="{StaticResource Icon.Notification}"
+                 Margin="10 0" />
+      <core:Icon Template="{StaticResource Icon.Settings}"
+                 Margin="10 0" />
+      <core:PopupButton Style="{StaticResource Style.PopupButton.Icon}"
+                        Margin="10 0">
         <core:Icon Template="{StaticResource Icon.Info}" />
         <core:PopupButton.Popup>
           <Popup Placement="Top"

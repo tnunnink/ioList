@@ -7,6 +7,7 @@
         }
 
         public int Id { get; set; }
+        public int ControllerId { get; set; }
         public string Name { get; set; }
         public string Parent { get; set; }
         public string CatalogNumber { get; set; }
