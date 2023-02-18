@@ -2,22 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using EntityObserver;
-using ioList.Entities;
 
-namespace ioList.Observers
+namespace ioList.Features.Startup
 {
-    public class ProjectFileObserver : Observer<ProjectFile>
+    public class ProjectObserver : Observer<ProjectFile>
     {
-        private readonly FileInfo _fileInfo;
-
-        public ProjectFileObserver() : base(new ProjectFile("MyProject"))
+        public ProjectObserver() : base(new ProjectFile())
         {
-            _fileInfo = new FileInfo(Entity.FileName());
         }
 
-        public ProjectFileObserver(ProjectFile entity) : base(entity)
+        public ProjectObserver(ProjectFile entity) : base(entity)
         {
-            _fileInfo = new FileInfo(Entity.FileName());
         }
 
         [Required(ErrorMessage = "Name is required")]
@@ -35,16 +30,14 @@ namespace ioList.Observers
             get => GetValue<string>();
             set => SetValue(value);
         }
-        
-        public bool Exists => _fileInfo.Exists;
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (!Directory.Exists(Location))
                 yield return new ValidationResult($"{Location} does not exist.", new[] { nameof(Location) });
             
-            if (File.Exists(Entity.FileName()))
-                yield return new ValidationResult($"{Entity.FileName()} already exists.", new[] { nameof(Name) });
+            if (File.Exists(Entity.FileName))
+                yield return new ValidationResult($"{Entity.FileName} already exists.", new[] { nameof(Name) });
         }
     }
 }

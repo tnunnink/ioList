@@ -227,12 +227,22 @@
     </Viewbox>
   </ControlTemplate>
   
+  <ControlTemplate x:Key="Icon.Folder.Add" TargetType="{x:Type core:Icon}">
+    <Viewbox SnapsToDevicePixels="False"
+             UseLayoutRounding="False">
+      <Canvas Width="24" Height="24">
+        <Path Fill="{TemplateBinding Foreground}" 
+              Data="M13 19C13 19.34 13.04 19.67 13.09 20H4C2.9 20 2 19.11 2 18V6C2 4.89 2.89 4 4 4H10L12 6H20C21.1 6 22 6.89 22 8V13.81C21.12 13.3 20.1 13 19 13C15.69 13 13 15.69 13 19M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" />
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+  
   <ControlTemplate x:Key="Icon.List" TargetType="{x:Type core:Icon}">
     <Viewbox SnapsToDevicePixels="False"
              UseLayoutRounding="False">
       <Canvas Width="24" Height="24">
         <Path Fill="{TemplateBinding Foreground}" 
-              Data="M2 14H8V20H2M16 8H10V10H16M2 10H8V4H2M10 4V6H22V4M10 20H16V18H10M10 16H22V14H10" />
+              Data="M9,5V9H21V5M9,19H21V15H9M9,14H21V10H9M4,9H8V5H4M4,19H8V15H4M4,14H8V10H4V14Z" />
       </Canvas>
     </Viewbox>
   </ControlTemplate>
@@ -253,6 +263,16 @@
       <Canvas Width="24" Height="24">
         <Path Fill="{TemplateBinding Foreground}" 
               Data="M2,16H10V14H2M18,14V10H16V14H12V16H16V20H18V16H22V14M14,6H2V8H14M14,10H2V12H14V10Z" />
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+  
+  <ControlTemplate x:Key="Icon.Back" TargetType="{x:Type core:Icon}">
+    <Viewbox SnapsToDevicePixels="False"
+             UseLayoutRounding="False">
+      <Canvas Width="24" Height="24">
+        <Path Fill="{TemplateBinding Foreground}" 
+              Data="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
       </Canvas>
     </Viewbox>
   </ControlTemplate>

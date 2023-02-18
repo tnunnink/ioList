@@ -221,7 +221,7 @@
 
   <Style x:Key="ShellStyle" TargetType="{x:Type Window}">
     <Setter Property="UseLayoutRounding" Value="True" />
-    <Setter Property="Background" Value="{StaticResource Brush.Page.Background}" />
+    <Setter Property="Background" Value="{StaticResource Brush.Light.Background}" />
     <Setter Property="Foreground" Value="#567791" />
     <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />

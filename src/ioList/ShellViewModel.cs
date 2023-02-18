@@ -1,9 +1,12 @@
 ﻿using System.Windows;
 using CoreWPF.Mvvm;
 using CoreWPF.Prism;
-using ioList.Entities;
+using ioList.Composites;
+using ioList.Core;
 using ioList.Events;
+using ioList.Shared;
 using ioList.Shared.Services;
+using NLog;
 using Prism.Events;
 using Prism.Regions;
 
@@ -11,26 +14,35 @@ namespace ioList
 {
     public class ShellViewModel : ViewModelBase, IRegionManagerAware
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEventAggregator _eventAggregator;
         private readonly IScopedShellCreator _shellCreator;
+        private Project _project;
+        private ResizeMode _resizeMode = ResizeMode.CanMinimize;
 
         public ShellViewModel(IEventAggregator eventAggregator, IScopedShellCreator shellCreator)
         {
             _eventAggregator = eventAggregator;
             _shellCreator = shellCreator;
 
-            _eventAggregator.GetEvent<LaunchProjectEvent>().Subscribe(LaunchProject);
+            _eventAggregator.GetEvent<OpenProjectEvent>().Subscribe(LaunchProject);
         }
 
-        private void LaunchProject(LaunchProjectEventArgs args)
+        public ResizeMode ResizeMode
         {
-            //todo close out the startup view.
-            //kick off the project creation and migration.
-            //start navigation of views into content region.
-            //set data store recent projects to the new project file.
-            //set Title to the project name and location?.
+            get => _resizeMode;
+            private set => SetProperty(ref _resizeMode, value);
         }
 
+        private void LaunchProject(Project project)
+        {
+            _project = project;
+            ResizeMode = ResizeMode.CanResize;
+            Title = _project.Name;
+            
+            RegionManager?.RequestNavigate(Regions.ContentRegion, nameof(ProjectView));
+        }
+        
         public IRegionManager RegionManager { get; set; }
     }
 }

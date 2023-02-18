@@ -2,9 +2,9 @@
 
 namespace ioList.Features.Startup
 {
-    public partial class NewProjectView
+    public partial class OpenProjectView
     {
-        public NewProjectView()
+        public OpenProjectView()
         {
             InitializeComponent();
         }

@@ -54,13 +54,13 @@ namespace ioList.Features.AppInfo
         }
 
         public DelegateCommand LaunchRepository =>
-            _launchRepository ??= new DelegateCommand(() => LaunchSite(Shared.Application.RepositoryUrl));
+            _launchRepository ??= new DelegateCommand(() => LaunchSite(Shared.Global.RepositoryUrl));
 
         public DelegateCommand LaunchIssues =>
-            _launchIssues ??= new DelegateCommand(() => LaunchSite(Shared.Application.IssuesUrl));
+            _launchIssues ??= new DelegateCommand(() => LaunchSite(Shared.Global.IssuesUrl));
 
         public DelegateCommand LaunchPages =>
-            _launchPages ??= new DelegateCommand(() => LaunchSite(Shared.Application.IssuesUrl));
+            _launchPages ??= new DelegateCommand(() => LaunchSite(Shared.Global.IssuesUrl));
 
         public DelegateCommand CheckForUpdates =>
             _checkForUpdates ??= new DelegateCommand(ExecuteCheckForUpdates, () => !CheckingForUpdates)
@@ -74,12 +74,12 @@ namespace ioList.Features.AppInfo
             Task.Run(async () =>
             {
                 CheckingForUpdates = true;
-                using var manager = await UpdateManager.GitHubUpdateManager(Shared.Application.RepositoryUrl);
+                using var manager = await UpdateManager.GitHubUpdateManager(Shared.Global.RepositoryUrl);
                 return await manager.CheckForUpdate();
             }).Await(OnCheckForUpdatesComplete,
                 e =>
                 {
-                    Logger.Error(e, $"Unable to perform application update check for '{Shared.Application.RepositoryUrl}'.");
+                    Logger.Error(e, $"Unable to perform application update check for '{Shared.Global.RepositoryUrl}'.");
                     CheckingForUpdates = false;
                 }, false);
         }
@@ -104,10 +104,10 @@ namespace ioList.Features.AppInfo
         {
             Task.Run(async () =>
             {
-                using var manager = await UpdateManager.GitHubUpdateManager(Shared.Application.RepositoryUrl);
+                using var manager = await UpdateManager.GitHubUpdateManager(Shared.Global.RepositoryUrl);
                 return await manager.UpdateApp();
             }).Await(OnUpdateComplete,
-                e => Logger.Error(e, $"Unable to update application from repository '{Shared.Application.RepositoryUrl}'."));
+                e => Logger.Error(e, $"Unable to update application from repository '{Shared.Global.RepositoryUrl}'."));
         }
 
         private bool CanExecuteUpdateCommand() => UpdateAvailable;

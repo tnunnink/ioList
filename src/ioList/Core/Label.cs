@@ -1,4 +1,4 @@
-﻿namespace ioList.Entities
+﻿namespace ioList.Core
 {
     public class Label
     {

@@ -4,7 +4,7 @@ using CoreWPF.Services;
 
 namespace ioList.Shared
 {
-    public static class Application
+    public static class Global
     {
         public static readonly string Directory =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ioList");

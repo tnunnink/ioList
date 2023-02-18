@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="6.10.0" />
+        <PackageReference Include="NUnit" Version="3.12.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+        <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="19.1.18" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\ioList\ioList.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Database" />
+    </ItemGroup>
+
+</Project>

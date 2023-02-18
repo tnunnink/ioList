@@ -1,4 +1,6 @@
-﻿namespace ioList.Entities
+﻿using ioList.Core;
+
+namespace ioList.Entities
 {
     public class Reference
     {

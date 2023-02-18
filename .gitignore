@@ -350,5 +350,6 @@ MigrationBackup/
 .ionide/
 
 #Custom
+/db
 !releases/**
 !releases/

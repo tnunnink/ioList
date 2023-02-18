@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ioList.Entities;
 
-namespace ioList.Entities
+namespace ioList.Core
 {
     public class Tag
     {

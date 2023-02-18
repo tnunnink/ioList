@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         d:DesignHeight="600" d:DesignWidth="800">
 
-  <Border BorderBrush="{StaticResource Brush.Page.Background}">
+  <Border BorderBrush="{StaticResource Brush.Light.Background}">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition />

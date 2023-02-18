@@ -8,8 +8,7 @@
   <ControlTemplate x:Key="Template.Button" TargetType="{x:Type Button}">
     <Grid SnapsToDevicePixels="True">
       <Border x:Name="RootBorder"
-              BorderBrush="{TemplateBinding BorderBrush}"
-              BorderThickness="{TemplateBinding BorderThickness}"
+              Background="{TemplateBinding BorderBrush}"
               CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(core:BorderProperties.CornerRadius)}">
         <Border x:Name="MainBorder"
                 Background="{TemplateBinding Background}"
@@ -26,20 +25,10 @@
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Border>
       </Border>
-      <Border x:Name="FocusBorder"
-              BorderBrush="Aquamarine"
-              CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(core:BorderProperties.CornerRadius)}"
-              Margin="-1"
-              BorderThickness="1"
-              Visibility="Collapsed">
-        <Border.Effect>
-          <BlurEffect Radius="3" KernelType="Gaussian" />
-        </Border.Effect>
-      </Border>
     </Grid>
   </ControlTemplate>
 
-  <Style x:Key="Style.Button" TargetType="{x:Type Button}">
+  <Style x:Key="Style.Button.Base" TargetType="{x:Type Button}">
     <Style.Triggers>
       <Trigger Property="IsEnabled" Value="False">
         <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
@@ -50,42 +39,70 @@
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="UseLayoutRounding" Value="False" />
-    <Setter Property="SnapsToDevicePixels" Value="False" />
+    <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="core:BorderProperties.CornerRadius" Value="5" />
     <Setter Property="Template" Value="{StaticResource Template.Button}" />
   </Style>
-  
-  <!--<Style x:Key="Style.Button.Dark.Default" 
+
+  <Style x:Key="Style.Button.Default.Dark"
          TargetType="{x:Type Button}"
-         BasedOn="{StaticResource Style.Button}">
+         BasedOn="{StaticResource Style.Button.Base}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
         <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Default.MouseOver}" />
-      </Trigger>
-      <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Default.Pressed}" />
       </Trigger>
     </Style.Triggers>
     <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Default.Background}" />
     <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Button.Default.Foreground}" />
     <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Button.Default.Border}" />
+    <Setter Property="Height" Value="30" />
+    <Setter Property="Width" Value="100" />
   </Style>
-  
-  <Style x:Key="Style.Button.Dark.Accent" 
+
+  <Style x:Key="Style.Button.Accent.Dark"
          TargetType="{x:Type Button}"
-         BasedOn="{StaticResource Style.Button}">
+         BasedOn="{StaticResource Style.Button.Base}">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
         <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Accent.MouseOver}" />
-      </Trigger>
-      <Trigger Property="IsPressed" Value="True">
-        <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Accent.Pressed}" />
       </Trigger>
     </Style.Triggers>
     <Setter Property="Background" Value="{StaticResource Brush.Dark.Button.Accent.Background}" />
     <Setter Property="Foreground" Value="{StaticResource Brush.Dark.Button.Accent.Foreground}" />
     <Setter Property="BorderBrush" Value="{StaticResource Brush.Dark.Button.Accent.Border}" />
-  </Style>-->
-  
-  <Style BasedOn="{StaticResource Style.Button}" TargetType="{x:Type Button}" />
+    <Setter Property="Height" Value="30" />
+    <Setter Property="Width" Value="100" />
+  </Style>
+
+  <Style x:Key="Style.Button.Default.Light"
+         TargetType="{x:Type Button}"
+         BasedOn="{StaticResource Style.Button.Base}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{StaticResource Brush.Light.Button.Default.MouseOver}" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="Background" Value="{StaticResource Brush.Light.Button.Default.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Light.Button.Default.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Light.Button.Default.Border}" />
+    <Setter Property="Height" Value="30" />
+    <Setter Property="Width" Value="100" />
+  </Style>
+
+  <Style x:Key="Style.Button.Accent.Light"
+         TargetType="{x:Type Button}"
+         BasedOn="{StaticResource Style.Button.Base}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{StaticResource Brush.Light.Button.Accent.MouseOver}" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="Background" Value="{StaticResource Brush.Light.Button.Accent.Background}" />
+    <Setter Property="Foreground" Value="{StaticResource Brush.Light.Button.Accent.Foreground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Brush.Light.Button.Accent.Border}" />
+    <Setter Property="Height" Value="30" />
+    <Setter Property="Width" Value="100" />
+  </Style>
+
+  <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Style.Button.Base}" />
 </ResourceDictionary>

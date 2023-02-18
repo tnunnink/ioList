@@ -12,6 +12,8 @@
         <ResourceDictionary Source="Resources/Styles/IconStyle.xaml" />
         <ResourceDictionary Source="Resources/Styles/ButtonStyle.xaml" />
         <ResourceDictionary Source="Resources/Styles/PopupButtonStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/TextBoxStyle.xaml" />
+        <ResourceDictionary Source="Resources/Styles/ListViewItemStyle.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -5,39 +5,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ioList.Features.Startup"
              xmlns:core="http://CoreWPF.com"
+             Height="700" Width="600"
              d:DataContext="{d:DesignInstance local:StartupViewModel, IsDesignTimeCreatable=True}"
-             mc:Ignorable="d"
-             d:DesignHeight="770" d:DesignWidth="738">
-  
-  <Grid Background="{StaticResource Brush.Page.Background}">
-    <Grid Margin="20">
-      <DockPanel LastChildFill="False">
-        <StackPanel DockPanel.Dock="Bottom"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal">
-          <Button Height="30" Width="100" Margin="20 0" Content="Back" />
-          <Button Height="30" Width="100" Content="Create" />
-        </StackPanel>
-      </DockPanel>
-      <StackPanel VerticalAlignment="Center">
-        <core:Icon Template="{StaticResource Icon.Cube}" 
-                   Height="60" Width="60"/>
+             mc:Ignorable="d">
+
+  <UserControl.Resources>
+
+  </UserControl.Resources>
+
+  <Border Background="{StaticResource Brush.Dark.Background}">
+    <Grid Margin="40">
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="2*" />
+      </Grid.RowDefinitions>
+
+      <StackPanel Grid.Row="0"
+                  VerticalAlignment="Center">
+        <core:Icon Template="{StaticResource Icon.List}"
+                   Foreground="{StaticResource Brush.Dark.Accent}"
+                   Height="60" Width="60" />
         <TextBlock Text="New Project"
                    FontSize="24" FontWeight="SemiBold"
-                   Foreground="#48708D"
+                   Foreground="{StaticResource Brush.Dark.Accent}"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    Margin="0 10" />
-        <TextBlock Text="Specify the following project details to create a new project."
-                   FontSize="14"
-                   Foreground="#48708D"
-                   VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Margin="0 10 0 30" />
+      </StackPanel>
 
-        <Border BorderBrush="#D7E1E6"
-                Background="#F9FBFC"
-                BorderThickness="1"
-                CornerRadius="5 5 0 0"
-                Padding="10 20">
+      <StackPanel Grid.Row="1"
+                  HorizontalAlignment="Stretch">
+
+        <TextBlock Text="Specify the following information to create a new project."
+                   Foreground="{StaticResource Brush.Dark.Text}"
+                   FontSize="16"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Margin="0 0 0 20" />
+
+        <Border BorderBrush="{StaticResource Brush.Dark.Border}"
+                BorderThickness="0 0 0 1"
+                Padding="0 10">
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
@@ -48,31 +55,28 @@
                         Margin="5 0">
               <TextBlock Text="Project Name"
                          FontSize="16"
-                         FontWeight="SemiBold"
                          VerticalAlignment="Center"
-                         Foreground="#6486A8"
+                         Foreground="{StaticResource Brush.Dark.Text}"
                          Margin="0 5" />
-              <TextBlock Text="The file name of the project when created."
+              <TextBlock Text="The file name of the project to create."
                          FontSize="12"
                          VerticalAlignment="Center"
                          TextWrapping="Wrap"
-                         Foreground="#97A4B5" />
+                         Foreground="{StaticResource Brush.Dark.Caption}" />
             </StackPanel>
 
             <TextBox Grid.Column="1"
+                     Text="{Binding ProjectName}"
+                     Style="{StaticResource Style.TextBox.Dark}"
+                     HorizontalAlignment="Right"
                      VerticalAlignment="Center"
-                     Padding="5"
-                     Text="{Binding Project.Name}"
-                     Margin="5 0"
-                     core:BorderProperties.CornerRadius="5"
-                     Background="#FCFDFE"
-                     BorderBrush="#E7EBF1" />
+                     Width="200" />
           </Grid>
         </Border>
-        <Border BorderBrush="#D7E1E6"
-                Background="#F9FBFC"
-                BorderThickness="1 0 1 0"
-                Padding="10 20">
+
+        <Border BorderBrush="{StaticResource Brush.Dark.Border}"
+                BorderThickness="0 0 0 1"
+                Padding="0 10">
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
@@ -80,66 +84,63 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0"
-                        Margin="5 0">
+                        Margin="5 0 40 0"
+                        VerticalAlignment="Center">
               <TextBlock Text="Project Location"
                          FontSize="16"
-                         FontWeight="SemiBold"
                          VerticalAlignment="Center"
-                         Foreground="#6486A8"
+                         Foreground="{StaticResource Brush.Dark.Text}"
                          Margin="0 5" />
               <TextBlock Text="The file directory in which the project will be created."
                          FontSize="12"
                          VerticalAlignment="Center"
                          TextWrapping="Wrap"
-                         Foreground="#97A4B5" />
+                         Foreground="{StaticResource Brush.Dark.Caption}" />
             </StackPanel>
 
-            <core:FileExplorerTextBox Grid.Column="1"
-                                      Text="{Binding Project.Location}"
-                                      SelectFolder="True"
-                                      VerticalAlignment="Center"
-                                      Margin="5 0"
-                                      Padding="5"
-                                      core:BorderProperties.CornerRadius="5"
-                                      Background="#FCFDFE"
-                                      BorderBrush="#E7EBF1" />
-          </Grid>
-        </Border>
-        <Border BorderBrush="#D7E1E6"
-                Background="#F9FBFC"
-                BorderThickness="1"
-                Padding="10 20">
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0"
-                        Margin="5 0">
-              <TextBlock Text="Source L5X"
-                         FontSize="16"
-                         FontWeight="SemiBold"
-                         VerticalAlignment="Center"
-                         Foreground="#6486A8"
-                         Margin="0 5" />
-              <TextBlock Text="Optionally specify a L5X project file to start with."
-                         FontSize="12"
-                         VerticalAlignment="Center"
+            <Grid Grid.Column="1">
+              <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Button Grid.Row="0"
+                      Command="{Binding SelectLocationCommand}"
+                      Style="{StaticResource Style.Button.Default.Dark}"
+                      Content="Browse"
+                      HorizontalAlignment="Right" />
+              <TextBlock Grid.Row="1"
+                         Text="{Binding ProjectLocation}"
                          TextWrapping="Wrap"
-                         Foreground="#97A4B5" />
+                         TextAlignment="Right"
+                         Foreground="{StaticResource Brush.Dark.Accent}"/>
+            </Grid>
+            <StackPanel Grid.Column="1">
+
             </StackPanel>
-            <core:FileExplorerTextBox Grid.Column="1"
-                                      Text="{Binding Project.Location}"
-                                      VerticalAlignment="Center"
-                                      Margin="5 0"
-                                      Padding="5"
-                                      core:BorderProperties.CornerRadius="5"
-                                      Background="#FCFDFE"
-                                      BorderBrush="#E7EBF1" />
           </Grid>
         </Border>
+
+        <Grid Margin="0 20">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+
+          <Button Grid.Column="0"
+                  Command="{Binding BackCommand}"
+                  HorizontalAlignment="Left"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  BorderBrush="Transparent">
+            <core:Icon Template="{StaticResource Icon.Back}" />
+          </Button>
+
+          <Button Grid.Column="1" Content="Create"
+                  Command="{Binding CreateCommand}"
+                  HorizontalAlignment="Right"
+                  Style="{StaticResource Style.Button.Accent.Dark}" />
+        </Grid>
       </StackPanel>
     </Grid>
-  </Grid>
+  </Border>
 </UserControl>

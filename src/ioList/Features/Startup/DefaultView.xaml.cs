@@ -1,8 +1,8 @@
 ﻿namespace ioList.Features.Startup
 {
-    public partial class StartupSelectionView
+    public partial class DefaultView
     {
-        public StartupSelectionView()
+        public DefaultView()
         {
             InitializeComponent();
         }

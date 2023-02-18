@@ -23,6 +23,7 @@ namespace ioList
 
             containerRegistry.RegisterForNavigation<FooterView, FooterViewModel>();
             containerRegistry.RegisterForNavigation<StartupView, StartupViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
         }
         
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)

@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ioList", "ioList\ioList.csproj", "{CAFD4152-43F6-4171-B369-357B65463C90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ioList.Tests", "..\tests\ioList.Tests\ioList.Tests.csproj", "{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DEFBB774-BC44-4649-8684-86CEE2DBBD9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +19,16 @@ Global
 		{CAFD4152-43F6-4171-B369-357B65463C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAFD4152-43F6-4171-B369-357B65463C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAFD4152-43F6-4171-B369-357B65463C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110} = {DEFBB774-BC44-4649-8684-86CEE2DBBD9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F6D70FE-3EB6-436A-84F5-DCEA710E915D}

@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using CoreWPF.Mvvm;
 using CoreWPF.Services;
-using GongSolutions.Wpf.DragDrop;
-using ioList.Entities;
+using ioList.Core;
 using ioList.Events;
-using ioList.Observers;
 using ioList.Shared;
 using NLog;
 using Prism.Commands;
@@ -16,98 +14,103 @@ using Prism.Regions;
 
 namespace ioList.Features.Startup
 {
-    public class StartupViewModel : NavigationViewModelBase, IDropTarget
+    public class StartupViewModel : NavigationViewModelBase
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEventAggregator _eventAggregator;
         private bool _hasProjects;
-        private ObservableCollection<ProjectFileObserver> _projects;
-        private ProjectFileObserver _project;
-        private string _sourceFile;
+        private ObservableCollection<Project> _projects;
+        private Project _selectedProject;
+        private string _projectName = "MyProject";
+        private string _projectLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private DelegateCommand _newCommand;
         private DelegateCommand _openCommand;
         private DelegateCommand _createCommand;
-
+        private DelegateCommand _backCommand;
+        private DelegateCommand _selectLocationCommand;
+        private readonly DefaultView _defaultView;
+        private readonly OpenProjectView _openProjectView;
+        private readonly NewProjectView _newProjectView;
 
         public StartupViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
-
-            /*
-            _startupSelectionView = new StartupSelectionView();
-            _newProjectView = new NewProjectView();*/
+            _defaultView = new DefaultView();
+            _openProjectView = new OpenProjectView();
+            _newProjectView = new NewProjectView();
         }
 
-        public bool HasProjects
-        {
-            get => _hasProjects;
-            set => SetProperty(ref _hasProjects, value);
-        }
-
-        public ObservableCollection<ProjectFileObserver> Projects
+        public ObservableCollection<Project> Projects
         {
             get => _projects;
             private set => SetProperty(ref _projects, value);
         }
 
-        public ProjectFileObserver Project
+        public Project SelectedProject
         {
-            get => _project;
-            set => SetProperty(ref _project, value);
+            get => _selectedProject;
+            set
+            {
+                SetProperty(ref _selectedProject, value);
+                LaunchProject(_selectedProject);
+            }
         }
 
-        public string SourceFile
+        public string ProjectName
         {
-            get => _sourceFile;
-            set => SetProperty(ref _sourceFile, value);
+            get => _projectName;
+            set => SetProperty(ref _projectName, value);
+        }
+
+        public string ProjectLocation
+        {
+            get => _projectLocation;
+            private set => SetProperty(ref _projectLocation, value);
         }
 
         public DelegateCommand NewCommand =>
-            _newCommand ??= new DelegateCommand(() => NavigateProjectView(new ProjectFileObserver()));
+            _newCommand ??= new DelegateCommand(NavigateNewProjectView);
 
         public DelegateCommand OpenCommand =>
             _openCommand ??= new DelegateCommand(ExecuteOpenCommand);
 
+        public DelegateCommand SelectLocationCommand =>
+            _selectLocationCommand ??= new DelegateCommand(ExecuteSelectLocationCommand);
+
         public DelegateCommand CreateCommand =>
-            _createCommand ??= new DelegateCommand(LaunchProject, () => Project is not null && !Project.HasErrors)
-                .ObservesProperty(() => Project.HasErrors);
+            _createCommand ??= new DelegateCommand(ExecuteCreateCommand, CanExecuteCreateCommand)
+                .ObservesProperty(() => ProjectName)
+                .ObservesProperty(() => ProjectLocation);
+
+        public DelegateCommand BackCommand =>
+            _backCommand ??= new DelegateCommand(NavigateStartupView);
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var startupSelectionView = new StartupSelectionView { DataContext = this };
-            RegionManager?.Regions[Regions.PageRegion].Add(startupSelectionView);
+            RegionManager?.Regions[Regions.PageRegion].Add(_defaultView);
+            RegionManager?.Regions[Regions.PageRegion].Add(_openProjectView);
+            RegionManager?.Regions[Regions.PageRegion].Add(_newProjectView);
 
-            Task.Run(() =>
+            Projects = new ObservableCollection<Project>(LoadProjects());
+            _hasProjects = Projects.Count > 0;
+
+            NavigateStartupView();
+        }
+
+        private void NavigateNewProjectView()
+        {
+            RegionManager?.Regions[Regions.PageRegion].Activate(_newProjectView);
+        }
+
+        private void NavigateStartupView()
+        {
+            if (_hasProjects)
             {
-                Loading = true;
+                RegionManager?.Regions[Regions.PageRegion].Activate(_openProjectView);
+                return;
+            }
 
-                var projects = Application.Data.Load<List<ProjectFile>>("Projects.json");
-
-                Projects = projects is not null
-                    ? new ObservableCollection<ProjectFileObserver>(projects.Select(p => new ProjectFileObserver(p)))
-                    : new ObservableCollection<ProjectFileObserver>();
-
-                HasProjects = Projects.Count > 0;
-            }).Await(() => Loading = false,
-                e => Logger.Error(e, "Unable to load recent project from local application data file."));
-        }
-
-        public void DragOver(IDropInfo dropInfo)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Drop(IDropInfo dropInfo)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void NavigateProjectView(ProjectFileObserver defaultProject)
-        {
-            Project = defaultProject;
-            var view = new NewProjectView { DataContext = this };
-            RegionManager?.Regions[Regions.PageRegion].Add(view);
-            RegionManager?.Regions[Regions.PageRegion].Activate(view);
+            RegionManager?.Regions[Regions.PageRegion].Activate(_defaultView);
         }
 
         private void ExecuteOpenCommand()
@@ -116,25 +119,110 @@ namespace ioList.Features.Startup
 
             if (string.IsNullOrEmpty(fileName)) return;
 
-            var projectFile = ProjectFile.FromFileName(fileName);
-            Project = new ProjectFileObserver(projectFile);
-            LaunchProject();
+            try
+            {
+                var project = new Project(fileName);
+                LaunchProject(project);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Unable to open file {fileName}.");
+            }
         }
-        
+
+        private void ExecuteSelectLocationCommand()
+        {
+            var folder = FileService.SelectFolder(o =>
+            {
+                o.UseDescriptionForTitle = true;
+                o.Description = "Select project location";
+                o.ShowNewFolderButton = true;
+            });
+
+            if (string.IsNullOrEmpty(folder)) return;
+
+            ProjectLocation = folder;
+        }
+
+        private void ExecuteCreateCommand() => LaunchProject(new Project(ProjectName, ProjectLocation));
+
+        private bool CanExecuteCreateCommand() =>
+            !string.IsNullOrEmpty(ProjectName) && !string.IsNullOrEmpty(ProjectLocation);
+
+        private static List<Project> LoadProjects()
+        {
+            try
+            {
+                var projects = Global.Data.Load<List<string>>("Projects.json");
+
+                return projects is not null
+                    ? projects.Select(p => new Project(p)).ToList()
+                    : Enumerable.Empty<Project>().ToList();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Unable to load recent project from local application data file.");
+                return Enumerable.Empty<Project>().ToList();
+            }
+        }
+
         /// <summary>
         /// Event is subscribed to in the main shell view model. There is where the process of
         /// creating/migrating/connecting to the specified project is carried out.
         /// </summary>
-        private void LaunchProject()
+        private void LaunchProject(Project project)
         {
-            var args = new LaunchProjectEventArgs
-            {
-                ProjectFile = Project.Entity,
-                SourceFile = SourceFile
-            };
-            
-            _eventAggregator.GetEvent<LaunchProjectEvent>().Publish(args);
+            if (!project.Exists)
+                CreateProject(project);
+
+            MigrateProject(project);
+
+            SaveProject(project);
+
+            _eventAggregator.GetEvent<OpenProjectEvent>().Publish(project);
         }
-            
+
+        private static void CreateProject(Project project)
+        {
+            try
+            {
+                Logger.Info($"Creating project with name {project.Name}");
+                project.Create();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Filed to create project.");
+            }
+        }
+
+        private static void MigrateProject(Project project)
+        {
+            try
+            {
+                Logger.Info($"Migrating {project.Name} to latest version.");
+                project.Migrate();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Failed to migrate project {project.Name}");
+            }
+        }
+
+        private static void SaveProject(Project project)
+        {
+            try
+            {
+                Logger.Info("Persisting project details to local data store.");
+                var recent = Global.Data.Load<List<string>>("Projects.json") ?? new List<string>();
+                if (recent.Contains(project.FileName)) return;
+                recent.Add(project.FileName);
+                Global.Data.Save(recent, "Projects.json");
+                
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Filed to persist project to local data file.");
+            }
+        }
     }
 }

@@ -4,35 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:core="http://CoreWPF.com"
              xmlns:shared="clr-namespace:ioList.Shared"
              xmlns:local="clr-namespace:ioList.Features.Startup"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance local:StartupViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d"
-             Height="600" MinWidth="800" d:DesignWidth="1000">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <!--<core:CollapsibleColumnDefinition Width="280" Visible="{Binding HasProjects}" />-->
-      <ColumnDefinition Width="Auto" MaxWidth="300"/>
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-
-    <Border Grid.Column="0" BorderThickness="0"
-            Background="{StaticResource Brush.Explorer.Background}"
-            Visibility="{Binding HasProjects, Converter={core:BooleanVisibilityConverter}}">
-      <Grid>
-        <ListView ItemsSource="{Binding Projects}"
-                  SelectedItem="{Binding Project}"
-                  BorderThickness="0"
-                  Background="Transparent" />
-      </Grid>
-    </Border>
-
-    <Border Grid.Column="1"
-            Background="{StaticResource Brush.Page.Background}"
-            BorderThickness="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static shared:Regions.PageRegion}" />
-    </Border>
-  </Grid>
+             Height="640" MinWidth="600" d:DesignWidth="1000">
+  <Border Background="{StaticResource Brush.Dark.Background}"
+          BorderThickness="0">
+    <Grid>
+      <ContentControl prism:RegionManager.RegionName="{x:Static shared:Regions.PageRegion}"
+                      prism:RegionManager.RegionContext="{Binding}"/>
+    </Grid>
+  </Border>
 </UserControl>
