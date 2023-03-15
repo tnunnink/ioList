@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="ioList.Views.ErrorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:ioList="clr-namespace:ioList"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="14"
+             FontFamily="{md:MaterialDesignFont}"
+             d:DataContext="{d:DesignInstance ioList:ShellViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d">
+
+  <Border>
+    <Grid Margin="10">
+      <StackPanel Grid.Row="0"
+                  VerticalAlignment="Center">
+        <md:PackIcon Kind="ErrorOutline" 
+                     HorizontalAlignment="Center"
+                     Height="60" Width="60"
+                     Foreground="LightPink"
+                     Margin="0 20"/>
+        <TextBlock Text="Generation Failed..."
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+        <TextBlock Text="Boo! Check the generated exception below. If you believe this is a bug in the application, feel free to report it."
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Margin="10" />
+        
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Foreground="LightPink"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Margin="10" />
+        
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 30 0 0"
+                    HorizontalAlignment="Center">
+          <Button Command="{Binding ReportIssueCommand}"
+                  Style="{StaticResource MaterialDesignRaisedLightButton}"
+                  Width="160"
+                  Height="36"
+                  Content="Report Issue" 
+                  Margin="10"/>
+          <Button Command="{Binding TryAgainCommand}"
+                  Style="{StaticResource MaterialDesignRaisedLightButton}"
+                  Width="160"
+                  Height="36"
+                  Content="Try Again" 
+                  Margin="10"/>  
+        </StackPanel>
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>

@@ -2,55 +2,24 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
         <AssemblyVersion>0.1.0</AssemblyVersion>
         <FileVersion>0.1.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CoreWPF" Version="0.5.1" />
-        <PackageReference Include="Dapper" Version="2.0.123" />
-        <PackageReference Include="EntityObserver" Version="1.0.0" />
-        <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
-        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
-        <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.2" />
-        <PackageReference Include="NLog" Version="5.1.1" />
-        <PackageReference Include="NLog.Extensions.Logging" Version="5.2.1" />
-        <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Prism.Core" Version="8.1.97" />
-        <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
-        <PackageReference Include="Prism.Wpf" Version="8.1.97" />
-        <PackageReference Include="squirrel.windows" Version="1.9.0" />
-        <PackageReference Include="System.IO.Abstractions" Version="19.1.18" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+        <PackageReference Include="CsvHelper" Version="27.1.1" />
+        <PackageReference Include="L5Sharp" Version="0.9.1" />
+        <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+        <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+		<PackageReference Include="squirrel.windows" Version="1.9.0" />
+		<PackageReference Include="NuGet.CommandLine" Version="6.4.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Page Remove="Resources\Styles\FileExplorerTextBox.xaml" />
-      <Page Remove="Resources\Styles\IconButtonStyle.xaml" />
-      <Page Remove="Resources\Styles\DialogStyle.xaml" />
-      <Page Remove="Features\Import\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="Resources\Styles\DialogStyle.xaml.cs" />
-      <Compile Remove="Features\Import\**" />
-      <Compile Remove="Features\Startup\ProjectObserver.cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Features\Import\**" />
-      <None Remove="Data\Project\Scripts\CreateDatabase.sql" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Features\Import\**" />
-    </ItemGroup>
-
-    <PropertyGroup>
+	
+	<PropertyGroup>
         <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
         <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
         <NuspecFile>$(SolutionDir)ioList\ioList.nuspec</NuspecFile>

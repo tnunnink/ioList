@@ -1,48 +1,137 @@
-﻿using System.Windows;
-using CoreWPF.Mvvm;
-using CoreWPF.Prism;
-using ioList.Composites;
-using ioList.Core;
-using ioList.Events;
-using ioList.Shared;
-using ioList.Shared.Services;
-using NLog;
-using Prism.Events;
-using Prism.Regions;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Ookii.Dialogs.Wpf;
 
 namespace ioList
 {
-    public class ShellViewModel : ViewModelBase, IRegionManagerAware
+    public partial class ShellViewModel : ObservableValidator
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IEventAggregator _eventAggregator;
-        private readonly IScopedShellCreator _shellCreator;
-        private Project _project;
-        private ResizeMode _resizeMode = ResizeMode.CanMinimize;
+        [ObservableProperty] 
+        private int _selectedIndex;
 
-        public ShellViewModel(IEventAggregator eventAggregator, IScopedShellCreator shellCreator)
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
+        [NotifyDataErrorInfo]
+        [Required]
+        private string _sourceFile = string.Empty;
+        
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
+        [NotifyDataErrorInfo]
+        [Required]
+        [CustomValidation(typeof(ShellViewModel), nameof(ValidateName))]
+        private string _destinationName = string.Empty;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
+        [NotifyDataErrorInfo]
+        [Required]
+        private string _destinationLocation = string.Empty;
+
+        [ObservableProperty]
+        private string _errorMessage;
+        
+        [RelayCommand]
+        private void SelectSource()
         {
-            _eventAggregator = eventAggregator;
-            _shellCreator = shellCreator;
+            var dialog = new VistaOpenFileDialog
+            {
+                Title = "Select L5X file",
+                Filter = "L5X Files (*.L5X)|*.L5X",
+                DefaultExt = ".L5X",
+                AddExtension = true,
+                CheckFileExists = true,
+                Multiselect = false
+            };
 
-            _eventAggregator.GetEvent<OpenProjectEvent>().Subscribe(LaunchProject);
+            var fileName = dialog.ShowDialog() == true ? dialog.FileName : string.Empty;
+
+            if (string.IsNullOrEmpty(fileName)) return;
+
+            SourceFile = fileName;
         }
 
-        public ResizeMode ResizeMode
+        [RelayCommand]
+        private void SelectLocation()
         {
-            get => _resizeMode;
-            private set => SetProperty(ref _resizeMode, value);
-        }
+            var dialog = new VistaFolderBrowserDialog
+            {
+                Description = "Select Project Location",
+                UseDescriptionForTitle = true,
+                Multiselect = false
+            };
 
-        private void LaunchProject(Project project)
-        {
-            _project = project;
-            ResizeMode = ResizeMode.CanResize;
-            Title = _project.Name;
-            
-            RegionManager?.RequestNavigate(Regions.ContentRegion, nameof(ProjectView));
+            var folder = dialog.ShowDialog() == true ? dialog.SelectedPath : string.Empty;
+
+            if (string.IsNullOrEmpty(folder)) return;
+
+            DestinationLocation = folder;
         }
         
-        public IRegionManager RegionManager { get; set; }
+        [RelayCommand]
+        private void OpenInExplorer()
+        {
+            if (!Directory.Exists(DestinationLocation))
+                return;
+            
+            Process.Start("explorer.exe", DestinationLocation);
+            
+            SelectedIndex = 0;
+        }
+        
+        [RelayCommand]
+        private void TryAgain() => SelectedIndex = 0;
+        
+        [RelayCommand]
+        private void ReportIssue()
+        {
+            //todo what should this do...?
+            SelectedIndex = 0;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanGenerate))]
+        private void Generate()
+        {
+            SelectedIndex++;
+            
+            Task.Run(() =>
+            {
+                try
+                {
+                    var destinationFile = Path.Combine(DestinationLocation, $"{DestinationName}.csv");
+                    Generator.Generate(SourceFile, destinationFile);
+                    SelectedIndex++;
+                }
+                catch (Exception e)
+                {
+                    ErrorMessage = e.Message;
+                    SelectedIndex = 4;
+                }
+            });
+        }
+
+        private bool CanGenerate() => !string.IsNullOrWhiteSpace(SourceFile) 
+                                      && !string.IsNullOrWhiteSpace(DestinationName)
+                                      && !string.IsNullOrWhiteSpace(DestinationLocation)
+                                      && !HasErrors;
+        
+        public static ValidationResult ValidateName(string value, ValidationContext context)
+        {
+            var vm = (ShellViewModel)context.ObjectInstance;
+
+            if (value.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                return new ValidationResult($"The name {value} is not a valid file name.");
+
+            var fileName = Path.Combine(vm.DestinationLocation, $"{value}.db");
+
+            return File.Exists(fileName)
+                ? new ValidationResult($"The file name {value} already exists in the specified folder.")
+                : ValidationResult.Success;
+        }
     }
 }

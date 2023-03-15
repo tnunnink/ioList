@@ -3,27 +3,75 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:prism="http://prismlibrary.com/"
         xmlns:ioList="clr-namespace:ioList"
-        xmlns:shared="clr-namespace:ioList.Shared"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}"
-        ResizeMode="{Binding ResizeMode}"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:ioList.Views"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{md:MaterialDesignFont}"
+        Title="ioList"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource ShellStyle}"
+        Height="600" Width="640"
         d:DataContext="{d:DesignInstance ioList:ShellViewModel, IsDesignTimeCreatable=True}"
-        mc:Ignorable="d"
-        d:DesignHeight="600" d:DesignWidth="800">
-
-  <Border BorderBrush="{StaticResource Brush.Light.Background}">
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
-      
-      <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static shared:Regions.ContentRegion}" />
-      <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static shared:Regions.FooterRegion}" />
-    </Grid>
-  </Border>
+        mc:Ignorable="d">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="40"/>
+    </Grid.RowDefinitions>
+    
+    <md:Transitioner Grid.Row="0" 
+                     SelectedIndex="{Binding SelectedIndex}"
+                     Margin="20 10">
+      <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
+        <views:StartupView />
+      </md:TransitioningContent>
+      <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
+        <views:EntryView />
+      </md:TransitioningContent>
+      <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
+        <views:ProcessingView />
+      </md:TransitioningContent>
+      <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
+        <views:CompleteView />
+      </md:TransitioningContent>
+      <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
+        <views:ErrorView />
+      </md:TransitioningContent>
+    </md:Transitioner>
+    
+    <StackPanel Grid.Row="1" 
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="10 0">
+      <Button Style="{StaticResource MaterialDesignToolButton}">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <md:PackIcon Kind="ArrowUpCircleOutline" 
+                       Height="20" Width="20"
+                       Foreground="{DynamicResource PrimaryHueLightBrush}"/>  
+          <TextBlock Text="Update to version 0.2.0" 
+                     VerticalAlignment="Center"
+                     Foreground="{DynamicResource PrimaryHueLightBrush}"
+                     FontWeight="Regular" FontSize="12"
+                     Margin="5 0 0 0"/>
+        </StackPanel>
+        
+      </Button>
+    </StackPanel>
+    
+    <StackPanel Grid.Row="1" 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="10 0">
+      <Button Style="{StaticResource MaterialDesignToolButton}">
+        <md:PackIcon Kind="Cog" 
+                     Height="20" Width="20"/>
+      </Button>
+    </StackPanel>
+  </Grid>
 </Window>
