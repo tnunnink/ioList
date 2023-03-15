@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ioList", "ioList\ioList.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ioList.Tests", "..\tests\ioList.Tests\ioList.Tests.csproj", "{F9DA07F4-AC44-4C8B-B7AE-2E3CC4A93110}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DEFBB774-BC44-4649-8684-86CEE2DBBD9C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DEFBB774-BC44-4649-8684-86CEE2DBBD9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
