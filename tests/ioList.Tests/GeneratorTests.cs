@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using ioList.Shared;
 using NUnit.Framework;
 
 namespace ioList.Tests;

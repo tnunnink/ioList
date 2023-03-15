@@ -16,7 +16,9 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
         <PackageReference Include="CsvHelper" Version="27.1.1" />
         <PackageReference Include="L5Sharp" Version="0.9.1" />
+        <PackageReference Include="LambdaConverters" Version="4.0.0" />
         <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="NuGet.CommandLine" Version="6.4.0" />

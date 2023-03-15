@@ -6,12 +6,13 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:ioList="clr-namespace:ioList"
+             xmlns:viewModels="clr-namespace:ioList.ViewModels"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
              FontFamily="{md:MaterialDesignFont}"
-             d:DataContext="{d:DesignInstance ioList:ShellViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
   <Border>
     <Grid Margin="10">

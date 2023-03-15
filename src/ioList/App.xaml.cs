@@ -1,12 +1,18 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
+using ioList.ViewModels;
+using MaterialDesignThemes.Wpf;
+using Microsoft.Extensions.DependencyInjection;
 using Squirrel;
 
 namespace ioList
 {
-    public partial class App : Application
+    public partial class App
     {
         public App()
         {
+            Services = ConfigureServices();
             InitializeComponent();
         }
 
@@ -17,15 +23,49 @@ namespace ioList
                 onAppUninstall: OnAppUninstall,
                 onEveryRun: OnAppRun);
         }
+        
+        /// <summary>
+        /// Gets the current <see cref="App"/> instance in use
+        /// </summary>
+        public new static App Current => (App)Application.Current;
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
+        /// </summary>
+        public IServiceProvider Services { get; }
+
+        public readonly string InstallDirectory =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ioList");
+
+        public const string RepositoryUrl = @"https://github.com/tnunnink/ioList";
+
+        public const string IssuesUrl = @"https://github.com/tnunnink/ioList/issues";
+
+        public const string PagesUrl = @"https://github.com/tnunnink/ioList/issues";
+        
+        /// <summary>
+        /// Configures the services for the application.
+        /// </summary>
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            
+            services.AddSingleton<ISnackbarMessageQueue, SnackbarMessageQueue>();
+
+            services.AddTransient<ShellViewModel>();
+            services.AddTransient<FooterViewModel>();
+
+            return services.BuildServiceProvider();
+        }
 
         private static void OnAppInstall(SemanticVersion version, IAppTools tools)
         {
-            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu);
         }
 
         private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
         {
-            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu);
         }
 
         private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)

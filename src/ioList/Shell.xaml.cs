@@ -1,11 +1,11 @@
-﻿namespace ioList
+﻿namespace ioList.Views
 {
     public partial class Shell
     {
         public Shell()
         {
             InitializeComponent();
-            DataContext = new ShellViewModel();
+            DataContext = new ViewModels.ShellViewModel();
         }
     }
 }

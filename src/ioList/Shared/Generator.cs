@@ -10,7 +10,7 @@ using L5Sharp.Components;
 using L5Sharp.Enums;
 using L5Sharp.Extensions;
 
-namespace ioList;
+namespace ioList.Shared;
 
 public class Generator
 {

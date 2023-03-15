@@ -5,9 +5,10 @@ using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ioList.Shared;
 using Ookii.Dialogs.Wpf;
 
-namespace ioList
+namespace ioList.ViewModels
 {
     public partial class ShellViewModel : ObservableValidator
     {
