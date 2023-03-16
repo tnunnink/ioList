@@ -131,12 +131,19 @@
             Fill="{DynamicResource PrimaryHueMidBrush}" />
           <DockPanel LastChildFill="False">
 
-            <md:PackIcon
+            <!--<md:PackIcon
               Margin="8,0,0,0"
               DockPanel.Dock="Left"
               Kind="ViewList"
               VerticalAlignment="Center"
               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+              Height="20" Width="20"
+              WindowChrome.IsHitTestVisibleInChrome="True" />-->
+            
+            <Image Source="../logo.ico"
+              Margin="8,0,0,0"
+              DockPanel.Dock="Left"
+              VerticalAlignment="Center"
               Height="20" Width="20"
               WindowChrome.IsHitTestVisibleInChrome="True" />
 

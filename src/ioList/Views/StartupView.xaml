@@ -23,6 +23,8 @@
 
       <StackPanel Grid.Row="0"
                   VerticalAlignment="Center">
+        <Image Source="../Styles/logo.svg" 
+               Height="50" Width="50"/>
         <md:PackIcon Kind="ViewList" 
                      Height="50"
                      Width="50"

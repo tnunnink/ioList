@@ -7,13 +7,13 @@ namespace ioList.Model
     {
         public PointMap()
         {
-            Map(m => m.ModuleName).Index(0).Name("Module");
-            Map(m => m.CatalogNumber).Index(1).Name("Catalog");
+            Map(m => m.Module).Index(0).Name("Module");
+            Map(m => m.Catalog).Index(1).Name("Catalog");
             Map(m => m.Tag).Index(2).Name("Tag");
-            Map(m => m.ParentName).Index(3).Name("Rack");
+            Map(m => m.Parent).Index(3).Name("Rack");
             Map(m => m.Slot).Index(4).Name("Slot");
             Map(m => m.Type).Index(5).Name("Type");
-            Map(m => m.Path).Index(6).Name("Address");
+            Map(m => m.Address).Index(6).Name("Address");
             Map(m => m.Comment).Index(7).Name("Comment");
             Map(m => m.Unit).Index(8).Name("Units");
             Map(m => m.High).Index(9).Name("High");

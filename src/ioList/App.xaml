@@ -6,6 +6,7 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Styles\Icons.xaml" />
         <ResourceDictionary Source="Styles\WindowStyle.xaml" />
         <md:CustomColorTheme BaseTheme="Dark" PrimaryColor="#FF436D8B" SecondaryColor="#FF00FFD7" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />

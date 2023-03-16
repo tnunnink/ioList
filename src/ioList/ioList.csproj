@@ -8,7 +8,23 @@
         <FileVersion>0.1.4</FileVersion>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>logo.ico</ApplicationIcon>
     </PropertyGroup>
+
+    <Choose>
+        <When Condition=" '$(Configuration)'=='Debug' ">
+            <PropertyGroup>
+                <SignAssembly>false</SignAssembly>
+            </PropertyGroup>
+        </When>
+        <When Condition=" '$(Configuration)'=='Release' ">
+            <PropertyGroup>
+                <SignAssembly>true</SignAssembly>
+                <DelaySign>false</DelaySign>
+                <AssemblyOriginatorKeyFile>keypair.snk</AssemblyOriginatorKeyFile>
+            </PropertyGroup>
+        </When>
+    </Choose>
 
     <ItemGroup>
         <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
@@ -21,6 +37,18 @@
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="NuGet.CommandLine" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\README.md">
+        <Link>README.md</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="logo.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 	
 	<PropertyGroup>

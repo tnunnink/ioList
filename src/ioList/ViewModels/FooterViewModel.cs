@@ -17,7 +17,6 @@ namespace ioList.ViewModels
         public FooterViewModel(ISnackbarMessageQueue messageQueue)
         {
             _messageQueue = messageQueue;
-            UpdateAvailable = false;
             LoadTask = CheckForUpdates();
         }
 
@@ -27,14 +26,11 @@ namespace ioList.ViewModels
         #region PropertyRegion
 
         [ObservableProperty] 
-        private string _versionText;
-
-        [ObservableProperty] 
         private string _updateText;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
-        private bool _updateAvailable;
+        private bool _updateAvailable = false;
 
         #endregion
 
@@ -62,7 +58,6 @@ namespace ioList.ViewModels
 
                 var latest = updates.ReleasesToApply.MaxBy(r => r.Version)?.Version;
                 UpdateText = $"Update to version {latest}";
-                MessageQueue.Enqueue("New updates are available! Click update button to start installing.");
             }
             catch (Exception e)
             {
@@ -78,8 +73,11 @@ namespace ioList.ViewModels
             {
                 using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var release = await manager.UpdateApp();
-                MessageQueue.Enqueue($"Update complete. You are running version {release.Version}. Enjoy!");
-                UpdateAvailable = false;
+                
+                if (release == null) return;
+                
+                //todo perhaps prompt to restart
+                UpdateManager.RestartApp();
             }
             catch (Exception e)
             {

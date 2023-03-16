@@ -24,7 +24,7 @@
     </Grid.RowDefinitions>
     
     <md:Transitioner Grid.Row="0" 
-                     SelectedIndex="{Binding SelectedIndex}"
+                     SelectedIndex="{Binding ViewIndex}"
                      Margin="20 10">
       <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
         <views:StartupView />

@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Viewbox x:Key="Icon.Application" x:Shared="False" >
+    <Canvas Width="24" Height="24">
+      <Path
+        Fill="{DynamicResource PrimaryHueLightBrush}"
+        Data="M 7.6762473,1.7476233 V 16.667258 H 16.323753 V 1.7476233 Z m 1.9149111,1.3099672 h 1.7834186 v 0.7412432 h 1.22764 v 0.2663651 h -1.22764 v 0.729577 h -0.798999 v 1.227518 h 0.798999 v 0.7237446 h 1.250827 V 5.9991064 H 13.38969 V 4.7947758 H 12.625404 V 3.0575905 h 1.783437 v 1.7371853 h -0.752764 v 1.2043306 h 0.752764 V 7.7363111 H 12.625404 V 7.0124262 h -1.250827 v 0.746932 H 9.5911584 V 6.0222938 H 10.309234 V 4.7947758 H 9.5911584 Z M 7.6762473,17.086517 V 18.7054 h 8.6475057 v -1.618883 z m 0,2.038264 v 1.155069 h 8.6475057 v -1.155069 z m 0,1.57431 v 0.825592 h 8.6475057 v -0.825592 z m 0,1.244858 v 0.308428 h 8.6475057 v -0.308428 z" />
+    </Canvas>
+  </Viewbox>
+</ResourceDictionary>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ioList.Shared;
+using MaterialDesignThemes.Wpf;
 using Ookii.Dialogs.Wpf;
 using Squirrel;
 using Squirrel.Sources;
@@ -14,38 +15,36 @@ namespace ioList.ViewModels
 {
     public partial class ShellViewModel : ObservableValidator
     {
-        public ShellViewModel()
+        private readonly ISnackbarMessageQueue _messageQueue;
+
+        public ShellViewModel(ISnackbarMessageQueue messageQueue)
         {
+            _messageQueue = messageQueue;
             GetVersion();
         }
-        
-        [ObservableProperty] 
-        private string _version;
 
-        [ObservableProperty] 
-        private int _selectedIndex;
+        [ObservableProperty] private string _version;
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
-        [NotifyDataErrorInfo]
-        [Required]
+        [ObservableProperty] private int _viewIndex;
+
+        [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(GenerateCommand))] [NotifyDataErrorInfo] [Required]
         private string _sourceFile = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
         [NotifyDataErrorInfo]
         [Required]
-        [CustomValidation(typeof(ShellViewModel), nameof(ValidateName))]
+        [CustomValidation(typeof(ShellViewModel), nameof(ValidatePath))]
         private string _destinationName = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
         [NotifyDataErrorInfo]
         [Required]
+        [CustomValidation(typeof(ShellViewModel), nameof(ValidatePath))]
         private string _destinationLocation = string.Empty;
 
-        [ObservableProperty]
-        private string _errorMessage;
+        [ObservableProperty] private string _errorMessage;
 
         [RelayCommand]
         private void SelectSource()
@@ -89,59 +88,57 @@ namespace ioList.ViewModels
         {
             if (!Directory.Exists(DestinationLocation))
                 return;
-            
+
             Process.Start("explorer.exe", DestinationLocation);
-            
-            SelectedIndex = 0;
+
+            ViewIndex = 0;
         }
 
         [RelayCommand]
-        private void TryAgain() => SelectedIndex = 0;
+        private void TryAgain() => ViewIndex = 0;
 
         [RelayCommand]
         private void ReportIssue()
         {
             //todo what should this do...?
-            SelectedIndex = 0;
+            ViewIndex = 0;
         }
 
         [RelayCommand(CanExecute = nameof(CanGenerate))]
         private void Generate()
         {
-            SelectedIndex++;
-            
+            ViewIndex++;
+
             Task.Run(() =>
             {
                 try
                 {
-                    var destinationFile = Path.Combine(DestinationLocation, $"{DestinationName}.csv");
-                    Generator.Generate(SourceFile, destinationFile);
-                    SelectedIndex++;
+                    if (!Directory.Exists(DestinationLocation))
+                        Directory.CreateDirectory(DestinationLocation);
+                    
+                    var destination = Path.Combine(DestinationLocation, $"{DestinationName}.csv");
+                    
+                    Generator.Generate(SourceFile, destination);
+                    
+                    ViewIndex++;
                 }
                 catch (Exception e)
                 {
                     ErrorMessage = e.Message;
-                    SelectedIndex = 4;
+                    ViewIndex = 4;
                 }
             });
         }
 
-        private bool CanGenerate() => !string.IsNullOrWhiteSpace(SourceFile) 
+        private bool CanGenerate() => !string.IsNullOrWhiteSpace(SourceFile)
                                       && !string.IsNullOrWhiteSpace(DestinationName)
                                       && !string.IsNullOrWhiteSpace(DestinationLocation)
                                       && !HasErrors;
 
-        public static ValidationResult ValidateName(string value, ValidationContext context)
+        public static ValidationResult ValidatePath(string value, ValidationContext context)
         {
-            var vm = (ShellViewModel)context.ObjectInstance;
-
-            if (value.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-                return new ValidationResult($"The name {value} is not a valid file name.");
-
-            var fileName = Path.Combine(vm.DestinationLocation, $"{value}.db");
-
-            return File.Exists(fileName)
-                ? new ValidationResult($"The file name {value} already exists in the specified folder.")
+            return value.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
+                ? new ValidationResult($"The name {value} is not a valid file name.")
                 : ValidationResult.Success;
         }
 
@@ -152,7 +149,6 @@ namespace ioList.ViewModels
                 using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var installedVersion = manager.CurrentlyInstalledVersion();
                 Version = installedVersion is not null ? installedVersion.ToString() : string.Empty;
-                    
             }
             catch (Exception e)
             {

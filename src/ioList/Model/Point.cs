@@ -9,13 +9,13 @@ namespace ioList.Model
     {
         public Point(Module module, ILogixTag member, string type)
         {
-            ModuleName = module.Name;
-            ParentName = module.ParentModule;
-            CatalogNumber = module.CatalogNumber;
+            Module = module.Name;
+            Parent = module.ParentModule;
+            Catalog = module.CatalogNumber;
             Slot = module.Slot.ToString();
             Type = type;
             Tag = member.TagName;
-            Path = member.TagName.Path;
+            Address = member.TagName.Path;
             Comment = member.Description;
             Unit = member is TagMember m ? m.Unit : string.Empty;
 
@@ -24,18 +24,18 @@ namespace ioList.Model
             Low = module.Config?.Member($"{parent}.LowEngineering")?.Value?.ToString();
         }
 
-        public BufferTag Buffer { get; set; } = default;
-        public string ModuleName { get; set; }
-        public string ParentName { get; set; }
-        public string CatalogNumber { get; set; }
+        public string Module { get; set; }
+        public string Catalog { get; set; }
+        public string Tag { get; set; }
+        public string Parent { get; set; }
         public string Slot { get; set; }
         public string Type { get; set; }
-        public string Tag { get; set; }
-        public string Path { get; set; }
+        public string Address { get; set; }
         public string Comment { get; set; }
         public string Unit { get; set; }
         public string High { get; set; }
         public string Low { get; set; }
+        public BufferTag Buffer { get; set; } = default;
         public string Initials { get; set; } = string.Empty;
         public string Date { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;
