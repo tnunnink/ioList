@@ -51,7 +51,10 @@ namespace ioList.ViewModels
                 if (!manager.IsInstalledApp) return;
                 
                 var updates = await manager.CheckForUpdate();
+                
                 UpdateAvailable = updates.ReleasesToApply.Count > 0;
+
+                if (!UpdateAvailable) return;
 
                 var latest = updates.ReleasesToApply.MaxBy(r => r.Version)?.Version;
                 UpdateText = $"Update to version {latest}";
@@ -59,6 +62,7 @@ namespace ioList.ViewModels
             }
             catch (Exception e)
             {
+                //I think we probably just log this?  perhaps inform user.
                 MessageQueue.Enqueue("Unable to contact Github to find new updates...");
             }
         }

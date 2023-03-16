@@ -15,7 +15,7 @@
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
   <Border>
-    <Grid Margin="10">
+    <Grid Margin="30">
       <Grid.RowDefinitions>
         <RowDefinition />
         <RowDefinition Height="2*" />
