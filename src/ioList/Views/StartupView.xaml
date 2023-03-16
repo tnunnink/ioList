@@ -34,7 +34,7 @@
                    FontWeight="SemiBold"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
-        <TextBlock Text="0.1.2"
+        <TextBlock Text="{Binding Version}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    Foreground="#7186A1" />

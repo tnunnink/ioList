@@ -4,10 +4,9 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
+        <AssemblyVersion>0.1.1</AssemblyVersion>
+        <FileVersion>0.1.1</FileVersion>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-        <PublishSingleFile>true</PublishSingleFile>
-        <AssemblyVersion>0.1.0</AssemblyVersion>
-        <FileVersion>0.1.0</FileVersion>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
 
@@ -26,7 +25,6 @@
 	
 	<PropertyGroup>
         <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
-        <!--<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>-->
         <NuspecFile>$(SolutionDir)ioList\ioList.nuspec</NuspecFile>
     </PropertyGroup>
 

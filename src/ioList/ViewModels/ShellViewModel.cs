@@ -7,11 +7,21 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ioList.Shared;
 using Ookii.Dialogs.Wpf;
+using Squirrel;
+using Squirrel.Sources;
 
 namespace ioList.ViewModels
 {
     public partial class ShellViewModel : ObservableValidator
     {
+        public ShellViewModel()
+        {
+            GetVersion();
+        }
+        
+        [ObservableProperty] 
+        private string _version;
+
         [ObservableProperty] 
         private int _selectedIndex;
 
@@ -20,7 +30,7 @@ namespace ioList.ViewModels
         [NotifyDataErrorInfo]
         [Required]
         private string _sourceFile = string.Empty;
-        
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
         [NotifyDataErrorInfo]
@@ -36,7 +46,7 @@ namespace ioList.ViewModels
 
         [ObservableProperty]
         private string _errorMessage;
-        
+
         [RelayCommand]
         private void SelectSource()
         {
@@ -73,7 +83,7 @@ namespace ioList.ViewModels
 
             DestinationLocation = folder;
         }
-        
+
         [RelayCommand]
         private void OpenInExplorer()
         {
@@ -84,10 +94,10 @@ namespace ioList.ViewModels
             
             SelectedIndex = 0;
         }
-        
+
         [RelayCommand]
         private void TryAgain() => SelectedIndex = 0;
-        
+
         [RelayCommand]
         private void ReportIssue()
         {
@@ -120,7 +130,7 @@ namespace ioList.ViewModels
                                       && !string.IsNullOrWhiteSpace(DestinationName)
                                       && !string.IsNullOrWhiteSpace(DestinationLocation)
                                       && !HasErrors;
-        
+
         public static ValidationResult ValidateName(string value, ValidationContext context)
         {
             var vm = (ShellViewModel)context.ObjectInstance;
@@ -133,6 +143,22 @@ namespace ioList.ViewModels
             return File.Exists(fileName)
                 ? new ValidationResult($"The file name {value} already exists in the specified folder.")
                 : ValidationResult.Success;
+        }
+
+        private void GetVersion()
+        {
+            try
+            {
+                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
+                var installedVersion = manager.CurrentlyInstalledVersion();
+                Version = installedVersion is not null ? installedVersion.Version.ToString() : string.Empty;
+                    
+            }
+            catch (Exception e)
+            {
+                //todo log
+                Console.WriteLine(e);
+            }
         }
     }
 }

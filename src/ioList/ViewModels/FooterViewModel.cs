@@ -12,6 +12,8 @@ namespace ioList.ViewModels
 {
     public partial class FooterViewModel : ObservableObject
     {
+        private readonly TaskNotifier _loadTask;
+
         public FooterViewModel(ISnackbarMessageQueue messageQueue)
         {
             _messageQueue = messageQueue;
@@ -20,6 +22,7 @@ namespace ioList.ViewModels
         }
 
         [ObservableProperty] private ISnackbarMessageQueue _messageQueue;
+
 
         #region PropertyRegion
 
@@ -31,7 +34,6 @@ namespace ioList.ViewModels
 
         #endregion
 
-        private readonly TaskNotifier _loadTask;
 
         private Task LoadTask
         {
@@ -44,23 +46,16 @@ namespace ioList.ViewModels
         {
             try
             {
-                using var manager = new UpdateManager(new GithubSource("https://github.com/tnunnink/ioList", "", false));
-                var updateInfo = await manager.CheckForUpdate();
+                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
 
-                VersionText = $"ioList {updateInfo.CurrentlyInstalledVersion.Version}";
+                if (!manager.IsInstalledApp) return;
+                
+                var updates = await manager.CheckForUpdate();
+                UpdateAvailable = updates.ReleasesToApply.Count > 0;
 
-                UpdateAvailable = updateInfo.ReleasesToApply.Count > 0;
-
-                if (!UpdateAvailable)
-                {
-                    MessageQueue.Enqueue(
-                        "You have the latest updates! We will notify when new releases ar published. Enjoy!");
-                    return;
-                }
-
-                var latest = updateInfo.ReleasesToApply.MaxBy(r => r.Version)?.Version;
+                var latest = updates.ReleasesToApply.MaxBy(r => r.Version)?.Version;
                 UpdateText = $"Update to version {latest}";
-                MessageQueue.Enqueue("New updates are available! Click update to start installing.");
+                MessageQueue.Enqueue("New updates are available! Click update button to start installing.");
             }
             catch (Exception e)
             {
@@ -73,10 +68,9 @@ namespace ioList.ViewModels
         {
             try
             {
-                using var manager = new UpdateManager(new GithubSource("https://github.com/tnunnink/ioList", "", false));
+                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var release = await manager.UpdateApp();
                 MessageQueue.Enqueue($"Update complete. You are running version {release.Version}. Enjoy!");
-                VersionText = $"ioList {release.Version}";
                 UpdateAvailable = false;
             }
             catch (Exception e)
