@@ -4,27 +4,11 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWPF>true</UseWPF>
-        <AssemblyVersion>0.1.4</AssemblyVersion>
-        <FileVersion>0.1.4</FileVersion>
+        <AssemblyVersion>0.1.5</AssemblyVersion>
+        <FileVersion>0.1.5</FileVersion>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <ApplicationIcon>logo.ico</ApplicationIcon>
     </PropertyGroup>
-
-    <Choose>
-        <When Condition=" '$(Configuration)'=='Debug' ">
-            <PropertyGroup>
-                <SignAssembly>false</SignAssembly>
-            </PropertyGroup>
-        </When>
-        <When Condition=" '$(Configuration)'=='Release' ">
-            <PropertyGroup>
-                <SignAssembly>true</SignAssembly>
-                <DelaySign>false</DelaySign>
-                <AssemblyOriginatorKeyFile>keypair.snk</AssemblyOriginatorKeyFile>
-            </PropertyGroup>
-        </When>
-    </Choose>
 
     <ItemGroup>
         <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
@@ -38,19 +22,8 @@
         <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="NuGet.CommandLine" Version="6.4.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\..\README.md">
-        <Link>README.md</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="logo.ico">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
 	
+    
 	<PropertyGroup>
         <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
         <NuspecFile>$(SolutionDir)ioList\ioList.nuspec</NuspecFile>
