@@ -26,11 +26,15 @@ namespace ioList.ViewModels
 
         #region PropertyRegion
 
-        [ObservableProperty] private string _versionText;
+        [ObservableProperty] 
+        private string _versionText;
 
-        [ObservableProperty] private string _updateText;
+        [ObservableProperty] 
+        private string _updateText;
 
-        [ObservableProperty] private bool _updateAvailable;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
+        private bool _updateAvailable;
 
         #endregion
 
