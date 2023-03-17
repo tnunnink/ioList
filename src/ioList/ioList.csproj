@@ -31,8 +31,7 @@
             <Link>README.md</Link>
         </Content>
     </ItemGroup>
-
-
+    
     <PropertyGroup>
         <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
         <NuspecFile>$(SolutionDir)ioList\ioList.nuspec</NuspecFile>
@@ -48,6 +47,5 @@
         </GetAssemblyIdentity>
         <Exec Command="nuget pack ioList.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)"/>
         <Exec Command="@(squirrelPackage->'%(fullpath)') releasify --package=$(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=$(SolutionDir)..\releases --msi=x64"/>
-        <!--<Exec Command="@(squirrelPackage->'%(fullpath)') &#45;&#45;releasify $(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg &#45;&#45;releaseDir=$(SolutionDir)..\releases" />-->
     </Target>
 </Project>
