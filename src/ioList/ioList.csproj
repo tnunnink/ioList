@@ -8,16 +8,19 @@
         <FileVersion>0.1.5</FileVersion>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>logo.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
         <PackageReference Include="CsvHelper" Version="27.1.1" />
+        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
         <PackageReference Include="L5Sharp" Version="0.9.1" />
         <PackageReference Include="LambdaConverters" Version="4.0.0" />
         <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="7.0.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 		<PackageReference Include="NuGet.CommandLine" Version="6.4.0" />

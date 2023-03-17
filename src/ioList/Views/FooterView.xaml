@@ -53,12 +53,20 @@
                 Margin="10 0">
       <Button Style="{StaticResource MaterialDesignToolButton}"
               Command="{Binding LaunchSiteCommand}"
-              CommandParameter="{x:Static ioList:App.RepositoryUrl}"
-              Margin="10 0">
-        <md:PackIcon Kind="InfoOutline" 
+              CommandParameter="{x:Static ioList:App.IssuesUrl}"
+              Margin="5 0">
+        <md:PackIcon Kind="Bug" 
                      Height="20" Width="20"/>
       </Button>
-      <Button Style="{StaticResource MaterialDesignToolButton}">
+      <Button Style="{StaticResource MaterialDesignToolButton}"
+              Command="{Binding LaunchSiteCommand}"
+              CommandParameter="{x:Static ioList:App.ReadMeUrl}"
+              Margin="5 0">
+        <md:PackIcon Kind="Information" 
+                     Height="20" Width="20"/>
+      </Button>
+      <Button Style="{StaticResource MaterialDesignToolButton}"
+              Margin="5 0">
         <md:PackIcon Kind="Cog" 
                      Height="20" Width="20"/>
       </Button>

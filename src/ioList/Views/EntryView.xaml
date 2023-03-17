@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:ioList="clr-namespace:ioList"
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
@@ -42,12 +42,10 @@
         <Grid>
           <Button Grid.Column="0"
                   Command="{x:Static md:Transitioner.MovePreviousCommand}"
+                  Style="{StaticResource MaterialDesignToolButton}"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Center"
-                  Background="Transparent"
-                  BorderThickness="0"
-                  Padding="0"
-                  BorderBrush="Transparent">
+                  Padding="0">
             <md:PackIcon Kind="ArrowBack" Height="20" Width="20" />
           </Button>
 
@@ -59,7 +57,11 @@
         <TextBox
           x:Name="SourceTextBox"
           Text="{Binding SourceFile}"
-          md:HintAssist.HelperText="Select the file to parse."
+          dd:DragDrop.IsDropTarget="True"
+          dd:DragDrop.DragHandler="{Binding}"
+          dd:DragDrop.DropHandler="{Binding}"
+          dd:DragDrop.UseDefaultDragAdorner="True"
+          md:HintAssist.HelperText="The L5X project file to process."
           md:HintAssist.HelperTextFontSize="11"
           md:HintAssist.Hint="L5X File"
           md:HintAssist.HintOpacity="0.6"
@@ -77,7 +79,7 @@
 
         <TextBox
           Text="{Binding DestinationName}"
-          md:HintAssist.HelperText="The file name of the list to create."
+          md:HintAssist.HelperText="The file name of the list to create (without extension)."
           md:HintAssist.HelperTextFontSize="11"
           md:HintAssist.HintOpacity="0.6"
           md:HintAssist.Hint="List Name"
@@ -88,7 +90,7 @@
         <TextBox
           x:Name="LocationTextBox"
           Text="{Binding DestinationLocation}"
-          md:HintAssist.HelperText="The file directory in which the list file will be created."
+          md:HintAssist.HelperText="The file directory in which the list will be created."
           md:HintAssist.HelperTextFontSize="11"
           md:HintAssist.Hint="List Location"
           md:HintAssist.HintOpacity="0.6"
@@ -106,7 +108,7 @@
 
         <Button Content="Generate"
                 Height="32" Width="120"
-                Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}"
+                Style="{StaticResource MaterialDesignRaisedSecondaryButton}"
                 Command="{Binding GenerateCommand}"
                 Margin="0 40 0 0" />
       </StackPanel>

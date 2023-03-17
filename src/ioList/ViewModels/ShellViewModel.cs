@@ -2,9 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GongSolutions.Wpf.DragDrop;
 using ioList.Shared;
 using MaterialDesignThemes.Wpf;
 using Ookii.Dialogs.Wpf;
@@ -13,28 +16,35 @@ using Squirrel.Sources;
 
 namespace ioList.ViewModels
 {
-    public partial class ShellViewModel : ObservableValidator
+    public partial class ShellViewModel : ObservableValidator, IDropTarget
     {
         private readonly ISnackbarMessageQueue _messageQueue;
+        private readonly EventLog _eventLog;
 
         public ShellViewModel(ISnackbarMessageQueue messageQueue)
         {
+            _eventLog = new EventLog("Application");
             _messageQueue = messageQueue;
             GetVersion();
         }
 
-        [ObservableProperty] private string _version;
+        [ObservableProperty] //
+        private string _version;
 
-        [ObservableProperty] private int _viewIndex;
+        [ObservableProperty] // 
+        private int _viewIndex;
 
-        [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(GenerateCommand))] [NotifyDataErrorInfo] [Required]
+        [ObservableProperty] //
+        [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
+        [NotifyDataErrorInfo]
+        [Required]
         private string _sourceFile = string.Empty;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
         [NotifyDataErrorInfo]
         [Required]
-        [CustomValidation(typeof(ShellViewModel), nameof(ValidatePath))]
+        [CustomValidation(typeof(ShellViewModel), nameof(ValidateFileName))]
         private string _destinationName = string.Empty;
 
         [ObservableProperty]
@@ -44,7 +54,8 @@ namespace ioList.ViewModels
         [CustomValidation(typeof(ShellViewModel), nameof(ValidatePath))]
         private string _destinationLocation = string.Empty;
 
-        [ObservableProperty] private string _errorMessage;
+        [ObservableProperty] // 
+        private string _errorMessage;
 
         [RelayCommand]
         private void SelectSource()
@@ -100,7 +111,7 @@ namespace ioList.ViewModels
         [RelayCommand]
         private void ReportIssue()
         {
-            //todo what should this do...?
+            LaunchSite("https://github.com/tnunnink/ioList/issues/new");
             ViewIndex = 0;
         }
 
@@ -124,10 +135,40 @@ namespace ioList.ViewModels
                 }
                 catch (Exception e)
                 {
+                    _eventLog.WriteEntry($"Processing failed with error message '{e.Message}'.",
+                        EventLogEntryType.Error);
                     ErrorMessage = e.Message;
                     ViewIndex = 4;
                 }
             });
+        }
+
+        public void DragOver(IDropInfo dropInfo)
+        {
+            var files = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>().ToList();
+
+            var info = files.Count == 1 ? new FileInfo(files[0]) : null;
+
+            dropInfo.Effects = info is not null && info.Exists && info.Extension == ".L5X"
+                ? DragDropEffects.Copy
+                : DragDropEffects.None;
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            var files = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>().ToList();
+
+            var info = files.Count == 1 ? new FileInfo(files[0]) : null;
+
+            if (info is null || !info.Exists || info.Extension != ".L5X")
+                return;
+
+            SourceFile = info.FullName;
+            DestinationName = $"{Path.GetFileNameWithoutExtension(info.FullName)} IO List";
+            DestinationLocation = info.DirectoryName ?? string.Empty;
+
+            //Go to the entry view if not already there.
+            ViewIndex = 1;
         }
 
         private bool CanGenerate() => !string.IsNullOrWhiteSpace(SourceFile)
@@ -135,10 +176,17 @@ namespace ioList.ViewModels
                                       && !string.IsNullOrWhiteSpace(DestinationLocation)
                                       && !HasErrors;
 
-        public static ValidationResult ValidatePath(string value, ValidationContext context)
+        public static ValidationResult ValidateFileName(string value, ValidationContext context)
         {
             return value.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
                 ? new ValidationResult($"The name {value} is not a valid file name.")
+                : ValidationResult.Success;
+        }
+
+        public static ValidationResult ValidatePath(string value, ValidationContext context)
+        {
+            return value.IndexOfAny(Path.GetInvalidPathChars()) >= 0
+                ? new ValidationResult($"The path {value} is not a valid directory.")
                 : ValidationResult.Success;
         }
 
@@ -146,14 +194,28 @@ namespace ioList.ViewModels
         {
             try
             {
-                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
+                using var manager = new UpdateManager(new GithubSource(App.ReadMeUrl, string.Empty, false));
                 var installedVersion = manager.CurrentlyInstalledVersion();
                 Version = installedVersion is not null ? installedVersion.ToString() : string.Empty;
             }
             catch (Exception e)
             {
-                //todo log
-                Console.WriteLine(e);
+                _eventLog.WriteEntry($"Failed to get current version from Github with error message '{e.Message}'.",
+                    EventLogEntryType.Error);
+            }
+        }
+        
+        [RelayCommand]
+        private void LaunchSite(string url)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            }
+            catch (Exception e)
+            {
+                _eventLog.WriteEntry($"Unable to open site {url} due to error '{e.Message}'.", EventLogEntryType.Error);
+                _messageQueue.Enqueue($"Unable to open site {url}");
             }
         }
     }

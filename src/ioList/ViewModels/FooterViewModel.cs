@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
@@ -13,26 +14,25 @@ namespace ioList.ViewModels
     public partial class FooterViewModel : ObservableObject
     {
         private readonly TaskNotifier _loadTask;
+        private readonly EventLog _eventLog;
+
 
         public FooterViewModel(ISnackbarMessageQueue messageQueue)
         {
+            _eventLog = new EventLog("Application");
             _messageQueue = messageQueue;
             LoadTask = CheckForUpdates();
         }
 
-        [ObservableProperty] private ISnackbarMessageQueue _messageQueue;
+        [ObservableProperty] //
+        private ISnackbarMessageQueue _messageQueue;
 
-
-        #region PropertyRegion
-
-        [ObservableProperty] 
+        [ObservableProperty] // 
         private string _updateText;
 
-        [ObservableProperty]
+        [ObservableProperty] //
         [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
         private bool _updateAvailable = false;
-
-        #endregion
 
 
         private Task LoadTask
@@ -46,12 +46,12 @@ namespace ioList.ViewModels
         {
             try
             {
-                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
+                using var manager = new UpdateManager(new GithubSource(App.ReadMeUrl, string.Empty, false));
 
                 if (!manager.IsInstalledApp) return;
-                
+
                 var updates = await manager.CheckForUpdate();
-                
+
                 UpdateAvailable = updates.ReleasesToApply.Count > 0;
 
                 if (!UpdateAvailable) return;
@@ -61,27 +61,34 @@ namespace ioList.ViewModels
             }
             catch (Exception e)
             {
-                //I think we probably just log this?  perhaps inform user.
-                MessageQueue.Enqueue("Unable to contact Github to find new updates...");
+                _eventLog.WriteEntry($"Failed to perform check for updates with error '{e.Message}'.",
+                    EventLogEntryType.Error);
+
+                MessageQueue.Enqueue("Unable to contact Github to find new updates.");
             }
         }
 
         [RelayCommand(CanExecute = nameof(CanExecuteUpdateCommand))]
         private async Task PerformUpdate()
         {
+            _eventLog.WriteEntry("Starting application update.", EventLogEntryType.Information);
+            
+            UpdateText = "Updating application. Once complete the app will restart.";
+
             try
             {
-                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
+                using var manager = new UpdateManager(new GithubSource(App.ReadMeUrl, string.Empty, false));
                 var release = await manager.UpdateApp();
-                
-                if (release == null) return;
-                
-                //todo perhaps prompt to restart
-                UpdateManager.RestartApp();
+
+                if (release != null)
+                    UpdateManager.RestartApp();
             }
             catch (Exception e)
             {
-                MessageQueue.Enqueue("Failed performing application update. You hate to see it...");
+                _eventLog.WriteEntry($"Failed to perform application update with error '{e.Message}'.",
+                    EventLogEntryType.Error);
+
+                MessageQueue.Enqueue("Application update failed. Check the Windows Event Log for more info.");
             }
         }
 
@@ -96,6 +103,7 @@ namespace ioList.ViewModels
             }
             catch (Exception e)
             {
+                _eventLog.WriteEntry($"Unable to open site {url} due to error '{e.Message}'.", EventLogEntryType.Error);
                 MessageQueue.Enqueue($"Unable to open site {url}");
             }
         }

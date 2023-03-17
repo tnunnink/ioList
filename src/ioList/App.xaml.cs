@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Diagnostics;
 using System.Windows;
 using ioList.ViewModels;
 using MaterialDesignThemes.Wpf;
@@ -18,6 +18,12 @@ namespace ioList
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            using (var eventLog = new EventLog("Application"))
+            {
+                eventLog.Source = "Application";
+                eventLog.WriteEntry("ioList starting up...", EventLogEntryType.Information);
+            }
+
             SquirrelAwareApp.HandleEvents(
                 onInitialInstall: OnAppInstall,
                 onAppUninstall: OnAppUninstall,
@@ -34,15 +40,10 @@ namespace ioList
         /// </summary>
         public IServiceProvider Services { get; }
 
-        public readonly string InstallDirectory =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ioList");
-
-        public const string RepositoryUrl = @"https://github.com/tnunnink/ioList";
+        public const string ReadMeUrl = @"https://github.com/tnunnink/ioList/blob/main/README.md";
 
         public const string IssuesUrl = @"https://github.com/tnunnink/ioList/issues";
 
-        public const string PagesUrl = @"https://github.com/tnunnink/ioList/issues";
-        
         /// <summary>
         /// Configures the services for the application.
         /// </summary>
@@ -51,7 +52,6 @@ namespace ioList
             var services = new ServiceCollection();
             
             services.AddSingleton<ISnackbarMessageQueue, SnackbarMessageQueue>();
-
             services.AddTransient<ShellViewModel>();
             services.AddTransient<FooterViewModel>();
 

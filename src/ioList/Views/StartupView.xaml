@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:ioList="clr-namespace:ioList"
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             dd:DragDrop.IsDropTarget="True"
+             dd:DragDrop.DragHandler="{Binding}"
+             dd:DragDrop.DropHandler="{Binding}"
+             dd:DragDrop.UseDefaultDragAdorner="True"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
@@ -23,13 +27,11 @@
 
       <StackPanel Grid.Row="0"
                   VerticalAlignment="Center">
-        <Image Source="../Styles/logo.svg" 
-               Height="50" Width="50"/>
         <md:PackIcon Kind="ViewList" 
                      Height="50"
                      Width="50"
                      Margin="0 0 0 10"
-                     Foreground="{DynamicResource PrimaryHueLightBrush}"
+                     Foreground="{DynamicResource PrimaryHueMidBrush}"
                      HorizontalAlignment="Center"/>
         <TextBlock Text="ioList"
                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
@@ -55,7 +57,7 @@
                    Margin="10"/>
         
         <Button Command="{x:Static md:Transitioner.MoveNextCommand}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Style="{StaticResource MaterialDesignRaisedButton}"
                 Width="160"
                 Height="36"
                 Content="New List" 

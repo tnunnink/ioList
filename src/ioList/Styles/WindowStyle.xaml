@@ -32,7 +32,7 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
     <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0" />
@@ -56,7 +56,7 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
     <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="BorderThickness" Value="0" />
@@ -65,55 +65,6 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Template" Value="{StaticResource WindowsButtonTemplate}" />
   </Style>
-
-  <!--<ControlTemplate x:Key="Icon.App" TargetType="{x:Type core:Icon}">
-    <Viewbox>
-      <Canvas Width="24" Height="24">
-        <Path Fill="{TemplateBinding Foreground}"
-              Data="M9,5V9H21V5M9,19H21V15H9M9,14H21V10H9M4,9H8V5H4M4,19H8V15H4M4,14H8V10H4V14Z" />
-      </Canvas>
-    </Viewbox>
-  </ControlTemplate>
-
-  <ControlTemplate x:Key="Icon.Close" TargetType="{x:Type core:Icon}">
-    <Viewbox SnapsToDevicePixels="False"
-             UseLayoutRounding="False">
-      <Canvas Width="24" Height="24">
-        <Path Fill="{TemplateBinding Foreground}"
-              Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" />
-      </Canvas>
-    </Viewbox>
-  </ControlTemplate>
-
-  <ControlTemplate x:Key="Icon.Maximize" TargetType="{x:Type core:Icon}">
-    <Viewbox SnapsToDevicePixels="False"
-             UseLayoutRounding="False">
-      <Canvas Width="24" Height="24">
-        <Path Fill="{TemplateBinding Foreground}"
-              Data="M4,4H20V20H4V4M6,8V18H18V8H6Z" />
-      </Canvas>
-    </Viewbox>
-  </ControlTemplate>
-
-  <ControlTemplate x:Key="Icon.Minimize" TargetType="{x:Type core:Icon}">
-    <Viewbox SnapsToDevicePixels="False"
-             UseLayoutRounding="False">
-      <Canvas Width="24" Height="24">
-        <Path Fill="{TemplateBinding Foreground}"
-              Data="M20,14H4V10H20" />
-      </Canvas>
-    </Viewbox>
-  </ControlTemplate>
-
-  <ControlTemplate x:Key="Icon.Restore" TargetType="{x:Type core:Icon}">
-    <Viewbox SnapsToDevicePixels="False"
-             UseLayoutRounding="False">
-      <Canvas Width="24" Height="24">
-        <Path Fill="{TemplateBinding Foreground}"
-              Data="M4,8H8V4H20V16H16V20H4V8M16,8V14H18V6H10V8H16M6,12V18H14V12H6Z" />
-      </Canvas>
-    </Viewbox>
-  </ControlTemplate>-->
 
   <ControlTemplate x:Key="ShellTemplate" TargetType="{x:Type Window}">
     <Border x:Name="RootBorder"
@@ -131,27 +82,20 @@
             Fill="{DynamicResource PrimaryHueMidBrush}" />
           <DockPanel LastChildFill="False">
 
-            <!--<md:PackIcon
+            <md:PackIcon
               Margin="8,0,0,0"
               DockPanel.Dock="Left"
               Kind="ViewList"
               VerticalAlignment="Center"
-              Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-              Height="20" Width="20"
-              WindowChrome.IsHitTestVisibleInChrome="True" />-->
-            
-            <Image Source="../logo.ico"
-              Margin="8,0,0,0"
-              DockPanel.Dock="Left"
-              VerticalAlignment="Center"
-              Height="20" Width="20"
+              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Height="24" Width="24"
               WindowChrome.IsHitTestVisibleInChrome="True" />
 
             <TextBlock
-              Margin="8,0,0,0"
+              Margin="8,1,0,0"
               VerticalAlignment="Center"
               DockPanel.Dock="Left"
-              Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
               Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
 
             <Button x:Name="CloseButton"
@@ -216,6 +160,7 @@
     <Setter Property="UseLayoutRounding" Value="True" />
     <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+    <Setter Property="ResizeMode" Value="CanMinimize" />
     <Setter Property="WindowChrome.WindowChrome">
       <Setter.Value>
         <WindowChrome
