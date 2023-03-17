@@ -7,7 +7,7 @@
         <authors>Timothy Nunnink</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
-         <icon>logo.ico</icon> 
+        <!-- <icon>logo.ico</icon> -->
         <projectUrl>https://github.com/tnunnink/ioList</projectUrl>
         <description>Appplication for generating and PLC IO lists using L5X export files.</description>
         <releaseNotes>Test release.</releaseNotes>
