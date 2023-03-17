@@ -14,52 +14,51 @@
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
-  <Border>
-    <Grid Margin="10">
-      <StackPanel Grid.Row="0"
-                  VerticalAlignment="Center">
-        <md:PackIcon Kind="ErrorOutline" 
-                     HorizontalAlignment="Center"
-                     Height="60" Width="60"
-                     Foreground="LightPink"
-                     Margin="0 20"/>
-        <TextBlock Text="Generation Failed..."
-                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                   FontWeight="SemiBold"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" />
-        <TextBlock Text="Boo! Check the generated exception below. If you believe this is a bug in the application, feel free to report it."
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   VerticalAlignment="Center"
+  <Grid Margin="10">
+    <StackPanel Grid.Row="0"
+                VerticalAlignment="Center">
+      <md:PackIcon Kind="ErrorOutline"
                    HorizontalAlignment="Center"
-                   Margin="10" />
-        
-        <TextBlock Text="{Binding ErrorMessage}"
+                   Height="60" Width="60"
                    Foreground="LightPink"
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Margin="10" />
-        
-        <StackPanel Orientation="Horizontal"
-                    Margin="0 30 0 0"
-                    HorizontalAlignment="Center">
-          <Button Command="{Binding ReportIssueCommand}"
-                  Style="{StaticResource MaterialDesignRaisedLightButton}"
-                  Width="160"
-                  Height="36"
-                  Content="Report Issue" 
-                  Margin="10"/>
-          <Button Command="{Binding TryAgainCommand}"
-                  Style="{StaticResource MaterialDesignRaisedLightButton}"
-                  Width="160"
-                  Height="36"
-                  Content="Try Again" 
-                  Margin="10"/>  
-        </StackPanel>
+                   Margin="0 20" />
+      <TextBlock Text="Generation Failed..."
+                 Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                 FontWeight="SemiBold"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+      <TextBlock
+        Text="Boo! Check the generated exception below. If you believe this is a bug in the application, feel free to report it."
+        TextWrapping="Wrap"
+        TextAlignment="Center"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Margin="10" />
+
+      <TextBlock Text="{Binding ErrorMessage}"
+                 Foreground="LightPink"
+                 TextWrapping="Wrap"
+                 TextAlignment="Center"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 Margin="10" />
+
+      <StackPanel Orientation="Horizontal"
+                  Margin="0 30 0 0"
+                  HorizontalAlignment="Center">
+        <Button Command="{Binding ReportIssueCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Width="160"
+                Height="36"
+                Content="Report Issue"
+                Margin="10" />
+        <Button Command="{Binding TryAgainCommand}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Width="160"
+                Height="36"
+                Content="Try Again"
+                Margin="10" />
       </StackPanel>
-    </Grid>
-  </Border>
+    </StackPanel>
+  </Grid>
 </UserControl>

@@ -14,104 +14,102 @@
              FontFamily="{md:MaterialDesignFont}"
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
-  <Border>
-    <Grid Margin="30">
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition Height="2*" />
-      </Grid.RowDefinitions>
+  <Grid Margin="30">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="2*" />
+    </Grid.RowDefinitions>
 
-      <StackPanel Grid.Row="0"
-                  VerticalAlignment="Center">
-        <md:PackIcon Kind="ViewList"
-                     Height="50"
-                     Width="50"
-                     Margin="0 0 0 10"
-                     Foreground="{DynamicResource PrimaryHueLightBrush}"
-                     HorizontalAlignment="Center" />
-        <TextBlock Text="New List"
-                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                   FontWeight="SemiBold"
+    <StackPanel Grid.Row="0"
+                VerticalAlignment="Center">
+      <md:PackIcon Kind="ViewList"
+                   Height="50"
+                   Width="50"
+                   Margin="0 0 0 10"
+                   Foreground="{DynamicResource PrimaryHueLightBrush}"
+                   HorizontalAlignment="Center" />
+      <TextBlock Text="New List"
+                 Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                 FontWeight="SemiBold"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+    </StackPanel>
+
+    <StackPanel Grid.Row="1"
+                HorizontalAlignment="Stretch">
+
+      <Grid>
+        <Button Grid.Column="0"
+                Command="{x:Static md:Transitioner.MovePreviousCommand}"
+                Style="{StaticResource MaterialDesignToolButton}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Padding="0">
+          <md:PackIcon Kind="ArrowBack" Height="20" Width="20" />
+        </Button>
+
+        <TextBlock Text="Specify the following information to generate a new list."
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
-      </StackPanel>
+                   HorizontalAlignment="Center" />
+      </Grid>
 
-      <StackPanel Grid.Row="1"
-                  HorizontalAlignment="Stretch">
+      <TextBox
+        x:Name="SourceTextBox"
+        Text="{Binding SourceFile}"
+        dd:DragDrop.IsDropTarget="True"
+        dd:DragDrop.DragHandler="{Binding}"
+        dd:DragDrop.DropHandler="{Binding}"
+        dd:DragDrop.UseDefaultDragAdorner="True"
+        md:HintAssist.HelperText="The L5X project file to process."
+        md:HintAssist.HelperTextFontSize="11"
+        md:HintAssist.Hint="L5X File"
+        md:HintAssist.HintOpacity="0.6"
+        md:TextFieldAssist.HasTrailingIcon="True"
+        md:TextFieldAssist.TrailingIconSize="20"
+        md:TextFieldAssist.TrailingIcon="Folder"
+        Style="{StaticResource MaterialDesignTextBox}"
+        Margin="0 15">
+        <b:Interaction.Triggers>
+          <b:EventTrigger EventName="PreviewMouseDown" SourceName="SourceTextBox">
+            <b:InvokeCommandAction Command="{Binding SelectSourceCommand}" />
+          </b:EventTrigger>
+        </b:Interaction.Triggers>
+      </TextBox>
 
-        <Grid>
-          <Button Grid.Column="0"
-                  Command="{x:Static md:Transitioner.MovePreviousCommand}"
-                  Style="{StaticResource MaterialDesignToolButton}"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Center"
-                  Padding="0">
-            <md:PackIcon Kind="ArrowBack" Height="20" Width="20" />
-          </Button>
+      <TextBox
+        Text="{Binding DestinationName}"
+        md:HintAssist.HelperText="The file name of the list to create (without extension)."
+        md:HintAssist.HelperTextFontSize="11"
+        md:HintAssist.HintOpacity="0.6"
+        md:HintAssist.Hint="List Name"
+        Style="{StaticResource MaterialDesignTextBox}"
+        Margin="0 15">
+      </TextBox>
 
-          <TextBlock Text="Specify the following information to generate a new list."
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center" />
-        </Grid>
+      <TextBox
+        x:Name="LocationTextBox"
+        Text="{Binding DestinationLocation}"
+        md:HintAssist.HelperText="The file directory in which the list will be created."
+        md:HintAssist.HelperTextFontSize="11"
+        md:HintAssist.Hint="List Location"
+        md:HintAssist.HintOpacity="0.6"
+        md:TextFieldAssist.HasTrailingIcon="True"
+        md:TextFieldAssist.TrailingIconSize="20"
+        md:TextFieldAssist.TrailingIcon="Folder"
+        Style="{StaticResource MaterialDesignTextBox}"
+        Margin="0 15">
+        <b:Interaction.Triggers>
+          <b:EventTrigger EventName="PreviewMouseDown" SourceName="LocationTextBox">
+            <b:InvokeCommandAction Command="{Binding SelectLocationCommand}" />
+          </b:EventTrigger>
+        </b:Interaction.Triggers>
+      </TextBox>
 
-        <TextBox
-          x:Name="SourceTextBox"
-          Text="{Binding SourceFile}"
-          dd:DragDrop.IsDropTarget="True"
-          dd:DragDrop.DragHandler="{Binding}"
-          dd:DragDrop.DropHandler="{Binding}"
-          dd:DragDrop.UseDefaultDragAdorner="True"
-          md:HintAssist.HelperText="The L5X project file to process."
-          md:HintAssist.HelperTextFontSize="11"
-          md:HintAssist.Hint="L5X File"
-          md:HintAssist.HintOpacity="0.6"
-          md:TextFieldAssist.HasTrailingIcon="True"
-          md:TextFieldAssist.TrailingIconSize="20"
-          md:TextFieldAssist.TrailingIcon="Folder"
-          Style="{StaticResource MaterialDesignTextBox}"
-          Margin="0 15">
-          <b:Interaction.Triggers>
-            <b:EventTrigger EventName="PreviewMouseDown" SourceName="SourceTextBox">
-              <b:InvokeCommandAction Command="{Binding SelectSourceCommand}" />
-            </b:EventTrigger>
-          </b:Interaction.Triggers>
-        </TextBox>
-
-        <TextBox
-          Text="{Binding DestinationName}"
-          md:HintAssist.HelperText="The file name of the list to create (without extension)."
-          md:HintAssist.HelperTextFontSize="11"
-          md:HintAssist.HintOpacity="0.6"
-          md:HintAssist.Hint="List Name"
-          Style="{StaticResource MaterialDesignTextBox}"
-          Margin="0 15">
-        </TextBox>
-
-        <TextBox
-          x:Name="LocationTextBox"
-          Text="{Binding DestinationLocation}"
-          md:HintAssist.HelperText="The file directory in which the list will be created."
-          md:HintAssist.HelperTextFontSize="11"
-          md:HintAssist.Hint="List Location"
-          md:HintAssist.HintOpacity="0.6"
-          md:TextFieldAssist.HasTrailingIcon="True"
-          md:TextFieldAssist.TrailingIconSize="20"
-          md:TextFieldAssist.TrailingIcon="Folder"
-          Style="{StaticResource MaterialDesignTextBox}"
-          Margin="0 15">
-          <b:Interaction.Triggers>
-            <b:EventTrigger EventName="PreviewMouseDown" SourceName="LocationTextBox">
-              <b:InvokeCommandAction Command="{Binding SelectLocationCommand}" />
-            </b:EventTrigger>
-          </b:Interaction.Triggers>
-        </TextBox>
-
-        <Button Content="Generate"
-                Height="32" Width="120"
-                Style="{StaticResource MaterialDesignRaisedSecondaryButton}"
-                Command="{Binding GenerateCommand}"
-                Margin="0 40 0 0" />
-      </StackPanel>
-    </Grid>
-  </Border>
+      <Button Content="Generate"
+              Height="32" Width="120"
+              Style="{StaticResource MaterialDesignRaisedSecondaryButton}"
+              Command="{Binding GenerateCommand}"
+              Margin="0 40 0 0" />
+    </StackPanel>
+  </Grid>
 </UserControl>

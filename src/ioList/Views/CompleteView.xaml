@@ -14,33 +14,31 @@
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
-  <Border>
-    <Grid Margin="10">
-      <StackPanel Grid.Row="0"
-                  VerticalAlignment="Center">
-        <md:PackIcon Kind="Success" HorizontalAlignment="Center"
-                     Height="60" Width="60"
-                     Foreground="{DynamicResource SecondaryHueMidBrush}"
-                     Margin="0 20"/>
-        <TextBlock Text="Generation Compete!"
-                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                   FontWeight="SemiBold"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" />
-        <TextBlock Text="Thanks for waiting. Check out the generated file by clicking below."
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Margin="10" />
-        
-        <Button Command="{Binding OpenInExplorerCommand}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                Width="160"
-                Height="36"
-                Content="Open In Explorer" 
-                Margin="0 30"/>
-      </StackPanel>
-    </Grid>
-  </Border>
+  <Grid Margin="10">
+    <StackPanel Grid.Row="0"
+                VerticalAlignment="Center">
+      <md:PackIcon Kind="Success" HorizontalAlignment="Center"
+                   Height="60" Width="60"
+                   Foreground="{DynamicResource SecondaryHueMidBrush}"
+                   Margin="0 20" />
+      <TextBlock Text="Generation Complete!"
+                 Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                 FontWeight="SemiBold"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+      <TextBlock Text="Thanks for waiting. Check out the generated file by clicking below."
+                 TextWrapping="Wrap"
+                 TextAlignment="Center"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 Margin="10" />
+
+      <Button Command="{Binding OpenInExplorerCommand}"
+              Style="{StaticResource MaterialDesignRaisedLightButton}"
+              Width="160"
+              Height="36"
+              Content="Open In Explorer"
+              Margin="0 30" />
+    </StackPanel>
+  </Grid>
 </UserControl>

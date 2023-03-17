@@ -18,51 +18,49 @@
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
-  <Border>
-    <Grid Margin="10">
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition Height="1.5*"/>
-      </Grid.RowDefinitions>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="1.5*" />
+    </Grid.RowDefinitions>
 
-      <StackPanel Grid.Row="0"
-                  VerticalAlignment="Center">
-        <md:PackIcon Kind="ViewList" 
-                     Height="50"
-                     Width="50"
-                     Margin="0 0 0 10"
-                     Foreground="{DynamicResource PrimaryHueMidBrush}"
-                     HorizontalAlignment="Center"/>
-        <TextBlock Text="ioList"
-                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                   FontWeight="SemiBold"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
-        <TextBlock Text="{Binding Version}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Foreground="#7186A1" />
-      </StackPanel>
+    <StackPanel Grid.Row="0"
+                VerticalAlignment="Center">
+      <md:PackIcon Kind="ViewList"
+                   Height="50"
+                   Width="50"
+                   Margin="0 0 0 10"
+                   Foreground="{DynamicResource PrimaryHueLightBrush}"
+                   HorizontalAlignment="Center" />
+      <TextBlock Text="ioList"
+                 Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                 FontWeight="SemiBold"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center" />
+      <TextBlock Text="{Binding Version}"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 Foreground="#7186A1" />
+    </StackPanel>
 
-      <StackPanel Grid.Row="1"
-                  HorizontalAlignment="Stretch">
-        <TextBlock Text="Welcome!"
-                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Margin="10"/>
-        <TextBlock Text="Please select New List or drag and drop L5X to start."
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Margin="10"/>
-        
-        <Button Command="{x:Static md:Transitioner.MoveNextCommand}"
-                Style="{StaticResource MaterialDesignRaisedButton}"
-                Width="160"
-                Height="36"
-                Content="New List" 
-                Margin="0 30"/>
-      </StackPanel>
-    </Grid>
-  </Border>
+    <StackPanel Grid.Row="1"
+                HorizontalAlignment="Stretch">
+      <TextBlock Text="Welcome!"
+                 Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 Margin="10" />
+      <TextBlock Text="Please select New List or drag and drop L5X to start."
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Center"
+                 Margin="10" />
+
+      <Button Command="{x:Static md:Transitioner.MoveNextCommand}"
+              Style="{StaticResource MaterialDesignRaisedLightButton}"
+              Width="160"
+              Height="36"
+              Content="New List"
+              Margin="0 30" />
+    </StackPanel>
+  </Grid>
 </UserControl>
