@@ -23,7 +23,7 @@ namespace ioList.ViewModels
 
         public ShellViewModel(ISnackbarMessageQueue messageQueue)
         {
-            _eventLog = new EventLog("Application");
+            _eventLog = new EventLog("Application", Environment.MachineName, "Application");
             _messageQueue = messageQueue;
             GetVersion();
         }
@@ -188,8 +188,14 @@ namespace ioList.ViewModels
         {
             try
             {
+                _eventLog.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to get current version.",
+                    EventLogEntryType.Information);
+
                 using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var installedVersion = manager.CurrentlyInstalledVersion();
+
+                _eventLog.WriteEntry($"Current installed version: {installedVersion}", EventLogEntryType.Information);
+                
                 Version = installedVersion is not null ? installedVersion.ToString() : string.Empty;
             }
             catch (Exception e)

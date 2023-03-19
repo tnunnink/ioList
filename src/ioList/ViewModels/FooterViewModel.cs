@@ -17,19 +17,16 @@ namespace ioList.ViewModels
 
         public FooterViewModel(ISnackbarMessageQueue messageQueue)
         {
-            _eventLog = new EventLog("Application");
+            _eventLog = new EventLog("Application", Environment.MachineName, "Application");
             _messageQueue = messageQueue;
             LoadTask = CheckForUpdates();
         }
 
-        [ObservableProperty]
-        private ISnackbarMessageQueue _messageQueue;
+        [ObservableProperty] private ISnackbarMessageQueue _messageQueue;
 
-        [ObservableProperty] 
-        private string _updateText;
+        [ObservableProperty] private string _updateText;
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
+        [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
         private bool _updateAvailable = false;
 
 
@@ -44,6 +41,9 @@ namespace ioList.ViewModels
         {
             try
             {
+                _eventLog.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to check for updates.",
+                    EventLogEntryType.Information);
+
                 using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
 
                 if (!manager.IsInstalledApp) return;
