@@ -31,7 +31,7 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
+    <Setter Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -55,7 +55,7 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-    <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
+    <Setter Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
     <Setter Property="Foreground" Value="{DynamicResource PrimaryHueDarkForegroundBrush}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -79,7 +79,7 @@
         <Grid Grid.Row="0">
           <Rectangle
             Height="30"
-            Fill="{DynamicResource PrimaryHueMidBrush}" />
+            Fill="{DynamicResource PrimaryHueLightBrush}" />
           <DockPanel LastChildFill="False">
 
             <md:PackIcon
@@ -87,7 +87,7 @@
               DockPanel.Dock="Left"
               Kind="ViewList"
               VerticalAlignment="Center"
-              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Foreground="{DynamicResource PrimaryHueDarkBrush}"
               Height="24" Width="24"
               WindowChrome.IsHitTestVisibleInChrome="True" />
 
@@ -95,7 +95,7 @@
               Margin="8,1,0,0"
               VerticalAlignment="Center"
               DockPanel.Dock="Left"
-              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Foreground="{DynamicResource PrimaryHueDarkBrush}"
               Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
 
             <Button x:Name="CloseButton"

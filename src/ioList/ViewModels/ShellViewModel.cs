@@ -28,16 +28,11 @@ namespace ioList.ViewModels
             GetVersion();
         }
 
-        [ObservableProperty] //
-        private string _version;
+        [ObservableProperty] private string _version;
 
-        [ObservableProperty] // 
-        private int _viewIndex;
+        [ObservableProperty] private int _viewIndex;
 
-        [ObservableProperty] //
-        [NotifyCanExecuteChangedFor(nameof(GenerateCommand))]
-        [NotifyDataErrorInfo]
-        [Required]
+        [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(GenerateCommand))] [NotifyDataErrorInfo] [Required]
         private string _sourceFile = string.Empty;
 
         [ObservableProperty]
@@ -54,8 +49,7 @@ namespace ioList.ViewModels
         [CustomValidation(typeof(ShellViewModel), nameof(ValidatePath))]
         private string _destinationLocation = string.Empty;
 
-        [ObservableProperty] // 
-        private string _errorMessage;
+        [ObservableProperty] private string _errorMessage;
 
         [RelayCommand]
         private void SelectSource()
@@ -126,11 +120,11 @@ namespace ioList.ViewModels
                 {
                     if (!Directory.Exists(DestinationLocation))
                         Directory.CreateDirectory(DestinationLocation);
-                    
+
                     var destination = Path.Combine(DestinationLocation, $"{DestinationName}.csv");
-                    
+
                     Generator.Generate(SourceFile, destination);
-                    
+
                     ViewIndex++;
                 }
                 catch (Exception e)
@@ -204,7 +198,7 @@ namespace ioList.ViewModels
                     EventLogEntryType.Error);
             }
         }
-        
+
         [RelayCommand]
         private void LaunchSite(string url)
         {

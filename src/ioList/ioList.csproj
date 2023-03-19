@@ -12,18 +12,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Clowd.Squirrel" Version="2.9.42"/>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0"/>
-        <PackageReference Include="CsvHelper" Version="27.1.1"/>
-        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1"/>
-        <PackageReference Include="L5Sharp" Version="0.9.1"/>
-        <PackageReference Include="LambdaConverters" Version="4.0.0"/>
-        <PackageReference Include="MaterialDesignThemes" Version="4.7.1"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39"/>
-        <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1"/>
-        <PackageReference Include="NuGet.CommandLine" Version="6.4.0"/>
+        <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+        <PackageReference Include="CsvHelper" Version="27.1.1" />
+        <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
+        <PackageReference Include="L5Sharp" Version="0.9.1" />
+        <PackageReference Include="LambdaConverters" Version="4.0.0" />
+        <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+        <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+        <PackageReference Include="NuGet.CommandLine" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,14 +38,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <SquirrelPackage Include="C:\Users\tnunnink\.nuget\packages\clowd.squirrel\2.9.42\tools\Squirrel.exe"/>
+        <SquirrelPackage Include="C:\Users\tnunnink\.nuget\packages\clowd.squirrel\2.9.42\tools\Squirrel.exe" />
     </ItemGroup>
 
     <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
         <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-            <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
+            <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
         </GetAssemblyIdentity>
-        <Exec Command="nuget pack ioList.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)"/>
-        <Exec Command="@(squirrelPackage->'%(fullpath)') releasify --package=$(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=$(SolutionDir)..\releases --msi=x64"/>
+        <Exec Command="nuget pack ioList.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory $(OutDir) -BasePath $(OutDir)" />
+        <Exec Command="@(squirrelPackage->'%(fullpath)') releasify --package=$(OutDir)ioList.$([System.Version]::Parse(%(myAssemblyInfo.Version)).ToString(3)).nupkg --releaseDir=$(SolutionDir)..\releases --msi=x64" />
     </Target>
 </Project>

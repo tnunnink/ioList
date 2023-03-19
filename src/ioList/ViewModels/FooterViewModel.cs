@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
@@ -16,7 +15,6 @@ namespace ioList.ViewModels
         private readonly TaskNotifier _loadTask;
         private readonly EventLog _eventLog;
 
-
         public FooterViewModel(ISnackbarMessageQueue messageQueue)
         {
             _eventLog = new EventLog("Application");
@@ -24,13 +22,13 @@ namespace ioList.ViewModels
             LoadTask = CheckForUpdates();
         }
 
-        [ObservableProperty] //
+        [ObservableProperty]
         private ISnackbarMessageQueue _messageQueue;
 
-        [ObservableProperty] // 
+        [ObservableProperty] 
         private string _updateText;
 
-        [ObservableProperty] //
+        [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
         private bool _updateAvailable = false;
 
@@ -50,7 +48,14 @@ namespace ioList.ViewModels
 
                 if (!manager.IsInstalledApp) return;
 
+                _eventLog.WriteEntry("Checking for updates.", EventLogEntryType.Information);
+
                 var updates = await manager.CheckForUpdate();
+
+                if (updates is null) return;
+
+                _eventLog.WriteEntry($"{updates.ReleasesToApply.Count} New Releases Found.",
+                    EventLogEntryType.Information);
 
                 UpdateAvailable = updates.ReleasesToApply.Count > 0;
 
@@ -72,7 +77,7 @@ namespace ioList.ViewModels
         private async Task PerformUpdate()
         {
             _eventLog.WriteEntry("Starting application update.", EventLogEntryType.Information);
-            
+
             UpdateText = "Updating application. Once complete the app will restart.";
 
             try
