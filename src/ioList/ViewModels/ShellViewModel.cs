@@ -188,7 +188,7 @@ namespace ioList.ViewModels
         {
             try
             {
-                using var manager = new UpdateManager(new GithubSource(App.ReadMeUrl, string.Empty, false));
+                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var installedVersion = manager.CurrentlyInstalledVersion();
                 Version = installedVersion is not null ? installedVersion.ToString() : string.Empty;
             }

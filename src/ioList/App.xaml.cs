@@ -39,6 +39,8 @@ namespace ioList
         /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
         /// </summary>
         public IServiceProvider Services { get; }
+        
+        public const string RepositoryUrl = @"https://github.com/tnunnink/ioList";
 
         public const string ReadMeUrl = @"https://github.com/tnunnink/ioList/blob/main/README.md";
 

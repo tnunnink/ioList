@@ -44,7 +44,7 @@ namespace ioList.ViewModels
         {
             try
             {
-                using var manager = new UpdateManager(new GithubSource(App.ReadMeUrl, string.Empty, false));
+                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
 
                 if (!manager.IsInstalledApp) return;
 
@@ -82,7 +82,7 @@ namespace ioList.ViewModels
 
             try
             {
-                using var manager = new UpdateManager(new GithubSource(App.ReadMeUrl, string.Empty, false));
+                using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var release = await manager.UpdateApp();
 
                 if (release != null)
