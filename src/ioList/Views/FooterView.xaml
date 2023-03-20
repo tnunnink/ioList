@@ -56,6 +56,7 @@
               CommandParameter="{x:Static ioList:App.IssuesUrl}"
               Margin="5 0">
         <md:PackIcon Kind="Bug" 
+                     ToolTip="Report Issue"
                      Height="20" Width="20"/>
       </Button>
       <Button Style="{StaticResource MaterialDesignToolButton}"
@@ -63,9 +64,11 @@
               CommandParameter="{x:Static ioList:App.ReadMeUrl}"
               Margin="5 0">
         <md:PackIcon Kind="Information" 
+                     ToolTip="Information"
                      Height="20" Width="20"/>
       </Button>
       <Button Style="{StaticResource MaterialDesignToolButton}"
+              ToolTip="Options (Under development)"
               Margin="5 0">
         <md:PackIcon Kind="Cog" 
                      Height="20" Width="20"/>

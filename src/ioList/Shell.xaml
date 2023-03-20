@@ -17,32 +17,34 @@
         Height="600" Width="640"
         d:DataContext="{d:DesignInstance viewModels:ShellViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition Height="40"/>
-    </Grid.RowDefinitions>
-    
-    <md:Transitioner Grid.Row="0" 
-                     SelectedIndex="{Binding ViewIndex}"
-                     Margin="20 10">
-      <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
-        <views:StartupView />
-      </md:TransitioningContent>
-      <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
-        <views:EntryView />
-      </md:TransitioningContent>
-      <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
-        <views:ProcessingView />
-      </md:TransitioningContent>
-      <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
-        <views:CompleteView />
-      </md:TransitioningContent>
-      <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
-        <views:ErrorView />
-      </md:TransitioningContent>
-    </md:Transitioner>
-    
-    <views:FooterView Grid.Row="1"/>
-  </Grid>
+  <md:DialogHost DialogTheme="Inherit" Identifier="ShellHost">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="40" />
+      </Grid.RowDefinitions>
+
+      <md:Transitioner Grid.Row="0"
+                       SelectedIndex="{Binding ViewIndex}"
+                       Margin="20 10">
+        <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
+          <views:StartupView />
+        </md:TransitioningContent>
+        <md:TransitioningContent OpeningEffect="{md:TransitionEffect SlideInFromLeft}">
+          <views:EntryView />
+        </md:TransitioningContent>
+        <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
+          <views:ProcessingView />
+        </md:TransitioningContent>
+        <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
+          <views:CompleteView />
+        </md:TransitioningContent>
+        <md:TransitioningContent OpeningEffect="{md:TransitionEffect ExpandIn}">
+          <views:ErrorView />
+        </md:TransitioningContent>
+      </md:Transitioner>
+
+      <views:FooterView Grid.Row="1" />
+    </Grid>
+  </md:DialogHost>
 </Window>

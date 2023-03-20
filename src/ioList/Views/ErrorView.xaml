@@ -47,13 +47,13 @@
                   Margin="0 30 0 0"
                   HorizontalAlignment="Center">
         <Button Command="{Binding ReportIssueCommand}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Style="{StaticResource MaterialDesignOutlinedLightButton}"
                 Width="160"
                 Height="36"
                 Content="Report Issue"
                 Margin="10" />
         <Button Command="{Binding TryAgainCommand}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Style="{StaticResource MaterialDesignOutlinedLightButton}"
                 Width="160"
                 Height="36"
                 Content="Try Again"

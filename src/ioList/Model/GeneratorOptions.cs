@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using L5Sharp.Enums;
 
 namespace ioList.Model;
 
-public class Options
+public class GeneratorOptions
 {
     private const string FileName = "Options.json";
     
-    public Options()
+    public GeneratorOptions()
     {
         SearchForBuffers = true;
 
@@ -33,20 +34,18 @@ public class Options
     
     public List<string> BufferPatterns { get; set; }
     
+    [JsonIgnore]
     public List<Predicate<Point>> Filters { get; set; }
     
     
-    public static Options Load()
+    public static GeneratorOptions Load()
     {
         var file = new FileInfo(FileName);
 
-        if (file.Directory is not null && !file.Directory.Exists)
-            file.Directory.Create();
-
         if (!file.Exists)
-            File.WriteAllText(FileName, JsonSerializer.Serialize(new Options()));
+            File.WriteAllText(FileName, JsonSerializer.Serialize(new GeneratorOptions()));
 
-        return JsonSerializer.Deserialize<Options>(File.ReadAllText(FileName));
+        return JsonSerializer.Deserialize<GeneratorOptions>(File.ReadAllText(FileName));
     }
 
     public void Save() => File.WriteAllText(FileName, JsonSerializer.Serialize(this));

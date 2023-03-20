@@ -8,7 +8,9 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GongSolutions.Wpf.DragDrop;
+using ioList.Model;
 using ioList.Shared;
+using ioList.Views;
 using MaterialDesignThemes.Wpf;
 using Ookii.Dialogs.Wpf;
 using Squirrel;
@@ -18,12 +20,12 @@ namespace ioList.ViewModels
 {
     public partial class ShellViewModel : ObservableValidator, IDropTarget
     {
+        private readonly GeneratorOptions _options;
         private readonly ISnackbarMessageQueue _messageQueue;
-        private readonly EventLog _eventLog;
 
-        public ShellViewModel(ISnackbarMessageQueue messageQueue)
+        public ShellViewModel(GeneratorOptions options, ISnackbarMessageQueue messageQueue)
         {
-            _eventLog = new EventLog("Application", Environment.MachineName, "Application");
+            _options = options;
             _messageQueue = messageQueue;
             GetVersion();
         }
@@ -109,6 +111,20 @@ namespace ioList.ViewModels
             ViewIndex = 0;
         }
 
+        [RelayCommand]
+        private async Task OpenOptions()
+        {
+            var viewModel = new OptionsViewModel();
+            var view = new OptionsView { DataContext = viewModel };
+
+            var save = await DialogHost.Show(view, "ShellHost");
+
+            if (save is true)
+            {
+                _options.Save();
+            }
+        }
+
         [RelayCommand(CanExecute = nameof(CanGenerate))]
         private void Generate()
         {
@@ -116,6 +132,8 @@ namespace ioList.ViewModels
 
             Task.Run(() =>
             {
+                using var log = new EventLog("Application", Environment.MachineName, "Application");
+
                 try
                 {
                     if (!Directory.Exists(DestinationLocation))
@@ -129,7 +147,7 @@ namespace ioList.ViewModels
                 }
                 catch (Exception e)
                 {
-                    _eventLog.WriteEntry($"Processing failed with error message '{e.Message}'.",
+                    log.WriteEntry($"Processing failed with error message '{e.Message}'.",
                         EventLogEntryType.Error);
                     ErrorMessage = e.Message;
                     ViewIndex = 4;
@@ -186,21 +204,23 @@ namespace ioList.ViewModels
 
         private void GetVersion()
         {
+            using var log = new EventLog("Application", Environment.MachineName, "Application");
+
             try
             {
-                _eventLog.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to get current version.",
+                log.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to get current version.",
                     EventLogEntryType.Information);
 
                 using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
                 var installedVersion = manager.CurrentlyInstalledVersion();
 
-                _eventLog.WriteEntry($"Current installed version: {installedVersion}", EventLogEntryType.Information);
-                
+                log.WriteEntry($"Current installed version: {installedVersion}", EventLogEntryType.Information);
+
                 Version = installedVersion is not null ? installedVersion.ToString() : string.Empty;
             }
             catch (Exception e)
             {
-                _eventLog.WriteEntry($"Failed to get current version from Github with error message '{e.Message}'.",
+                log.WriteEntry($"Failed to get current version from Github with error message '{e.Message}'.",
                     EventLogEntryType.Error);
             }
         }
@@ -208,13 +228,15 @@ namespace ioList.ViewModels
         [RelayCommand]
         private void LaunchSite(string url)
         {
+            using var log = new EventLog("Application", Environment.MachineName, "Application");
+
             try
             {
                 Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
             }
             catch (Exception e)
             {
-                _eventLog.WriteEntry($"Unable to open site {url} due to error '{e.Message}'.", EventLogEntryType.Error);
+                log.WriteEntry($"Unable to open site {url} due to error '{e.Message}'.", EventLogEntryType.Error);
                 _messageQueue.Enqueue($"Unable to open site {url}");
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using ioList.Model;
 using ioList.ViewModels;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,7 @@ namespace ioList
             using (var eventLog = new EventLog("Application"))
             {
                 eventLog.Source = "Application";
-                eventLog.WriteEntry("ioList starting up...", EventLogEntryType.Information);
+                eventLog.WriteEntry("ioList Entered Startup.", EventLogEntryType.Information);
             }
 
             SquirrelAwareApp.HandleEvents(
@@ -52,10 +53,12 @@ namespace ioList
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
-            
+
+            services.AddSingleton(GeneratorOptions.Load());
             services.AddSingleton<ISnackbarMessageQueue, SnackbarMessageQueue>();
             services.AddTransient<ShellViewModel>();
             services.AddTransient<FooterViewModel>();
+            services.AddTransient<OptionsViewModel>();
 
             return services.BuildServiceProvider();
         }

@@ -34,7 +34,7 @@
                  Margin="10" />
 
       <Button Command="{Binding OpenInExplorerCommand}"
-              Style="{StaticResource MaterialDesignRaisedLightButton}"
+              Style="{StaticResource MaterialDesignOutlinedLightButton}"
               Width="160"
               Height="36"
               Content="Open In Explorer"

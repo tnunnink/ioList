@@ -56,7 +56,7 @@
                  Margin="10" />
 
       <Button Command="{x:Static md:Transitioner.MoveNextCommand}"
-              Style="{StaticResource MaterialDesignRaisedLightButton}"
+              Style="{StaticResource MaterialDesignOutlinedLightButton}"
               Width="160"
               Height="36"
               Content="New List"

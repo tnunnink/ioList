@@ -107,7 +107,7 @@
 
       <Button Content="Generate"
               Height="32" Width="120"
-              Style="{StaticResource MaterialDesignRaisedSecondaryButton}"
+              Style="{StaticResource MaterialDesignOutlinedSecondaryButton}"
               Command="{Binding GenerateCommand}"
               Margin="0 40 0 0" />
     </StackPanel>
