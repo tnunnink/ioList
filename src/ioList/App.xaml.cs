@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using ioList.Model;
+using ioList.Entities;
 using ioList.ViewModels;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,12 +53,11 @@ namespace ioList
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
-
-            services.AddSingleton(GeneratorOptions.Load());
+            
             services.AddSingleton<ISnackbarMessageQueue, SnackbarMessageQueue>();
             services.AddTransient<ShellViewModel>();
             services.AddTransient<FooterViewModel>();
-            services.AddTransient<OptionsViewModel>();
+            services.AddTransient<ConfigurationViewModel>();
 
             return services.BuildServiceProvider();
         }

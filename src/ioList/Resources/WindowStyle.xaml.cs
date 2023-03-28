@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ioList.Styles
+namespace ioList.Resources
 {
     public partial class WindowStyles
     {

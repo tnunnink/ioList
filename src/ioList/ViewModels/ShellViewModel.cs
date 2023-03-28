@@ -8,9 +8,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GongSolutions.Wpf.DragDrop;
-using ioList.Model;
-using ioList.Shared;
-using ioList.Views;
+using ioList.Generation;
 using MaterialDesignThemes.Wpf;
 using Ookii.Dialogs.Wpf;
 using Squirrel;
@@ -20,12 +18,10 @@ namespace ioList.ViewModels
 {
     public partial class ShellViewModel : ObservableValidator, IDropTarget
     {
-        private readonly GeneratorOptions _options;
         private readonly ISnackbarMessageQueue _messageQueue;
 
-        public ShellViewModel(GeneratorOptions options, ISnackbarMessageQueue messageQueue)
+        public ShellViewModel(ISnackbarMessageQueue messageQueue)
         {
-            _options = options;
             _messageQueue = messageQueue;
             GetVersion();
         }
@@ -111,20 +107,6 @@ namespace ioList.ViewModels
             ViewIndex = 0;
         }
 
-        [RelayCommand]
-        private async Task OpenOptions()
-        {
-            var viewModel = new OptionsViewModel();
-            var view = new OptionsView { DataContext = viewModel };
-
-            var save = await DialogHost.Show(view, "ShellHost");
-
-            if (save is true)
-            {
-                _options.Save();
-            }
-        }
-
         [RelayCommand(CanExecute = nameof(CanGenerate))]
         private void Generate()
         {
@@ -136,12 +118,16 @@ namespace ioList.ViewModels
 
                 try
                 {
+                    /*//todo inject into generator
+                    var config = GeneratorConfig.Load();*/
+                    
                     if (!Directory.Exists(DestinationLocation))
                         Directory.CreateDirectory(DestinationLocation);
 
                     var destination = Path.Combine(DestinationLocation, $"{DestinationName}.csv");
 
-                    Generator.Generate(SourceFile, destination);
+                    var generator = new Generator(SourceFile, destination, new GeneratorConfig());
+                    generator.Generate();
 
                     ViewIndex++;
                 }

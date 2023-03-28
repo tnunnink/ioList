@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using LambdaConverters;
 
-namespace ioList.Shared
+namespace ioList.Resources
 {
     public static class Converters
     {

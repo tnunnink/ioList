@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="ioList.Views.ConfigurationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="12"
+             FontFamily="{md:MaterialDesignFont}"
+             Height="500" Width="440"
+             d:DataContext="{d:DesignInstance viewModels:ConfigurationViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d">
+  <md:Card>
+    <DockPanel>
+      <md:ColorZone DockPanel.Dock="Bottom"
+                    Height="50"
+                    BorderThickness="0 1 0 0">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="10 0">
+          <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                  Style="{StaticResource MaterialDesignOutlinedSecondaryLightButton}"
+                  Content="Save"
+                  Width="80" Height="30"
+                  Margin="10 0">
+            <Button.CommandParameter>
+              <system:Boolean>true</system:Boolean>
+            </Button.CommandParameter>
+          </Button>
+          <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                  Content="Cancel"
+                  Style="{StaticResource MaterialDesignOutlinedLightButton}"
+                  Width="80" Height="30">
+            <Button.CommandParameter>
+              <system:Boolean>false</system:Boolean>
+            </Button.CommandParameter>
+          </Button>
+        </StackPanel>
+      </md:ColorZone>
+      <TabControl
+        Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+        md:ElevationAssist.Elevation="Dp1">
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Width="auto" Height="auto">
+              <md:PackIcon
+                Width="20"
+                Height="20"
+                Margin="0 0 0 5"
+                HorizontalAlignment="Center"
+                Kind="Cog" />
+              <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="14"
+                Text="General" />
+            </StackPanel>
+          </TabItem.Header>
+          <TextBlock
+            Margin="8"
+            Text="General Options" />
+        </TabItem>
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Width="auto" Height="auto">
+              <md:PackIcon
+                Width="20"
+                Height="20"
+                Margin="0 0 0 5"
+                HorizontalAlignment="Center"
+                Kind="Layers" />
+              <TextBlock
+                FontSize="14"
+                HorizontalAlignment="Center"
+                Text="Buffers" />
+            </StackPanel>
+          </TabItem.Header>
+          <TextBlock
+            Margin="8"
+            Text="PrimaryLight Tab 1" />
+        </TabItem>
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Width="auto" Height="auto">
+              <md:PackIcon
+                Width="20"
+                Height="20"
+                Margin="0 0 0 5"
+                HorizontalAlignment="Center"
+                Kind="Filter" />
+              <TextBlock
+                FontSize="14"
+                HorizontalAlignment="Center"
+                Text="Filters" />
+            </StackPanel>
+          </TabItem.Header>
+          <TextBlock
+            Margin="8"
+            Text="PrimaryLight Tab 2" />
+        </TabItem>
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Width="auto" Height="auto">
+              <md:PackIcon
+                Width="24"
+                Height="24"
+                Margin="0 0 0 5"
+                HorizontalAlignment="Center"
+                Kind="TableColumn" />
+              <TextBlock
+                FontSize="14"
+                HorizontalAlignment="Center"
+                Text="Columns" />
+            </StackPanel>
+          </TabItem.Header>
+          <TextBlock
+            Margin="8"
+            Text="PrimaryLight Tab 2" />
+        </TabItem>
+      </TabControl>
+    </DockPanel>
+
+  </md:Card>
+
+</UserControl>

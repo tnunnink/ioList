@@ -1,13 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using L5Sharp;
 using L5Sharp.Components;
 using L5Sharp.Core;
 
-namespace ioList.Model
+namespace ioList.Entities
 {
-    public class Point
+    public class DeviceTag
     {
-        public Point(Module module, ILogixTag member, string type)
+        public DeviceTag(Module module, ILogixTag member, string type)
         {
             Module = module.Name;
             Parent = module.ParentModule;
@@ -19,6 +20,7 @@ namespace ioList.Model
             Comment = member.Description;
             Unit = member is TagMember m ? m.Unit : string.Empty;
 
+            //todo would like to make this configurable as I imagine not all analogs have the same member names.
             var parent = member.TagName.Members.ElementAt(member.TagName.Depth - 1);
             High = module.Config?.Member($"{parent}.HighEngineering")?.Value?.ToString();
             Low = module.Config?.Member($"{parent}.LowEngineering")?.Value?.ToString();
@@ -35,7 +37,9 @@ namespace ioList.Model
         public string Unit { get; set; }
         public string High { get; set; }
         public string Low { get; set; }
-        public BufferTag Buffer { get; set; } = default;
+        public List<NeutralText> References { get; set; } = new();
+        public string BufferTag { get; set; } = string.Empty;
+        public string BufferDescription { get; set; } = string.Empty;
         public string Initials { get; set; } = string.Empty;
         public string Date { get; set; } = string.Empty;
         public string Notes { get; set; } = string.Empty;

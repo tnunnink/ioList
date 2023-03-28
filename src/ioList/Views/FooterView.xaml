@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:ioList="clr-namespace:ioList"
-             xmlns:shared="clr-namespace:ioList.Shared"
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:shared="clr-namespace:ioList.Resources"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
              FontFamily="{md:MaterialDesignFont}"
-             d:DataContext="{d:DesignInstance viewModels:FooterViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance viewModels:FooterViewModel}"
              mc:Ignorable="d"
              d:DesignWidth="1000">
 
@@ -68,6 +68,7 @@
                      Height="20" Width="20"/>
       </Button>
       <Button Style="{StaticResource MaterialDesignToolButton}"
+              Command="{Binding OpenConfigurationCommand}"
               ToolTip="Options (Under development)"
               Margin="5 0">
         <md:PackIcon Kind="Cog" 

@@ -16,8 +16,9 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
         <PackageReference Include="CsvHelper" Version="27.1.1" />
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
-        <PackageReference Include="L5Sharp" Version="0.9.1" />
+        <PackageReference Include="L5Sharp" Version="0.9.2" />
         <PackageReference Include="LambdaConverters" Version="4.0.0" />
+        <PackageReference Include="LinqKit.Core" Version="1.2.4" />
         <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="7.0.0" />

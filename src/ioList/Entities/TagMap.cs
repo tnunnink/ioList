@@ -1,11 +1,11 @@
 ﻿using CsvHelper.Configuration;
 
-namespace ioList.Model
+namespace ioList.Entities
 {
     // ReSharper disable once InconsistentNaming
-    public sealed class PointMap : ClassMap<Point>
+    public sealed class TagMap : ClassMap<DeviceTag>
     {
-        public PointMap()
+        public TagMap()
         {
             Map(m => m.Module).Index(0).Name("Module");
             Map(m => m.Catalog).Index(1).Name("Catalog");
@@ -18,8 +18,8 @@ namespace ioList.Model
             Map(m => m.Unit).Index(8).Name("Units");
             Map(m => m.High).Index(9).Name("High");
             Map(m => m.Low).Index(10).Name("Low");
-            Map(m => m.Buffer.TagName).Index(11).Name("Buffer Tag");
-            Map(m => m.Buffer.Description).Index(12).Name("Buffer Description");
+            Map(m => m.BufferTag).Index(11).Name("Buffer Tag");
+            Map(m => m.BufferDescription).Index(12).Name("Buffer Description");
             Map(m => m.Initials).Index(13).Name("Initials");
             Map(m => m.Date).Index(14).Name("Date");
             Map(m => m.Notes).Index(15).Name("Notes");

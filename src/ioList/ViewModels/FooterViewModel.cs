@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ioList.Entities;
+using ioList.Generation;
+using ioList.Views;
 using MaterialDesignThemes.Wpf;
 using Squirrel;
 using Squirrel.Sources;
@@ -13,11 +16,9 @@ namespace ioList.ViewModels
     public partial class FooterViewModel : ObservableObject
     {
         private readonly TaskNotifier _loadTask;
-        private readonly EventLog _eventLog;
 
         public FooterViewModel(ISnackbarMessageQueue messageQueue)
         {
-            _eventLog = new EventLog("Application", Environment.MachineName, "Application");
             _messageQueue = messageQueue;
             LoadTask = CheckForUpdates();
         }
@@ -27,34 +28,35 @@ namespace ioList.ViewModels
         [ObservableProperty] private string _updateText;
 
         [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(PerformUpdateCommand))]
-        private bool _updateAvailable = false;
+        private bool _updateAvailable;
 
 
         private Task LoadTask
         {
-            get => _loadTask;
             init => SetPropertyAndNotifyOnCompletion(ref _loadTask, value);
         }
 
         [RelayCommand]
         private async Task CheckForUpdates()
         {
+            using var log = new EventLog("Application", Environment.MachineName, "Application");
+            
             try
             {
-                _eventLog.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to check for updates.",
+                log.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to check for updates.",
                     EventLogEntryType.Information);
 
                 using var manager = new UpdateManager(new GithubSource(App.RepositoryUrl, string.Empty, false));
 
                 if (!manager.IsInstalledApp) return;
 
-                _eventLog.WriteEntry("Checking for updates.", EventLogEntryType.Information);
+                log.WriteEntry("Performing checking for updates.", EventLogEntryType.Information);
 
                 var updates = await manager.CheckForUpdate();
 
                 if (updates is null) return;
 
-                _eventLog.WriteEntry($"{updates.ReleasesToApply.Count} New Releases Found.",
+                log.WriteEntry($"{updates.ReleasesToApply.Count} New Releases Found.",
                     EventLogEntryType.Information);
 
                 UpdateAvailable = updates.ReleasesToApply.Count > 0;
@@ -66,7 +68,7 @@ namespace ioList.ViewModels
             }
             catch (Exception e)
             {
-                _eventLog.WriteEntry($"Failed to perform check for updates with error '{e.Message}'.",
+                log.WriteEntry($"Failed to perform check for updates with error '{e.Message}'.",
                     EventLogEntryType.Error);
 
                 MessageQueue.Enqueue("Unable to contact Github to find new updates.");
@@ -76,7 +78,9 @@ namespace ioList.ViewModels
         [RelayCommand(CanExecute = nameof(CanExecuteUpdateCommand))]
         private async Task PerformUpdate()
         {
-            _eventLog.WriteEntry("Starting application update.", EventLogEntryType.Information);
+            using var log = new EventLog("Application", Environment.MachineName, "Application");
+            
+            log.WriteEntry("Starting application update.", EventLogEntryType.Information);
 
             UpdateText = "Updating application. Once complete the app will restart.";
 
@@ -90,7 +94,7 @@ namespace ioList.ViewModels
             }
             catch (Exception e)
             {
-                _eventLog.WriteEntry($"Failed to perform application update with error '{e.Message}'.",
+                log.WriteEntry($"Failed to perform application update with error '{e.Message}'.",
                     EventLogEntryType.Error);
 
                 MessageQueue.Enqueue("Application update failed. Check the Windows Event Log for more info.");
@@ -98,17 +102,31 @@ namespace ioList.ViewModels
         }
 
         private bool CanExecuteUpdateCommand() => UpdateAvailable;
+        
+        [RelayCommand]
+        private static async Task OpenConfiguration()
+        {
+            var config = new GeneratorConfig();
+            var viewModel = new ConfigurationViewModel(config);
+            var view = new ConfigurationView { DataContext = viewModel };
+
+            var save = await DialogHost.Show(view, "ShellHost");
+
+            /*config.Save();*/
+        }
 
         [RelayCommand]
         private void LaunchSite(string url)
         {
+            using var log = new EventLog("Application", Environment.MachineName, "Application");
+            
             try
             {
                 Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
             }
             catch (Exception e)
             {
-                _eventLog.WriteEntry($"Unable to open site {url} due to error '{e.Message}'.", EventLogEntryType.Error);
+                log.WriteEntry($"Unable to open site {url} due to error '{e.Message}'.", EventLogEntryType.Error);
                 MessageQueue.Enqueue($"Unable to open site {url}");
             }
         }
