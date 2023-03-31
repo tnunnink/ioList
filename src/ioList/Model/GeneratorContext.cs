@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ioList.Entities;
+using System.Data;
 using L5Sharp;
 
-namespace ioList.Generation;
+namespace ioList.Model;
 
 public class GeneratorContext
 {
@@ -19,4 +19,5 @@ public class GeneratorContext
     public LogixContent Content { get; }
     public GeneratorConfig Config { get; }
     public List<DeviceTag> Tags { get; set; }
+    public DataTable Table { get; set; }
 }

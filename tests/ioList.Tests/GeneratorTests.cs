@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using ioList.Generation;
+using ioList.Model;
 using NUnit.Framework;
 
 namespace ioList.Tests;
@@ -8,7 +9,7 @@ namespace ioList.Tests;
 [TestFixture]
 public class GeneratorTests
 {
-    private const string TestFile = @"C:\Users\tnunnink\Local\Tests\L5X\MVTF.L5X";
+    private const string TestFile = @"C:\Users\tnunnink\Local\Tests\L5X\Template.L5X";
     private const string TestDestination = @"C:\Users\tnunnink\Local\Tests\L5X\Output\IOList.csv";
 
     [Test]

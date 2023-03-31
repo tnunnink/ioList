@@ -1,4 +1,6 @@
-﻿namespace ioList.Generation.Steps;
+﻿using ioList.Model;
+
+namespace ioList.Generation.Steps;
 
 public interface IGeneratorStep
 {

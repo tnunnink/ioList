@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="ioList.Views.ConfigFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="12"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{md:MaterialDesignFont}"
+             MaxWidth="300"
+             d:DataContext="{d:DesignInstance viewModels:ConfigFilterViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+  <DockPanel Margin="20">
+    <StackPanel DockPanel.Dock="Bottom"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="10 20 10 0">
+      <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
+              CommandParameter="{Binding}"
+              Content="{Binding ButtonText}"
+              IsDefault="True"
+              Style="{StaticResource MaterialDesignOutlinedSecondaryLightButton}"
+              Width="100" Height="30"
+              Margin="10 0">
+      </Button>
+      <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
+              CommandParameter="{x:Null}"
+              IsCancel="True"
+              Content="Cancel"
+              Style="{StaticResource MaterialDesignOutlinedLightButton}"
+              Width="100" Height="30">
+      </Button>
+    </StackPanel>
+
+    <Grid DockPanel.Dock="Top"
+          Margin="0 0 0 10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <StackPanel Grid.Row="0"
+                  Margin="10 0 10 10">
+        <TextBlock Text="Tag Filter"
+                   FontWeight="Bold"
+                   FontSize="14"
+                   Margin="0 0 0 5" />
+        <TextBlock Text="Specify the following options to configure the tag filter."
+                   TextWrapping="Wrap"
+                   Opacity="0.6" />
+      </StackPanel>
+
+      <ComboBox Grid.Row="1"
+                md:HintAssist.Hint="Property"
+                ItemsSource="{Binding PropertyNames}"
+                SelectedItem="{Binding PropertyName}"
+                MaxDropDownHeight="180"
+                Margin="10" />
+      <ComboBox Grid.Row="2"
+                md:HintAssist.Hint="Condition"
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding Conditions}"
+                SelectedItem="{Binding Condition, Mode=TwoWay}"
+                MaxDropDownHeight="180"
+                Margin="10" />
+      <TextBox Grid.Row="3"
+               md:HintAssist.Hint="Value"
+               Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+               Margin="10" 
+               Visibility="{Binding ValueVisible}"/>
+    </Grid>
+  </DockPanel>
+</UserControl>

@@ -1,8 +1,9 @@
-﻿using L5Sharp.Enums;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using L5Sharp.Enums;
 
-namespace ioList.Entities;
+namespace ioList.Model;
 
-public class BufferPattern
+public partial class BufferPattern : ObservableObject
 {
     public BufferPattern()
     {
@@ -29,7 +30,15 @@ public class BufferPattern
         BufferOrdinal = bufferOrdinal;
     }
 
-    public string ReferenceKey { get; set; }
-    public string BufferKey { get; set; }
-    public int BufferOrdinal { get; set; }
+    [ObservableProperty]
+    private bool _enabled = true;
+    
+    [ObservableProperty]
+    private string _referenceKey;
+    
+    [ObservableProperty]
+    private string _bufferKey;
+    
+    [ObservableProperty]
+    private int _bufferOrdinal;
 }

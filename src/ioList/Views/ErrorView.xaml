@@ -28,7 +28,7 @@
                  VerticalAlignment="Center"
                  HorizontalAlignment="Center" />
       <TextBlock
-        Text="Boo! Check the generated exception below. If you believe this is a bug in the application, feel free to report it."
+        Text="Check the generated exception below. If you believe this is a bug in the application, feel free to report it."
         TextWrapping="Wrap"
         TextAlignment="Center"
         VerticalAlignment="Center"

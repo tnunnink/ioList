@@ -6,81 +6,75 @@
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:views="clr-namespace:ioList.Views"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="12"
              FontFamily="{md:MaterialDesignFont}"
-             Height="500" Width="440"
+             Height="500" Width="600"
              d:DataContext="{d:DesignInstance viewModels:ConfigurationViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
-  <md:Card>
+  <md:DialogHost DialogTheme="Inherit" Identifier="ConfigHost">
     <DockPanel>
-      <md:ColorZone DockPanel.Dock="Bottom"
-                    Height="50"
-                    BorderThickness="0 1 0 0">
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right"
+      <Border DockPanel.Dock="Bottom"
+              Height="50"
+              BorderThickness="0 1 0 0"
+              Background="{StaticResource MaterialDesignDarkBackground}"
+              BorderBrush="{DynamicResource MaterialDesignDivider }">
+        <Grid>
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Left"
+                      Margin="20 0">
+            <Button Command="{Binding}"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    ToolTip="Export/Import Configuration (Coming Soon)"
+                    Height="30" Width="30">
+              <md:PackIcon Kind="ImportExport" />
+            </Button>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal"
+                      HorizontalAlignment="Right"
+                      Margin="10 0">
+            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedSecondaryLightButton}"
+                    Content="Save"
+                    Width="80" Height="30"
                     Margin="10 0">
-          <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
-                  Style="{StaticResource MaterialDesignOutlinedSecondaryLightButton}"
-                  Content="Save"
-                  Width="80" Height="30"
-                  Margin="10 0">
-            <Button.CommandParameter>
-              <system:Boolean>true</system:Boolean>
-            </Button.CommandParameter>
-          </Button>
-          <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
-                  Content="Cancel"
-                  Style="{StaticResource MaterialDesignOutlinedLightButton}"
-                  Width="80" Height="30">
-            <Button.CommandParameter>
-              <system:Boolean>false</system:Boolean>
-            </Button.CommandParameter>
-          </Button>
-        </StackPanel>
-      </md:ColorZone>
+              <Button.CommandParameter>
+                <system:Boolean>true</system:Boolean>
+              </Button.CommandParameter>
+            </Button>
+            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                    Content="Cancel"
+                    Style="{StaticResource MaterialDesignOutlinedLightButton}"
+                    Width="80" Height="30">
+              <Button.CommandParameter>
+                <system:Boolean>false</system:Boolean>
+              </Button.CommandParameter>
+            </Button>
+          </StackPanel>
+        </Grid>
+
+      </Border>
       <TabControl
-        Style="{StaticResource MaterialDesignNavigationRailTabControl}"
-        md:ElevationAssist.Elevation="Dp1">
+        Style="{StaticResource MaterialDesignNavigationRailTabControl}">
         <TabItem>
           <TabItem.Header>
             <StackPanel Width="auto" Height="auto">
               <md:PackIcon
-                Width="20"
-                Height="20"
+                Width="24"
+                Height="24"
                 Margin="0 0 0 5"
                 HorizontalAlignment="Center"
-                Kind="Cog" />
-              <TextBlock
-                HorizontalAlignment="Center"
-                FontSize="14"
-                Text="General" />
-            </StackPanel>
-          </TabItem.Header>
-          <TextBlock
-            Margin="8"
-            Text="General Options" />
-        </TabItem>
-        <TabItem>
-          <TabItem.Header>
-            <StackPanel Width="auto" Height="auto">
-              <md:PackIcon
-                Width="20"
-                Height="20"
-                Margin="0 0 0 5"
-                HorizontalAlignment="Center"
-                Kind="Layers" />
+                Kind="TableColumn" />
               <TextBlock
                 FontSize="14"
                 HorizontalAlignment="Center"
-                Text="Buffers" />
+                Text="Columns" />
             </StackPanel>
           </TabItem.Header>
-          <TextBlock
-            Margin="8"
-            Text="PrimaryLight Tab 1" />
+          <views:ConfigColumnsView />
         </TabItem>
         <TabItem>
           <TabItem.Header>
@@ -97,32 +91,43 @@
                 Text="Filters" />
             </StackPanel>
           </TabItem.Header>
-          <TextBlock
-            Margin="8"
-            Text="PrimaryLight Tab 2" />
+          <views:ConfigFiltersView />
         </TabItem>
         <TabItem>
           <TabItem.Header>
             <StackPanel Width="auto" Height="auto">
               <md:PackIcon
-                Width="24"
-                Height="24"
+                Width="20"
+                Height="20"
                 Margin="0 0 0 5"
                 HorizontalAlignment="Center"
-                Kind="TableColumn" />
+                Kind="Layers" />
               <TextBlock
                 FontSize="14"
                 HorizontalAlignment="Center"
-                Text="Columns" />
+                Text="Buffers" />
             </StackPanel>
           </TabItem.Header>
-          <TextBlock
-            Margin="8"
-            Text="PrimaryLight Tab 2" />
+          <views:ConfigBuffersView />
+        </TabItem>
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Width="auto" Height="auto">
+              <md:PackIcon
+                Width="20"
+                Height="20"
+                Margin="0 0 0 5"
+                HorizontalAlignment="Center"
+                Kind="Wrench" />
+              <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="14"
+                Text="Options" />
+            </StackPanel>
+          </TabItem.Header>
+          <views:ConfigOptionsView />
         </TabItem>
       </TabControl>
     </DockPanel>
-
-  </md:Card>
-
+  </md:DialogHost>
 </UserControl>

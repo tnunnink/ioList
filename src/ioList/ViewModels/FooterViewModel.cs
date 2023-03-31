@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ioList.Entities;
-using ioList.Generation;
+using ioList.Model;
 using ioList.Views;
 using MaterialDesignThemes.Wpf;
 using Squirrel;
@@ -40,7 +39,7 @@ namespace ioList.ViewModels
         private async Task CheckForUpdates()
         {
             using var log = new EventLog("Application", Environment.MachineName, "Application");
-            
+
             try
             {
                 log.WriteEntry($"Connecting to repository at {App.RepositoryUrl} to check for updates.",
@@ -79,7 +78,7 @@ namespace ioList.ViewModels
         private async Task PerformUpdate()
         {
             using var log = new EventLog("Application", Environment.MachineName, "Application");
-            
+
             log.WriteEntry("Starting application update.", EventLogEntryType.Information);
 
             UpdateText = "Updating application. Once complete the app will restart.";
@@ -102,24 +101,27 @@ namespace ioList.ViewModels
         }
 
         private bool CanExecuteUpdateCommand() => UpdateAvailable;
-        
+
         [RelayCommand]
         private static async Task OpenConfiguration()
         {
-            var config = new GeneratorConfig();
+            var config = await Task.Run(GeneratorConfig.Load);
             var viewModel = new ConfigurationViewModel(config);
             var view = new ConfigurationView { DataContext = viewModel };
 
             var save = await DialogHost.Show(view, "ShellHost");
 
-            /*config.Save();*/
+            if (save is true)
+            {
+                config.Save();
+            }
         }
 
         [RelayCommand]
         private void LaunchSite(string url)
         {
             using var log = new EventLog("Application", Environment.MachineName, "Application");
-            
+
             try
             {
                 Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });

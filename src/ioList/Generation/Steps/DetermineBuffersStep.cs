@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using ioList.Model;
 using L5Sharp.Components;
-using L5Sharp.Extensions;
 
 namespace ioList.Generation.Steps;
 
@@ -14,19 +14,24 @@ public class DetermineBuffersStep : IGeneratorStep
 
         foreach (var tag in context.Tags)
         {
+            if (tag.TagName == "IO_INJ_FLEX:4:O.Ch00.Data")
+            {
+                
+            }
             if (tag.References.Count == 0) continue;
 
             foreach (var reference in tag.References)
             {
-                foreach (var pattern in context.Config.Patterns)
+                foreach (var pattern in context.Config.Patterns.Where(p => p.Enabled))
                 {
-                    if (!reference.OperandsByKey(pattern.ReferenceKey).Any()) continue;
+                    if (!reference.SplitByKey(pattern.ReferenceKey).Any(t => t.ContainsTag(tag.TagName))) continue;
 
-                    var bufferReference = reference.OperandsByKey(pattern.BufferKey).FirstOrDefault().Value;
+                    var operands = reference.SplitByKey(pattern.BufferKey).FirstOrDefault()?.Operands().ToList();
 
-                    if (bufferReference is null) continue;
-                    
-                    var buffer = bufferReference.ElementAt(pattern.BufferOrdinal);
+                    if (operands is null || pattern.BufferOrdinal < 0 || pattern.BufferOrdinal >= operands.Count) 
+                        continue;
+
+                    var buffer = operands[pattern.BufferOrdinal];
 
                     if (!tagLookup.Contains(buffer)) continue;
 

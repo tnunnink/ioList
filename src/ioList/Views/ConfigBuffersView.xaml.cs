@@ -2,9 +2,9 @@
 
 namespace ioList.Views;
 
-public partial class ConfigGeneralView : UserControl
+public partial class ConfigBuffersView : UserControl
 {
-    public ConfigGeneralView()
+    public ConfigBuffersView()
     {
         InitializeComponent();
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ioList.Entities;
 using ioList.Generation.Steps;
+using ioList.Model;
 
 namespace ioList.Generation;
 
@@ -25,7 +25,8 @@ public class Generator
 
         if (_context.Config.Filters.Any())
             _steps.Add(new ApplyFiltersStep());
-
+        
+        _steps.Add(new CreateTableStep());
         _steps.Add(new WriteCsvStep());
     }
 

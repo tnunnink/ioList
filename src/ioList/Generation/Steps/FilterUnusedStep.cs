@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ioList.Model;
 
 namespace ioList.Generation.Steps;
 

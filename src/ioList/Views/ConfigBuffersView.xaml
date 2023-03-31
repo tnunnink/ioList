@@ -1,0 +1,190 @@
+﻿<UserControl x:Class="ioList.Views.ConfigBuffersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:ioList.ViewModels"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="12"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{md:MaterialDesignFont}"
+             d:DataContext="{d:DesignInstance viewModels:ConfigurationViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="500">
+
+  <ScrollViewer md:ScrollViewerAssist.IsAutoHideEnabled="True">
+    <Grid Margin="10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Border Grid.Row="0"
+              Padding="10"
+              BorderThickness="0 0 0 1"
+              BorderBrush="{DynamicResource MaterialDesignDivider}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+
+          <StackPanel Grid.Column="0">
+            <TextBlock Text="Find Buffer Tags"
+                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       FontSize="14" />
+            <TextBlock
+              Text="When enabled, will search the L5X for references to IO tags in attempt to locate a buffer tag reference, or a tag in which the IO is getting mapped into."
+              Style="{StaticResource MaterialDesignCaptionTextBlock}"
+              Opacity="0.5"
+              FontSize="12"
+              TextWrapping="Wrap" />
+          </StackPanel>
+
+          <ToggleButton Grid.Column="2"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding Config.FindBuffers}"
+                        Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
+        </Grid>
+      </Border>
+
+      <Border Grid.Row="1"
+              Padding="10"
+              BorderThickness="0 0 0 1"
+              BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}"
+              md:ElevationAssist.Elevation="Dp2">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+
+          <StackPanel Grid.Column="0">
+            <TextBlock Text="Buffer Patterns"
+                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                       FontSize="14" />
+            <TextBlock
+              Text="Configure patters for which to determine what logic instruction(s) represent valid buffer instructions in your L5X."
+              Style="{StaticResource MaterialDesignCaptionTextBlock}"
+              Opacity="0.5"
+              FontSize="12"
+              TextWrapping="Wrap" />
+          </StackPanel>
+
+          <Button Grid.Column="2"
+                  Command="{Binding AddBufferCommand}"
+                  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                  HorizontalAlignment="Right"
+                  Height="26" Width="26"
+                  ToolTip="Add Buffer">
+            <md:PackIcon
+              Width="20"
+              Height="20"
+              Kind="Plus" />
+          </Button>
+        </Grid>
+      </Border>
+
+      <ItemsControl Grid.Row="2"
+                    Grid.IsSharedSizeScope="True"
+                    HorizontalContentAlignment="Stretch"
+                    ItemsSource="{Binding Config.Patterns}"
+                    BorderThickness="0 0 0 1"
+                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                    Padding="2">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border
+              x:Name="Border"
+              BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}"
+              Padding="5"
+              BorderThickness="0,0,0,1">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ToggleButton Grid.Column="0"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding Enabled}"
+                              Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
+                              Margin="5 0 10 0" />
+
+                <StackPanel Grid.Column="1"
+                            Margin="10,0">
+                  <TextBlock
+                    Text="Reference"
+                    FontWeight="Normal"
+                    Opacity="0.6"
+                    Margin="0,0,0,3"/>
+                  <TextBlock
+                    FontWeight="Bold"
+                    Text="{Binding ReferenceKey}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2"
+                            Margin="10,0">
+                  <TextBlock
+                    Text="Buffer"
+                    FontWeight="Normal"
+                    Opacity="0.6"
+                    Margin="0,0,0,3" />
+                  <TextBlock
+                    FontWeight="Bold"
+                    Text="{Binding BufferKey}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="3"
+                            Margin="10,0">
+                  <TextBlock
+                    Text="Ordinal"
+                    FontWeight="Normal"
+                    Opacity="0.6"
+                    Margin="0,0,0,3" />
+                  <TextBlock
+                    FontWeight="Bold"
+                    Text="{Binding BufferOrdinal}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="5"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                  <Button
+                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.EditBufferCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignToolButton}"
+                    ToolTip="Edit Buffer"
+                    Height="30" Width="30">
+                    <md:PackIcon Kind="Edit"
+                                 Height="20"
+                                 Width="20" />
+                  </Button>
+                  <Button
+                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.RemoveBufferCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignToolButton}"
+                    ToolTip="Remove Buffer"
+                    Height="30" Width="30">
+                    <md:PackIcon Kind="Delete"
+                                 Height="20"
+                                 Width="20" />
+                  </Button>
+                </StackPanel>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Grid>
+  </ScrollViewer>
+</UserControl>

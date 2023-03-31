@@ -13,6 +13,7 @@ using MaterialDesignThemes.Wpf;
 using Ookii.Dialogs.Wpf;
 using Squirrel;
 using Squirrel.Sources;
+using GeneratorConfig = ioList.Model.GeneratorConfig;
 
 namespace ioList.ViewModels
 {
@@ -118,15 +119,14 @@ namespace ioList.ViewModels
 
                 try
                 {
-                    /*//todo inject into generator
-                    var config = GeneratorConfig.Load();*/
+                    var config = GeneratorConfig.Load();
                     
                     if (!Directory.Exists(DestinationLocation))
                         Directory.CreateDirectory(DestinationLocation);
 
                     var destination = Path.Combine(DestinationLocation, $"{DestinationName}.csv");
 
-                    var generator = new Generator(SourceFile, destination, new GeneratorConfig());
+                    var generator = new Generator(SourceFile, destination, config);
                     generator.Generate();
 
                     ViewIndex++;
