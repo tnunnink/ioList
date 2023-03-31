@@ -28,6 +28,57 @@ The application is very simple as of now. The high level steps are as follows:
 3. Click **Generate** to start the process of extracting the IO list from the L5X. 
 4. Once complete, click **Open In Explorer** to open the directory in which the csv was generated.
 
+## Configuration
+Version 0.2.0 of the application adds a configuration interface that allows you to control
+what the output looks like. The following sections explain how the application can be configured.
+To open the configuration interface, click the cog icon in the bottom left of the application.
+
+### Columns
+On the `Columns` tab you can configure which columns get output, change the names of any 
+pre-existing or new column, and add new meta data columns that you want output by default.
+This saves you the step of manually performing this task each time you generate a new list.
+
+#### Edit Column Name
+To edit the name of a default or custom column, click the edit icon on the row that you
+want to change. You will see the following interface that will allow you to change the name
+or the column.
+
+![image](/docs/EditColumn.png)
+
+![image](/docs/EditColumnName.png)
+
+#### Disable Column
+To disable or prevent the column from being written to the output CSV file, click the 
+toggle button on any column to disable it like shown here.
+
+![image](/docs/DisableColumn.png)
+
+#### Add Custom Column
+To add a new column, click the plus action icon button on the top right. 
+This will launch the an interface that allows you to specify the name of the column.
+
+![image](/docs/AddColumn.png)
+
+#### Delete Custom Column
+To delete a custom column, click the trash icon on the column to remove it from the list.
+
+![image](/docs/RemoveColumn.png)
+
+### Filters
+On the `Filters` tab you can configure which how the application will filter IO tags. 
+
+First, you can specify whether or not to filter unused tags, which will remove tag
+that are not used within the logic of the project from the output list.
+
+Second, you can specify custom filters that allow you to further specify which 
+tags to remove from the list. The following sections explain how to configure custom filters.
+
+#### Add Custom Filter
+To add a custom filter, click the plus action icon button on the top right. 
+This will launch the tag filter popup which allows you to select a property,
+condition, and value for which to filter the IO tags.
+
+
 ## Screenshots
 
 #### Startup Page
@@ -44,22 +95,3 @@ The application is very simple as of now. The high level steps are as follows:
 
 #### Complete Page
 ![image](/docs/Complete.png)
-
-## Future
-At some point I plan on adding the ability to configure a few things related to how
-the application generates the csv file. Right now, the application will automatically
-try to find references to the IO tags within the project that have 
-MOV or XIC/OTE XIO/OTE signatures. The idea is that this identifies the buffered IO
-that is actually used within the project. The generated file will only output
-IO that has references of these predefined patterns. This helps filter the list 
-significantly to IO that is likely of interest.
-
-At some point I will add the ability to configure whether to actually look for "Buffer"
-tags, and if so which patters to look for (other than the configured defaults.)
-
-I also plan on adding some simple configurable filters for automatically filtering the
-generated output based on rules you define. For example you may wat to filter out certain
-tag names that don't represent "IO" you care about. Or you may want to filter uncommented
-IO tags. This would give better flexibility on what is generated. 
-
-Stay tuned.
