@@ -3,7 +3,7 @@ A tool for generating IO Lists using RSLogix 5000 L5X export files.
 
 ## Summary
 This is a simple WPF windows application that allows you to process an L5X project file
-and generate an IO list. IO lists are helpful for tracking and documenting a given
+and generate an IO list as a CSV output. IO lists are helpful for tracking and documenting a given
 PLC project's IO configuration. These are typically used in a controls FAT or commissioning
 to track the IO that has been loop tested with field devices.
 
@@ -65,7 +65,10 @@ To delete a custom column, click the trash icon on the column to remove it from 
 ![image](/docs/RemoveColumn.png)
 
 ### Filters
-On the `Filters` tab you can configure which how the application will filter IO tags. 
+The `Filters` tab allows you to configure how the application will filter IO tags prior to 
+writing the CSV output.
+
+![image](/docs/FilterTab.png)
 
 First, you can specify whether or not to filter unused tags, which will remove tag
 that are not used within the logic of the project from the output list.
@@ -76,7 +79,10 @@ tags to remove from the list. The following sections explain how to configure cu
 #### Add Custom Filter
 To add a custom filter, click the plus action icon button on the top right. 
 This will launch the tag filter popup which allows you to select a property,
-condition, and value for which to filter the IO tags.
+condition, and value for which to filter the IO tags. Below is an example of the
+interface for adding and editing the custom tag filter.
+
+![image](/docs/TagFilter.png)
 
 
 ## Screenshots

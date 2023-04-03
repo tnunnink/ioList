@@ -8,9 +8,9 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:views="clr-namespace:ioList.Views"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-             Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="12"
+             Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{md:MaterialDesignFont}"
              Height="500" Width="600"
              d:DataContext="{d:DesignInstance viewModels:ConfigurationViewModel, IsDesignTimeCreatable=True}"
@@ -26,12 +26,60 @@
           <StackPanel Orientation="Horizontal"
                       HorizontalAlignment="Left"
                       Margin="20 0">
-            <Button Command="{Binding}"
+            <!--<Button Command="{Binding}"
                     Style="{StaticResource MaterialDesignIconButton}"
-                    ToolTip="Export/Import Configuration (Coming Soon)"
+                    ToolTip="Export/Import Configuration"
                     Height="30" Width="30">
               <md:PackIcon Kind="ImportExport" />
-            </Button>
+            </Button>-->
+
+            <md:PopupBox
+              Height="30" Width="30"
+              PlacementMode="TopAndAlignLeftEdges">
+              <md:PopupBox.ToggleContent>
+                <md:PackIcon
+                  Width="24"
+                  Height="24"
+                  Kind="ImportExport"
+                  Foreground="{DynamicResource PrimaryHueLightBrush}"/>
+              </md:PopupBox.ToggleContent>
+              <StackPanel>
+                <StackPanel.Resources>
+                  <Style TargetType="{x:Type Button}"
+                         BasedOn="{StaticResource MaterialDesignPopupBoxButton}">
+                  </Style>
+                  <Style TargetType="{x:Type md:PackIcon}">
+                    <Setter Property="Height" Value="18" />
+                    <Setter Property="Width" Value="18" />
+                    <Setter Property="Margin" Value="0 0 10 0" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                  </Style>
+                  <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                  </Style>
+                </StackPanel.Resources>
+
+                <Button Command="{Binding SelectLocationCommand}">
+                  <StackPanel Orientation="Horizontal">
+                    <md:PackIcon Kind="Export"
+                                 Height="20" Width="20"
+                                 Margin="0 0 10 0" />
+                    <TextBlock Text="Export Configuration"
+                               VerticalAlignment="Center" />
+                  </StackPanel>
+                </Button>
+                <Button Command="{Binding SelectConfigCommand}">
+                  <StackPanel Orientation="Horizontal">
+                    <md:PackIcon Kind="Import"
+                                 Height="20" Width="20"
+                                 Margin="0 0 10 0" />
+                    <TextBlock Text="Import Configuration"
+                               VerticalAlignment="Center" />
+                  </StackPanel>
+                </Button>
+              </StackPanel>
+            </md:PopupBox>
+
           </StackPanel>
           <StackPanel Orientation="Horizontal"
                       HorizontalAlignment="Right"

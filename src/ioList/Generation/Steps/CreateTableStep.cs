@@ -8,7 +8,7 @@ public class CreateTableStep : IGeneratorStep
 {
     public void Execute(GeneratorContext context)
     {
-        var columns = context.Config.Columns.Select(c => c.ToDataColumn()).ToArray();
+        var columns = context.Config.Columns.Where(c => c.Enabled).Select(c => c.ToDataColumn()).ToArray();
         var table = new DataTable();
         table.Columns.AddRange(columns);
 

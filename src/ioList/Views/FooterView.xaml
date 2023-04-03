@@ -69,7 +69,7 @@
       </Button>
       <Button Style="{StaticResource MaterialDesignToolButton}"
               Command="{Binding OpenConfigurationCommand}"
-              ToolTip="Options (Under development)"
+              ToolTip="Configuration"
               Margin="5 0">
         <md:PackIcon Kind="Cog" 
                      Height="20" Width="20"/>

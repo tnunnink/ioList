@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ioList.Model;
 using ioList.Views;
 using MaterialDesignThemes.Wpf;
+using Ookii.Dialogs.Wpf;
 
 namespace ioList.ViewModels;
 
@@ -168,4 +172,60 @@ public partial class ConfigurationViewModel : ObservableObject
     private void RemoveColumn(TagColumn column) => _config.Columns.Remove(column);
 
     private static bool CanRemoveColumn(TagColumn column) => column is not null && column.Type != ColumnType.Property;
+    
+    [RelayCommand]
+    private static void SelectLocation()
+    {
+        using var log = new EventLog("Application", Environment.MachineName, "Application");
+        
+        var dialog = new VistaFolderBrowserDialog
+        {
+            Description = "Select export location.",
+            UseDescriptionForTitle = true,
+            Multiselect = false
+        };
+
+        var folder = dialog.ShowDialog() == true ? dialog.SelectedPath : string.Empty;
+
+        if (string.IsNullOrEmpty(folder)) return;
+        
+        var fileName = Path.Combine(folder, "Config.json");
+
+        try
+        {
+            File.Copy("Config.json", fileName, true);
+        }
+        catch (Exception e)
+        {
+            log.WriteEntry($"Failed to export configuration file with error '{e.Message}'.", EventLogEntryType.Error);
+        }
+    }
+    
+    [RelayCommand]
+    private void SelectConfig()
+    {
+        using var log = new EventLog("Application", Environment.MachineName, "Application");
+        
+        var dialog = new VistaOpenFileDialog
+        {
+            Title = "Select configuration file to import.",
+            CheckFileExists = true,
+            Multiselect = false,
+            DefaultExt = ".json"
+        };
+
+        var fileName = dialog.ShowDialog() == true ? dialog.FileName : string.Empty;
+
+        if (string.IsNullOrEmpty(fileName)) return;
+
+        try
+        {
+            File.Copy(fileName, "Config.json", true);
+            _config = GeneratorConfig.Load();
+        }
+        catch (Exception e)
+        {
+            log.WriteEntry($"Failed to import configuration file with error '{e.Message}'.", EventLogEntryType.Error);
+        }
+    }
 }

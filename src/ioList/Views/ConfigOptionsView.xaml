@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:ioList.ViewModels"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
@@ -47,7 +46,7 @@
 
           <ToggleButton Grid.Column="2"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding Config.Overwrite}"
+                        IsChecked="{Binding Config.Overwrite, Mode=TwoWay}"
                         Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
         </Grid>
       </Border>
