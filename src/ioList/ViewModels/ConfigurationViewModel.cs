@@ -222,6 +222,7 @@ public partial class ConfigurationViewModel : ObservableObject
         {
             File.Copy(fileName, "Config.json", true);
             _config = GeneratorConfig.Load();
+            OnPropertyChanged(string.Empty);
         }
         catch (Exception e)
         {
