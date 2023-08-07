@@ -8,16 +8,12 @@ public class DetermineBuffersStep : IGeneratorStep
 {
     public void Execute(GeneratorContext context)
     {
-        var tagLookup = context.Content.Query<Tag>()
-            .SelectMany(t => t.MembersAndSelf())
+        var tagLookup = context.Content.Find<Tag>()
+            .SelectMany(t => t.Members())
             .ToLookup(k => k.TagName, t => t);
 
         foreach (var tag in context.Tags)
         {
-            if (tag.TagName == "IO_INJ_FLEX:4:O.Ch00.Data")
-            {
-                
-            }
             if (tag.References.Count == 0) continue;
 
             foreach (var reference in tag.References)

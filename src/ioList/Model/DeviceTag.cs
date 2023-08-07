@@ -1,29 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using L5Sharp;
+using L5Sharp.Common;
 using L5Sharp.Components;
-using L5Sharp.Core;
+using L5Sharp.Extensions;
 
 namespace ioList.Model
 {
     public class DeviceTag
     {
-        public DeviceTag(Module module, ILogixTag member, string type)
+        public DeviceTag(Module module, Tag member, string type)
         {
             Module = module.Name;
             Rack = module.ParentModule;
             Catalog = module.CatalogNumber;
-            Slot = module.Slot.ToString();
+            Slot = module.Slot().ToString();
             Type = type;
             TagName = member.TagName;
             Address = member.TagName.Path;
-            Comment = member.Description;
-            Unit = member is TagMember m ? m.Unit : string.Empty;
+            Comment = member.Comment;
+            Unit = member.Unit ?? string.Empty;
 
             //todo would like to make this configurable as I imagine not all analogs have the same member names.
             var parent = member.TagName.Members.ElementAt(member.TagName.Depth - 1);
-            High = module.Config?.Member($"{parent}.HighEngineering")?.Value?.ToString();
-            Low = module.Config?.Member($"{parent}.LowEngineering")?.Value?.ToString();
+            High = module.Config()?.Member($"{parent}.HighEngineering")?.Value.ToString();
+            Low = module.Config()?.Member($"{parent}.LowEngineering")?.Value.ToString();
         }
 
         public string Module { get; set; }

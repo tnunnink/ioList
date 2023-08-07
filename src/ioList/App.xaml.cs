@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using ioList.Model;
 using ioList.ViewModels;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;

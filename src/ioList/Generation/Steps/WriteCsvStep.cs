@@ -13,8 +13,6 @@ public class WriteCsvStep : IGeneratorStep
         if (!context.Config.Overwrite && File.Exists(context.Destination)) return;
         using var writer = new StreamWriter(context.Destination);
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-        /*csv.Context.RegisterClassMap<TagMap>();
-        csv.WriteRecords(context.Tags);*/
         
         // Write columns
         foreach (DataColumn column in context.Table.Columns)
