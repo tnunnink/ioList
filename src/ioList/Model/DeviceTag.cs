@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using L5Sharp.Common;
 using L5Sharp.Components;
 using L5Sharp.Extensions;
@@ -8,7 +7,7 @@ namespace ioList.Model
 {
     public class DeviceTag
     {
-        public DeviceTag(Module module, Tag member, string type)
+        public DeviceTag(Module module, Tag config, Tag member, string type)
         {
             Module = module.Name;
             Rack = module.ParentModule;
@@ -17,13 +16,14 @@ namespace ioList.Model
             Type = type;
             TagName = member.TagName;
             Address = member.TagName.Path;
-            Comment = member.Comment;
+            Comment = member.Description;
             Unit = member.Unit ?? string.Empty;
 
             //todo would like to make this configurable as I imagine not all analogs have the same member names.
-            var parent = member.TagName.Members.ElementAt(member.TagName.Depth - 1);
-            High = module.Config()?.Member($"{parent}.HighEngineering")?.Value.ToString();
-            Low = module.Config()?.Member($"{parent}.LowEngineering")?.Value.ToString();
+            if (member.Parent is null || config is null) return;
+            var parent = member.Parent.TagName.Member;
+            High = config.Member($"{parent}.HighEngineering")?.Value.ToString();
+            Low = config.Member($"{parent}.LowEngineering")?.Value.ToString();
         }
 
         public string Module { get; set; }

@@ -15,8 +15,10 @@ public class Generator
         _context = new GeneratorContext(sourceFile, destination, config);
 
         _steps.Add(new GetDeviceTagsStep());
-        _steps.Add(new FindReferencesStep());
 
+        if (_context.Config.FindBuffers || _context.Config.FilterUnused)
+            _steps.Add(new FindReferencesStep());
+        
         if (_context.Config.FindBuffers)
             _steps.Add(new DetermineBuffersStep());
 

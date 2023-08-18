@@ -13,11 +13,11 @@
 
     <ItemGroup>
         <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
         <PackageReference Include="CsvHelper" Version="27.1.1" />
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
-        <PackageReference Include="L5Sharp" Version="0.13.0" />
-        <PackageReference Include="L5Sharp.Extensions" Version="0.1.0" />
+        <PackageReference Include="L5Sharp" Version="0.15.2" />
+        <PackageReference Include="L5Sharp.Extensions" Version="0.2.0" />
         <PackageReference Include="LambdaConverters" Version="4.0.0" />
         <PackageReference Include="LinqKit.Core" Version="1.2.4" />
         <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
